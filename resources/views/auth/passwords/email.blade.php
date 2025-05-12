@@ -1,11 +1,11 @@
-@extends('layouts.app')
+@extends('layouts.auth')
 
 @section('content')
     <div class="login-main">
         <div class="row">
             <div class="col-md-6 d-none d-lg-block">
                 <div class="left-area">
-                    <img src="{{ asset('user/assets/img/login-img.png') }}" alt="" />
+                    <img src="{{ asset('user/assets/img/login-img.png') }}" alt=""/>
                     <div class="img-text">
                         <h2>Welcome to Eventesot.</h2>
                         <p>Easily gather every guest's photos and videos
@@ -16,7 +16,7 @@
             <div class="col-lg-6 col-md-12">
                 <div class="right-area">
                     <div class="logo">
-                        <img src="{{ asset('user/assets/img/logo.png') }}" alt="" />
+                        <img src="{{ asset('user/assets/img/logo.png') }}" alt=""/>
                     </div>
 
                     <div class="form-area">
@@ -26,7 +26,8 @@
                                 <label for="email">Email</label>
                                 <div class="input-wrapper">
                                     <i class="fas fa-envelope"></i>
-                                    <input id="email" type="email" name="email" value="{{ old('email') }}" placeholder="Enter Email" required>
+                                    <input id="email" type="email" name="email" value="{{ old('email') }}"
+                                           placeholder="Enter Email" required>
 
                                     @error('email')
                                     <span class="invalid-feedback" role="alert">

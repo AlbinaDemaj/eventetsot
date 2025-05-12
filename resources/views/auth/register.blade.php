@@ -1,11 +1,11 @@
-@extends('layouts.app')
+@extends('layouts.auth')
 
 @section('content')
     <div class="login-main">
         <div class="row">
             <div class="col-md-6 d-none d-lg-block">
                 <div class="left-area">
-                    <img src="{{ asset('user/assets/img/login-img.png') }}" alt="" />
+                    <img src="{{ asset('user/assets/img/login-img.png') }}" alt=""/>
                     <div class="img-text">
                         <h2>Welcome to Eventesot.</h2>
                         <p>Easily gather every guest's photos and videos
@@ -16,7 +16,7 @@
             <div class="col-lg-6 col-md-12">
                 <div class="right-area">
                     <div class="logo">
-                        <img src="{{ asset('user/assets/img/logo.png') }}" alt="" />
+                        <img src="{{ asset('user/assets/img/logo.png') }}" alt=""/>
                     </div>
                     <div class="auth-btn">
 
@@ -44,7 +44,8 @@
                                 <label for="name">Name</label>
                                 <div class="input-wrapper">
                                     <i class="fas fa-user"></i>
-                                    <input id="name" type="text" name="name" value="{{ old('name') }}" placeholder="Enter Name" required>
+                                    <input id="name" type="text" name="name" value="{{ old('name') }}"
+                                           placeholder="Enter Name" required>
 
                                     @error('name')
                                     <span class="invalid-feedback" role="alert">
@@ -58,7 +59,8 @@
                                 <label for="email">Email</label>
                                 <div class="input-wrapper">
                                     <i class="fas fa-envelope"></i>
-                                    <input id="email" type="email" name="email" value="{{ old('email') }}" placeholder="Enter Email" required>
+                                    <input id="email" type="email" name="email" value="{{ old('email') }}"
+                                           placeholder="Enter Email" required>
 
                                     @error('email')
                                     <span class="invalid-feedback" role="alert">
@@ -72,7 +74,8 @@
                                 <label for="password">Password</label>
                                 <div class="input-wrapper">
                                     <i class="fas fa-lock"></i>
-                                    <input id="password" type="password" name="password" placeholder="Enter Password" required>
+                                    <input id="password" type="password" name="password" placeholder="Enter Password"
+                                           required>
 
                                     @error('password')
                                     <span class="invalid-feedback" role="alert">
@@ -86,7 +89,8 @@
                                 <label for="password-confirm">Confirm Password</label>
                                 <div class="input-wrapper">
                                     <i class="fas fa-lock"></i>
-                                    <input id="password-confirm" type="password" name="password_confirmation" placeholder="Enter Password" required>
+                                    <input id="password-confirm" type="password" name="password_confirmation"
+                                           placeholder="Enter Password" required>
                                 </div>
                             </div>
                             <button type="submit" class="login-btn">

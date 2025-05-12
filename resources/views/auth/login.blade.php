@@ -1,11 +1,11 @@
-@extends('layouts.app')
+@extends('layouts.auth')
 
 @section('content')
     <div class="login-main">
         <div class="row">
             <div class="col-md-6 d-none d-lg-block">
                 <div class="left-area">
-                    <img src="user/assets/img/login-img.png" alt="" />
+                    <img src="user/assets/img/login-img.png" alt=""/>
                     <div class="img-text">
                         <h2>Welcome to Eventesot.</h2>
                         <p>Easily gather every guest's photos and videos into a shareable live slideshow</p>
@@ -15,7 +15,7 @@
             <div class="col-lg-6 col-md-12">
                 <div class="right-area">
                     <div class="logo">
-                        <img src="user/assets/img/logo.png" alt="" />
+                        <img src="user/assets/img/logo.png" alt=""/>
                     </div>
                     <div class="auth-btn">
                         <div class="btn-single">
@@ -43,7 +43,8 @@
                                 <div class="input-wrapper">
                                     <div class="input-wrapper">
                                         <i class="fa-solid fa-envelope"></i>
-                                        <input id="email" type="email" name="email" value="{{ old('email') }}" placeholder="Enter Email" required>
+                                        <input id="email" type="email" name="email" value="{{ old('email') }}"
+                                               placeholder="Enter Email" required>
 
                                         @error('email')
                                         <span class="invalid-feedback" role="alert">
@@ -58,7 +59,8 @@
                                 <label for="password">Password</label>
                                 <div class="input-wrapper">
                                     <i class="fas fa-lock"></i>
-                                    <input id="password" type="password" name="password" placeholder="Enter Password" required>
+                                    <input id="password" type="password" name="password" placeholder="Enter Password"
+                                           required>
 
                                     @error('password')
                                     <span class="invalid-feedback" role="alert">
