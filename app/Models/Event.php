@@ -3,8 +3,40 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class Event extends Model
 {
-    //
+    protected $fillable = [
+        'name',
+        'event_date',
+        'code',
+        'qr_code',
+        'user_id',
+        'type',
+    ];
+
+    protected static function booted()
+    {
+        static::creating(function ($event) {
+            do {
+                $code = Str::upper(Str::random(10));
+            } while (self::where('code', $code)->exists());
+
+            $event->code = $code;
+
+            $url = url('/' . $event->code);
+            $qrCode = base64_encode(
+                QrCode::format('png')->size(200)->generate($url)
+            );
+
+            $event->qr_code = 'data:image/png;base64,' . $qrCode;
+        });
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

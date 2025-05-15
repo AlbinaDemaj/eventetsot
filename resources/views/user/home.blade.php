@@ -17,18 +17,18 @@
                     <div class="form-area pt-3">
                         <div class="form-group">
                             <div class="input-wrapper">
-                                <i class="fa-solid fa-copy"></i>
-                                <input type="password" id="password" placeholder="app.evemtetsot.com/x9joci" required>
-                                <button class="opn-btn">Open</button>
+                                <i class="fa-solid fa-copy" onclick="copyURL()"></i>
+                                <input type="text" readonly id="url" value="{{ url('/'.$selectedEvent->code) }}" required>
+                                <button class="opn-btn" onclick="openURL()">Open</button>
                             </div>
                         </div>
                     </div>
                     <div class="qr-code">
-                        <button type="submit" class="login-btn">
+                        <button type="button" class="login-btn" onclick="downloadQRCode()">
                             Download QR Code <i class="fa-solid fa-cloud-arrow-down"></i>
                         </button>
                         <div class="qr-img">
-                            <img src="{{ asset('user/assets/img/qr-code.png') }}" alt="" />
+                            <img src="{{ $selectedEvent->qr_code }}" alt="" id="event-qr"/>
                         </div>
                     </div>
                 </div>

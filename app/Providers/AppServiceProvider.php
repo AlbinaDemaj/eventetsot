@@ -22,7 +22,15 @@ class AppServiceProvider extends ServiceProvider
     {
         // Share common variables with all views
         view()->composer('*', function ($view) {
-            $view->with('currentUser', auth()->user());
+            $user = auth()->user();
+
+            $selectedEvent = null;
+            if ($user && session()->has('selected_event_id')) {
+                $selectedEvent = $user->events()->find(session('selected_event_id'));
+            }
+
+            $view->with('currentUser', $user);
+            $view->with('selectedEvent', $selectedEvent);
         });
 
         // Set default string length for migrations

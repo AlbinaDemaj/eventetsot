@@ -30,11 +30,15 @@
                 </a>
                 <div class="form-group">
                     <label for="email">Current Event</label>
-                    <select class="my-select selectpicker" data-container="body">
-                        <option>View Event</option>
+                    <form method="POST" action="{{ route('user.switch-event') }}">
+                        @csrf
+                    <select name="event_id" class="my-select selectpicker" data-container="body" onchange="this.form.submit()">
+                        @foreach(auth()->user()->events()->latest()->get() as $event)
+                            <option value="{{ $event->id }}" {{ $selectedEvent && $selectedEvent->id == $event->id ? 'selected' : '' }}>{{ $event->name }}</option>
+                        @endforeach
                         <option>Create New Event</option>
-
                     </select>
+                    </form>
                 </div>
                 <div class="nav">
                     <ul>
@@ -51,15 +55,15 @@
                             </a>
                         </li>
                         <li>
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="{{ route('user.settings') }}">
                                 <div class="sb-nav-link-icon"><i class="fa-solid fa-sliders"></i></div>
                                 Event Setting
                             </a>
                         </li>
                         <li>
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="{{ route('user.events') }}">
                                 <div class="sb-nav-link-icon"><img src="{{ asset('user/assets/img/red-carpet.png') }}" alt=""></div>
-                                View Event
+                                View Events
                             </a>
                         </li>
                     </ul>
@@ -69,8 +73,8 @@
                         <img src="{{ asset('user/assets/img/user.png') }}" />
                     </div>
                     <div class="name-area">
-                        <div class="small">Sam Wheelerc</div>
-                        <p>samwheeler@example.com</p>
+                        <div class="small">{{ auth()->user()->name }}</div>
+                        <p>{{ auth()->user()->email }}</p>
                     </div>
                 </div>
             </div>
@@ -84,32 +88,36 @@
                     <i class="fas fa-bars"></i>
                 </button> -->
                 <div class="header-text">
-                    <h2>Welcome Sam <span>Free Plan</span></h2>
+                    <h2>Welcome {{ auth()->user()->name }} <span>Free Plan</span></h2>
                 </div>
                 <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown"
-                           aria-expanded="false"><img src="{{ asset('user/assets/img/user.png') }}" alt="" /> Sam Wheeler</a>
+                           aria-expanded="false"><img src="{{ asset('user/assets/img/user.png') }}" alt="" /> {{ auth()->user()->name }}</a>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                             <li><a class="dropdown-item" href="#!">Settings</a></li>
                             <li><a class="dropdown-item" href="#!">Activity Log</a></li>
                             <li>
                                 <hr class="dropdown-divider" />
                             </li>
-                            <li><a class="dropdown-item" href="#!">Logout</a></li>
+                            <li><a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">Logout</a></li>
                         </ul>
                     </li>
                 </ul>
             </nav>
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                @csrf
+            </form>
             @yield('content')
         </main>
-
     </div>
 </div>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta3/dist/js/bootstrap-select.min.js"></script>
-<script src="{{ asset('user/js/scripts.js') }}"></script>
+<script src="https://www.dukelearntoprogram.com/course1/common/js/image/SimpleImage.js"></script>
+@include('user.layouts.script')
 
 <script>
     $(document).ready(function () {

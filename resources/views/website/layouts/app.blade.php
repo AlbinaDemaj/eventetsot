@@ -57,7 +57,7 @@
                         </li>
                     </ul>
                     <div class="d-flex gap-4 align-items-center">
-                        <a href="#" class="nav-link">Log in</a>
+                        <a href="{{ route('login') }}" class="nav-link">Log in</a>
                         <a href="#" class="btn e-btn-primary">Get started</a>
                     </div>
                 </div>
