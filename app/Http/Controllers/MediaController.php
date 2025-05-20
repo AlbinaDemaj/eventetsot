@@ -1,0 +1,54 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Event;
+use App\Models\Media;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+
+class MediaController extends Controller
+{
+    public function store(Request $request, Event $event)
+    {
+        $request->validate([
+            'media.*' => 'required|file|mimes:jpg,jpeg,png,mp4,mov,avi|max:20480',
+            'caption' => 'nullable|string|max:255'
+        ]);
+
+        $uploadedFiles = [];
+
+        foreach ($request->file('media') as $file) {
+            $path = $file->store("media/{$event->id}", 'public');
+
+            $uploadedFiles[] = [
+                'user_id' => auth()->id(),
+                'event_id' => auth()->id(),
+                'is_guest' => false,
+                'file_path' => $path,
+                'file_type' => $file->getClientMimeType(),
+                'file_size' => $file->getSize(),
+                'caption' => $request->caption,
+                'created_at' => now(),
+                'updated_at' => now()
+            ];
+        }
+
+        $event->media()->insert($uploadedFiles);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Media uploaded successfully!',
+            'count' => count($uploadedFiles)
+        ]);
+    }
+
+    public function destroy(Event $event, Media $media)
+    {
+        // Add authorization check here
+        Storage::disk('public')->delete($media->file_path);
+        $media->delete();
+
+        return back()->with('success', 'Media deleted successfully!');
+    }
+}

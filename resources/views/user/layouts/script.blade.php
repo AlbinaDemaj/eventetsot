@@ -24,6 +24,77 @@
             });
         }
 
+        document.getElementById('eventSelector').addEventListener('change', function (e) {
+            if (this.value === 'create_new') {
+                const modal = new bootstrap.Modal(document.getElementById('exampleModal'));
+                modal.show();
+            } else {
+                // Submit the form if another event is selected
+                this.form.submit();
+            }
+        });
+
+
+        // File upload
+        const dropzone = document.getElementById('dropzone');
+        const fileInput = document.getElementById('fileInput');
+
+        dropzone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropzone.classList.add('dragover');
+        });
+
+        dropzone.addEventListener('dragleave', () => {
+            dropzone.classList.remove('dragover');
+        });
+
+        dropzone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropzone.classList.remove('dragover');
+
+            const files = Array.from(e.dataTransfer.files);
+            if (files.length > 0) {
+                const file = files[0];
+
+                // Optional: check file type
+                if (file.type.startsWith('image/') || file.type.startsWith('video/')) {
+                    // ✅ Navigate to another page
+                    window.location.href = 'upload-view.html'; // change this to your desired URL
+                } else {
+                    alert('Only images and videos are allowed.');
+                }
+            }
+        });
+
+        // Optional: allow click to upload
+        dropzone.addEventListener('click', () => fileInput.click());
+
+        fileInput.addEventListener('change', () => {
+            const files = Array.from(fileInput.files);
+            if (files.length > 0) {
+                window.location.href = 'upload-view.html';
+            }
+        });
+
+
+        // Text Post
+        const textarea = document.querySelector('.preview-editor .postbg');
+        const thumbnails = document.querySelectorAll('.thumbnail-single');
+        const bgClasses = ['bg1', 'bg2', 'bg3', 'bg4', 'bg5'];
+
+        thumbnails.forEach(thumbnail => {
+            thumbnail.addEventListener('click', () => {
+                const bg = thumbnail.dataset.bg;
+                if (!bg) return;
+
+                // Remove all background classes
+                textarea.classList.remove(...bgClasses);
+
+                // Add selected background class
+                textarea.classList.add(bg);
+            });
+        });
+
     });
 
     function switchTab(tabId) {

@@ -20,20 +20,20 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <!-- Stylesheet -->
-    <link rel="stylesheet" href="website/css/bootstrap.min.css">
-    <link rel="stylesheet" href="website/css/style.css">
-    <link rel="stylesheet" href="website/css/responsive.css">
+    <link rel="stylesheet" href="{{ asset('website/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url('website/css/style.css') }}">
+    <link rel="stylesheet" href="{{ url('website/css/responsive.css') }}">
 
-    <link rel="stylesheet" type="text/css" href="website/css/slick.css"/>
+    <link rel="stylesheet" type="text/css" href="{{ url('website/css/slick.css') }}"/>
     <!-- Font Awesome 6 CDN -->
-    <link rel="stylesheet" href="website/css/fa.min.css" />
+    <link rel="stylesheet" href="{{ url('website/css/fa.min.css') }}" />
 </head>
 <body>
 <header>
     <div class="container">
         <nav class="navbar navbar-expand-lg">
             <div class="container-fluid">
-                <a class="navbar-brand" href="{{ route('index') }}"><img src="website/img/logo.svg"></a>
+                <a class="navbar-brand" href="{{ route('index') }}"><img src="{{ asset('website/img/logo.svg') }}"></a>
                 <button class="navbar-toggler shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -76,13 +76,13 @@
         </div>
     </div>
     <div class="text-center">
-        <img src="website/img/photo-collage.png" class="img-fluid">
+        <img src="{{ asset('website/img/photo-collage.png') }}" class="img-fluid">
     </div>
     <div class="ecomparison py-5 my-5">
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
-                    <img src="website/img/logo.svg">
+                    <img src="{{ asset('website/img/logo.svg') }}">
                     <ul class="checkitems">
                         <li>Effortless and smooth experience</li>
                         <li>Beautifully designed digital albums</li>
@@ -165,10 +165,10 @@
     </div>
 </footer>
 
-<script type="text/javascript" src="website/js/bootstrap.bundle.min.js"></script>
-<script type="text/javascript" src="website/js//jquery-1.11.0.min.js"></script>
-<script type="text/javascript" src="website/js/jquery-migrate-1.2.1.min.js"></script>
-<script type="text/javascript" src="website/js/slick.min.js"></script>
+<script type="text/javascript" src="{{ asset('website/js/bootstrap.bundle.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('website/js//jquery-1.11.0.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('website/js/jquery-migrate-1.2.1.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('website/js/slick.min.js') }}"></script>
 <script type="text/javascript">
     $('.eslider.a').slick({
         slidesToShow: 3,
@@ -176,8 +176,8 @@
         appendArrows: $('.arrowbox.a'),
         centerPadding: '1150px',
         autoplay: true,
-        prevArrow: '<span class="slick-prev"><img src="website/img/arrow-left.svg"></span>',
-        nextArrow: '<span class="slick-next"><img src="website/img/arrow-right.svg"></span>',
+        prevArrow: '<span class="slick-prev"><img src="{{ asset('website/img/arrow-left.svg') }}"></span>',
+        nextArrow: '<span class="slick-next"><img src="{{ asset('website/img/arrow-right.svg') }}"></span>',
         responsive: [
             {
                 breakpoint: 1024,
@@ -209,8 +209,8 @@
         appendArrows: $('.arrowbox.t'),
         centerPadding: '1150px',
         autoplay: true,
-        prevArrow: '<span class="slick-prev"><img src="website/img/arrow-left.svg"></span>',
-        nextArrow: '<span class="slick-next"><img src="website/img/arrow-right.svg"></span>',
+        prevArrow: '<span class="slick-prev"><img src="{{ asset('website/img/arrow-left.svg') }}"></span>',
+        nextArrow: '<span class="slick-next"><img src="{{ asset('website/img/arrow-right.svg') }}"></span>',
         responsive: [
             {
                 breakpoint: 1024,

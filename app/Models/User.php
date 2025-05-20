@@ -50,4 +50,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Event::class);
     }
+
+    public function media()
+    {
+        return $this->hasMany(Media::class);
+    }
 }

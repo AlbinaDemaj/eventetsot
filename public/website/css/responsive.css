@@ -32,6 +32,17 @@
   footer .social-links{
     margin-top: 1rem;
   }
+  .e-actionsheet{
+    height: 50vh;
+    padding: 2rem;
+  }
+  .e-actionsheet .content-scroll{
+    overflow: auto;
+    height: 100%;
+  }
+  .e-actionsheet .qr-code{
+    margin-bottom: 2rem;
+  }
 }
 
 /* Large devices (desktops, 992px and up) */

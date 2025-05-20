@@ -1,0 +1,30 @@
+@extends('website.layouts.event')
+
+@section('content')
+
+    <div class="add-album h-100">
+        <div class="row h-100 g-0">
+            <div class="col-md-6">
+                <div class="flex-banner h-100 d-flex align-items-center justify-content-center">
+                    <div class="flex-caption">
+                        <h4>Sam Dasma</h4>
+                        <a href="{{ route('events.upload', request()->route('code')) }}" class="btn e-btn-primary"><span>+</span> Shtoni Album</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 text-center">
+                <div class="collage-box px-4 h-100 d-flex align-items-center justify-content-center flex-column">
+                    <p><strong>39 Fotografitë, videot dhe postimet</strong></p>
+                    <div class="img-collage">
+                        <div class="child-wrap">
+                            @foreach($event->media()->get() as $media)
+                            <span><img src="https://placehold.co/600x400"></span>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+@endsection

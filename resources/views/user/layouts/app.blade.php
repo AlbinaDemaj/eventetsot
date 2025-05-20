@@ -32,18 +32,20 @@
                     <label for="email">Current Event</label>
                     <form method="POST" action="{{ route('user.switch-event') }}">
                         @csrf
-                    <select name="event_id" class="my-select selectpicker" data-container="body" onchange="this.form.submit()">
-                        @foreach(auth()->user()->events()->latest()->get() as $event)
-                            <option value="{{ $event->id }}" {{ $selectedEvent && $selectedEvent->id == $event->id ? 'selected' : '' }}>{{ $event->name }}</option>
-                        @endforeach
-                        <option>Create New Event</option>
-                    </select>
+                        <select id="eventSelector" name="event_id" class="my-select selectpicker" data-container="body">
+                            @foreach(auth()->user()->events()->latest()->get() as $event)
+                                <option value="{{ $event->id }}" {{ $selectedEvent && $selectedEvent->id == $event->id ? 'selected' : '' }}>
+                                    {{ $event->name }}
+                                </option>
+                            @endforeach
+                            <option value="create_new">Create New Event</option>
+                        </select>
                     </form>
                 </div>
                 <div class="nav">
                     <ul>
                         <li>
-                            <a class="nav-link" href="index.html">
+                            <a class="nav-link" href="{{ route('user.home') }}">
                                 <div class="sb-nav-link-icon"><i class="fa-solid fa-house-chimney"></i></div>
                                 Home
                             </a>
@@ -110,6 +112,46 @@
             </form>
             @yield('content')
         </main>
+    </div>
+</div>
+
+
+<!-- Add Event Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-md">
+        <div class="modal-content add-event">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add New Event</h5>
+                <button type="button" data-bs-dismiss="modal" aria-label="Close">
+                    <i class="fa-solid fa-circle-xmark"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-area">
+                    <form method="POST" action="{{ route('user.events') }}">
+                        @csrf
+                        <div class="form-group">
+                            <label for="name">Write Event Name</label>
+                            <div class="input-wrapper">
+                                <div class="input-wrapper">
+                                    <input type="text" id="name" name="name" placeholder="Write Here" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="date">Event date</label>
+                            <div class="input-wrapper">
+                                <input type="date" id="date" name="event_date" placeholder="29-04-2026" required>
+                            </div>
+                        </div>
+                        <button type="submit" class="login-btn">
+                            Submit
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+        </div>
     </div>
 </div>
 

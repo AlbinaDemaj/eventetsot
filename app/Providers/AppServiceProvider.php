@@ -29,6 +29,11 @@ class AppServiceProvider extends ServiceProvider
                 $selectedEvent = $user->events()->find(session('selected_event_id'));
             }
 
+            if ($user && !session()->has('selected_event_id')) {
+                session(['selected_event_id' => $user->events()->latest()->first()->id]);
+                $selectedEvent = $user->events()->find(session('selected_event_id'));
+            }
+
             $view->with('currentUser', $user);
             $view->with('selectedEvent', $selectedEvent);
         });

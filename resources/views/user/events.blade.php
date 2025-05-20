@@ -10,7 +10,7 @@
                     <p>Here you can find all you events or create new ones
                         Create new event</p>
                 </div>
-                <button type="submit" class="login-btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                <button type="button" class="login-btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
                     <i class="fa-solid fa-circle-plus"></i> Create Event
                 </button>
             </div>
@@ -50,4 +50,6 @@
             </div>
         </div>
     </div>
+
+
 @endsection

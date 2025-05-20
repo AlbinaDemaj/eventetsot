@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Models\Event;
 use Illuminate\Http\Request;
 
 class EventController extends Controller
@@ -23,5 +24,21 @@ class EventController extends Controller
         session(['selected_event_id' => $event->id]);
 
         return back();
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'event_date' => 'required|date',
+            'name' => 'required|string',
+        ]);
+
+        $event = Event::create([
+            'user_id' => auth()->id(),
+            'name' => $request->name,
+            'event_date' => $request->event_date,
+        ]);
+
+        return redirect()->back();
     }
 }

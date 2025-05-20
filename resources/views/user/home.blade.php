@@ -18,7 +18,7 @@
                         <div class="form-group">
                             <div class="input-wrapper">
                                 <i class="fa-solid fa-copy" onclick="copyURL()"></i>
-                                <input type="text" readonly id="url" value="{{ url('/'.$selectedEvent->code) }}" required>
+                                <input type="text" readonly id="url" value="{{ url('events/'.$selectedEvent->code) }}" required>
                                 <button class="opn-btn" onclick="openURL()">Open</button>
                             </div>
                         </div>
