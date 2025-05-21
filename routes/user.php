@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\User\EventController;
 use App\Http\Controllers\User\HomeController;
+use App\Http\Controllers\User\MediaController;
 use App\Http\Controllers\User\OnboardingController;
 use App\Http\Controllers\User\SettingController;
 use Illuminate\Support\Facades\Route;
@@ -10,6 +11,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware(['auth'])->prefix('user')->name('user.')->group(function () {
 
     Route::get('/home', [HomeController::class, 'index'])->name('home');
+    Route::get('/media', [MediaController::class, 'index'])->name('media');
 
     Route::prefix('onboarding')->name('onboarding.')->group(function () {
         Route::get('/', [OnboardingController::class, 'index'])->name('index');

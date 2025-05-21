@@ -174,23 +174,23 @@
                     const thumb = document.createElement('div');
                     thumb.className = 'preview-thumb';
                     thumb.innerHTML = `
-                    <img src="${e.target.result}" alt="${file.name}">
-                    <span class="remove-thumb" data-index="${index}">×</span>
-                `;
+                <img src="${e.target.result}" alt="${file.name}">
+                <span class="remove-thumb" data-index="${index}">×</span>
+            `;
                     preview.appendChild(thumb);
 
                     // Create preview item for review step
                     const col = document.createElement('div');
                     col.className = 'col-md-4 mb-3';
                     col.innerHTML = `
-                    <div class="uploaded-img">
-                        <span class="remove-img" data-index="${index}"><img src="{{ asset('website/img/trash.svg') }}"></span>
-                        <div class="img-box"><img src="${e.target.result}"></div>
-                        <span class="btn e-btn-ghost d-flex align-items-center justify-content-center gap-4" data-bs-toggle="modal" data-bs-target="#addCaption">
-                            <img src="{{ asset('website/img/caption.svg') }}"> Add Caption
-                        </span>
-                    </div>
-                `;
+                <div class="uploaded-img">
+                    <span class="remove-img" data-index="${index}"><img src="{{ asset('website/img/trash.svg') }}"></span>
+                    <div class="img-box"><img src="${e.target.result}"></div>
+                    <span class="btn e-btn-ghost d-flex align-items-center justify-content-center gap-4" data-bs-toggle="modal" data-bs-target="#addCaption">
+                        <img src="{{ asset('website/img/caption.svg') }}"> Add Caption
+                    </span>
+                </div>
+            `;
                     uploadPreviewContainer.appendChild(col);
                 };
 
@@ -205,19 +205,20 @@
                     preview.appendChild(videoThumb);
                 }
             });
-
-            // Add remove handlers
-            document.querySelectorAll('.remove-thumb, .remove-img').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const index = parseInt(this.getAttribute('data-index'));
-                    selectedFiles.splice(index, 1);
-                    updatePreviews();
-                    if (selectedFiles.length === 0) {
-                        showSelectionStep();
-                    }
-                });
-            });
         }
+
+        // Add event delegation for remove handlers
+        document.addEventListener('click', function(e) {
+            if (e.target.closest('.remove-thumb, .remove-img')) {
+                const removeBtn = e.target.closest('.remove-thumb, .remove-img');
+                const index = parseInt(removeBtn.getAttribute('data-index'));
+                selectedFiles.splice(index, 1);
+                updatePreviews();
+                if (selectedFiles.length === 0) {
+                    showSelectionStep();
+                }
+            }
+        });
 
         // Navigation between steps
         function showReviewStep() {
@@ -239,12 +240,13 @@
                 alert('Please select at least one file to upload.');
                 return;
             }
-console.log(selectedFiles, '@selectedFiles')
+
             const formData = new FormData();
             selectedFiles.forEach((file, index) => {
                 formData.append(`media[${index}]`, file);
-                // You could also add captions here if you've collected them
             });
+
+            formData.append('code', '{{request()->route('code')}}')
 
             // Submit to server
             fetch('{{ route("media.store") }}', {
@@ -258,7 +260,7 @@ console.log(selectedFiles, '@selectedFiles')
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
-                        window.location.href = '';
+                        window.location.href = '{{ route('events.show', request()->route('code')) }}';
                     } else {
                         alert(data.message || 'Upload failed');
                     }

@@ -9,12 +9,14 @@ use Illuminate\Support\Facades\Storage;
 
 class MediaController extends Controller
 {
-    public function store(Request $request, Event $event)
+    public function store(Request $request)
     {
         $request->validate([
             'media.*' => 'required|file|mimes:jpg,jpeg,png,mp4,mov,avi|max:20480',
             'caption' => 'nullable|string|max:255'
         ]);
+
+        $event = Event::where('code', $request->code)->first();
 
         $uploadedFiles = [];
 
@@ -23,7 +25,7 @@ class MediaController extends Controller
 
             $uploadedFiles[] = [
                 'user_id' => auth()->id(),
-                'event_id' => auth()->id(),
+                'event_id' => $event->id,
                 'is_guest' => false,
                 'file_path' => $path,
                 'file_type' => $file->getClientMimeType(),

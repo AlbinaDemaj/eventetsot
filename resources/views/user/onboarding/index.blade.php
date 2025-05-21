@@ -13,7 +13,13 @@
                     Let’s Go <i class="fas fa-right-to-bracket"></i>
                 </a>
                 <div class="alread-account">
-                    <p class="dont-account">Don’t You? <a href="#">Sign out</a></p>
+                    <p class="dont-account">Don’t You?
+                        <a href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">Sign out</a>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                        @csrf
+                    </form>
+                    </p>
+
                 </div>
             </div>
         </div>

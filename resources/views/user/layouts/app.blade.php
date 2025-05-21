@@ -51,7 +51,7 @@
                             </a>
                         </li>
                         <li>
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="{{ route('user.media') }}">
                                 <div class="sb-nav-link-icon"><i class="fa-solid fa-photo-film"></i></div>
                                 Photo & Video
                             </a>

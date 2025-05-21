@@ -14,11 +14,11 @@
             </div>
             <div class="col-md-6 text-center">
                 <div class="collage-box px-4 h-100 d-flex align-items-center justify-content-center flex-column">
-                    <p><strong>39 Fotografitë, videot dhe postimet</strong></p>
+                    <p><strong>{{ $event->media()->count() }} Fotografitë, videot dhe postimet</strong></p>
                     <div class="img-collage">
                         <div class="child-wrap">
                             @foreach($event->media()->get() as $media)
-                            <span><img src="https://placehold.co/600x400"></span>
+                            <span><img src="{{ asset('storage/' . $media->file_path) }}"></span>
                             @endforeach
                         </div>
                     </div>
