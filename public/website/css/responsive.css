@@ -10,38 +10,48 @@
 
 /* Medium devices (tablets, 768px and up) */
 @media (min-width: 768px) and (max-width: 991.98px) {
+
   /* Styles for tablets */
-  .master-head{
+  .master-head {
     padding: 1rem;
   }
 }
-@media (max-width: 767px){
-  .master-head{
+
+@media (max-width: 767px) {
+  .master-head {
     padding: 1rem;
   }
-  .how-it-works .tbox{
-    text-align: center;
-    padding: 3rem 0;
+
+  .how-it-works .tbox {
+    padding: 0rem;
   }
-  .how-it-works .tbox .ecount{
-    margin: 0 auto 10px;
-  }
-  footer .fnav{
+
+  footer .fnav {
     margin-top: 1rem;
   }
-  footer .social-links{
+
+  footer .social-links {
     margin-top: 1rem;
   }
-  .e-actionsheet{
-    height: 50vh;
-    padding: 2rem;
+
+  .e-actionsheet {
+    height: 85vh;
+    padding: 2rem 1px;
+    border-radius: 0;
   }
-  .e-actionsheet .content-scroll{
+
+  .e-actionsheet .content-scroll {
     overflow: auto;
     height: 100%;
   }
-  .e-actionsheet .qr-code{
+
+  .e-actionsheet .qr-code {
     margin-bottom: 2rem;
+    flex-direction: row !important;
+  }
+
+  .content-scroll .qr-code img {
+    width: 70px;
   }
 }
 

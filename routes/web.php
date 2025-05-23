@@ -19,6 +19,9 @@ Route::get('/wedding', [WebsiteController::class, 'wedding'])->name('wedding');
 Route::get('/pricing', [WebsiteController::class, 'pricing'])->name('pricing');
 Route::get('/blogs', [WebsiteController::class, 'blogs'])->name('blogs.index');
 Route::get('/blogs/{slug}', [WebsiteController::class, 'show'])->name('blogs.show');
+Route::get('/contact', [WebsiteController::class, 'contact'])->name('contact');
+Route::get('/contactAnkesa', [WebsiteController::class, 'contactAnkesa'])->name('contactAnkesa');
+Route::get('/about', [WebsiteController::class, 'about'])->name('about');
 
 Route::middleware('auth')->group(function() {
     Route::get('templates', [TemplateMediaController::class, 'create'])->name('templates');

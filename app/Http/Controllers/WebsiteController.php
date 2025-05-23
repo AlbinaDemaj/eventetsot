@@ -46,6 +46,18 @@ class WebsiteController extends Controller
         return view('website.pricing');
     }
 
+    public function contact()
+    {
+        return view('website.contact');
+    }
+    public function contactAnkesa()
+    {
+        return view('website.contactAnkesa');
+    }
+    public function about()
+    {
+        return view('website.about');
+    }
     /**
      * Show the application dashboard.
      *
