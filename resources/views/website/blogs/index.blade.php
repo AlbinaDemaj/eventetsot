@@ -10,7 +10,7 @@
                 <div class="col-lg-4 col-md-6">
                     <div class="blog-grid">
                         <div class="img-box">
-                            <img src="website/img/blog-1.png">
+                            <img src="{{ asset('website/img/blog-1.png') }}">
                         </div>
                         <p class="mt-3"><strong>September 18, 2024  |  0 comment</strong></p>
                         <h4><strong>The Meaning Behind Popular Flowers</strong></h4>
@@ -20,7 +20,7 @@
                 <div class="col-lg-4 col-md-6">
                     <div class="blog-grid">
                         <div class="img-box">
-                            <img src="website/img/blog-1.png">
+                            <img src="{{ asset('website/img/blog-1.png') }}">
                         </div>
                         <p class="mt-3"><strong>September 18, 2024  |  0 comment</strong></p>
                         <h4><strong>The Meaning Behind Popular Flowers</strong></h4>
@@ -30,7 +30,7 @@
                 <div class="col-lg-4 col-md-6">
                     <div class="blog-grid">
                         <div class="img-box">
-                            <img src="website/img/blog-1.png">
+                            <img src="{{ asset('website/img/blog-1.png') }}">
                         </div>
                         <p class="mt-3"><strong>September 18, 2024  |  0 comment</strong></p>
                         <h4><strong>The Meaning Behind Popular Flowers</strong></h4>
@@ -40,7 +40,7 @@
                 <div class="col-lg-4 col-md-6">
                     <div class="blog-grid">
                         <div class="img-box">
-                            <img src="website/img/blog-1.png">
+                            <img src="{{ asset('website/img/blog-1.png') }}">
                         </div>
                         <p class="mt-3"><strong>September 18, 2024  |  0 comment</strong></p>
                         <h4><strong>The Meaning Behind Popular Flowers</strong></h4>
@@ -50,7 +50,7 @@
                 <div class="col-lg-4 col-md-6">
                     <div class="blog-grid">
                         <div class="img-box">
-                            <img src="website/img/blog-1.png">
+                            <img src="{{ asset('website/img/blog-1.png') }}">
                         </div>
                         <p class="mt-3"><strong>September 18, 2024  |  0 comment</strong></p>
                         <h4><strong>The Meaning Behind Popular Flowers</strong></h4>
@@ -60,7 +60,7 @@
                 <div class="col-lg-4 col-md-6">
                     <div class="blog-grid">
                         <div class="img-box">
-                            <img src="website/img/blog-1.png">
+                            <img src="{{ asset('website/img/blog-1.png') }}">
                         </div>
                         <p class="mt-3"><strong>September 18, 2024  |  0 comment</strong></p>
                         <h4><strong>The Meaning Behind Popular Flowers</strong></h4>

@@ -5,7 +5,7 @@
         <div class="row">
             <div class="col-md-6 d-none d-lg-block">
                 <div class="left-area">
-                    <img src="user/assets/img/login-img.png" alt=""/>
+                    <img src="{{ asset('user/assets/img/login-img.png') }}" alt=""/>
                     <div class="img-text">
                         <h2>Welcome to Eventesot.</h2>
                         <p>Easily gather every guest's photos and videos into a shareable live slideshow</p>
@@ -15,7 +15,7 @@
             <div class="col-lg-6 col-md-12">
                 <div class="right-area">
                     <div class="logo">
-                        <img src="user/assets/img/logo.png" alt=""/>
+                        <img src="{{ asset('user/assets/img/logo.png') }}" alt=""/>
                     </div>
                     <div class="auth-btn">
                         <div class="btn-single">
