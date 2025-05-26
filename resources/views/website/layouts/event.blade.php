@@ -109,7 +109,6 @@
         let selectedFiles = [];
         const fileInput = document.getElementById('fileInput');
         const dropzone = document.getElementById('dropzone');
-        const preview = document.getElementById('preview');
         const fileSelectionStep = document.getElementById('fileSelectionStep');
         const reviewUploadStep = document.getElementById('reviewUploadStep');
         const uploadPreviewContainer = document.getElementById('uploadPreviewContainer');
@@ -160,7 +159,6 @@
         // Update preview thumbnails
         function updatePreviews() {
             // Clear existing previews
-            preview.innerHTML = '';
             uploadPreviewContainer.innerHTML = '';
 
             // Update file count
@@ -168,51 +166,69 @@
 
             // Create preview items
             selectedFiles.forEach((file, index) => {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    // Create thumbnail for selection step
-                    const thumb = document.createElement('div');
-                    thumb.className = 'preview-thumb';
-                    thumb.innerHTML = `
-                <img src="${e.target.result}" alt="${file.name}">
-                <span class="remove-thumb" data-index="${index}">×</span>
-            `;
-                    preview.appendChild(thumb);
+                const col = document.createElement('div');
+                col.className = 'col-md-4 mb-3';
 
-                    // Create preview item for review step
-                    const col = document.createElement('div');
-                    col.className = 'col-md-4 mb-3';
-                    col.innerHTML = `
+                if (file.type.startsWith('image/')) {
+                    // Handle image files
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        col.innerHTML = `
                 <div class="uploaded-img">
-                    <span class="remove-img" data-index="${index}"><img src="{{ asset('website/img/trash.svg') }}"></span>
-                    <div class="img-box"><img src="${e.target.result}"></div>
+                    <span class="remove-img" data-name="${file.name}" data-size="${file.size}">
+                        <img src="{{ asset('website/img/trash.svg') }}">
+                    </span>
+                    <div class="img-box">
+                        <img src="${e.target.result}">
+                    </div>
                     <span class="btn e-btn-ghost d-flex align-items-center justify-content-center gap-4" data-bs-toggle="modal" data-bs-target="#addCaption">
                         <img src="{{ asset('website/img/caption.svg') }}"> Add Caption
                     </span>
                 </div>
             `;
-                    uploadPreviewContainer.appendChild(col);
-                };
-
-                if (file.type.startsWith('image/')) {
+                    };
                     reader.readAsDataURL(file);
-                } else {
-                    // For videos, you could show a video thumbnail or generic video icon
-                    const videoThumb = document.createElement('video');
-                    videoThumb.src = URL.createObjectURL(file);
-                    videoThumb.width = 100;
-                    videoThumb.height = 100;
-                    preview.appendChild(videoThumb);
+                } else if (file.type.startsWith('video/')) {
+                    // Handle video files
+                    const videoURL = URL.createObjectURL(file);
+                    col.innerHTML = `
+            <div class="uploaded-img">
+                <span class="remove-img" data-name="${file.name}" data-size="${file.size}">
+                    <img src="{{ asset('website/img/trash.svg') }}">
+                </span>
+                <div class="img-box">
+                    <video controls>
+                        <source src="${videoURL}" type="${file.type}">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+                <span class="btn e-btn-ghost d-flex align-items-center justify-content-center gap-4" data-bs-toggle="modal" data-bs-target="#addCaption">
+                    <img src="{{ asset('website/img/caption.svg') }}"> Add Caption
+                </span>
+            </div>
+        `;
                 }
+
+                uploadPreviewContainer.appendChild(col);
             });
         }
 
         // Add event delegation for remove handlers
         document.addEventListener('click', function(e) {
-            if (e.target.closest('.remove-thumb, .remove-img')) {
-                const removeBtn = e.target.closest('.remove-thumb, .remove-img');
-                const index = parseInt(removeBtn.getAttribute('data-index'));
-                selectedFiles.splice(index, 1);
+            if (e.target.closest('.remove-img')) {
+                const removeBtn = e.target.closest('.remove-img');
+                const fileName = removeBtn.getAttribute('data-name');
+                const fileSize = removeBtn.getAttribute('data-size');
+
+                // Find the file by name and size (more reliable than just name)
+                const index = selectedFiles.findIndex(file =>
+                    file.name === fileName && file.size.toString() === fileSize
+                );
+
+                if (index !== -1) {
+                    selectedFiles.splice(index, 1);
+                }
+
                 updatePreviews();
                 if (selectedFiles.length === 0) {
                     showSelectionStep();
@@ -271,23 +287,68 @@
                 });
         });
 
-        // Text Post Modal Handling (from your original code)
+        // Text Post
         const textarea = document.querySelector('.preview-editor .postbg');
         const thumbnails = document.querySelectorAll('.thumbnail-single');
-        const bgClasses = ['bg1', 'bg2', 'bg3', 'bg4', 'bg5'];
 
         thumbnails.forEach(thumbnail => {
             thumbnail.addEventListener('click', () => {
-                const bg = thumbnail.dataset.bg;
-                if (!bg) return;
+                const imageName = thumbnail.dataset.bg;
+                if (!imageName) return;
 
-                // Remove all background classes
-                textarea.classList.remove(...bgClasses);
+                textarea.style.backgroundImage = `url('${imageName}')`;
+                textarea.style.color = thumbnail.dataset.fg;
+                textarea.style.setProperty('--placeholder-color', thumbnail.dataset.fg);
 
-                // Add selected background class
-                textarea.classList.add(bg);
+                const placeholderStyles = `
+                  textarea::placeholder { color: ${thumbnail.dataset.fg} !important; }
+                  textarea::-webkit-input-placeholder { color: ${thumbnail.dataset.fg} !important; }
+                  textarea::-moz-placeholder { color: ${thumbnail.dataset.fg} !important; opacity: 1; }
+                `;
+
+                const styleTag = document.createElement('style');
+                styleTag.innerHTML = placeholderStyles;
+                document.head.appendChild(styleTag);
+
+                // Remove previous style tags to avoid duplication
+                const oldStyles = document.querySelectorAll('style[data-placeholder-style]');
+                oldStyles.forEach(style => style.remove());
+                styleTag.setAttribute('data-placeholder-style', '');
             });
         });
+
+
+        document.querySelector('#addTextPostBtn').addEventListener('click', function () {
+            const textarea = document.querySelector('.preview-editor textarea');
+            const backgroundImage = textarea.style.backgroundImage;
+            const cleanBgUrl = backgroundImage.replace(/^url\(["']?/, '').replace(/["']?\)$/, '');
+
+            const textContent = textarea.value;
+            const fontColor = textarea.style.color || '#000';
+
+            if (!textContent.trim()) return;
+
+            const col = document.createElement('div');
+            col.className = 'col-md-4 mb-3';
+
+            col.innerHTML = `
+        <div class="uploaded-img text-post-preview" style="background-image: url('${cleanBgUrl}'); background-size: cover; height: 200px; position: relative; color: ${fontColor}; padding: 1rem;">
+            <span class="remove-img" data-index="-1" style="position: absolute; top: 5px; right: 5px; cursor: pointer;"><img src="{{ asset('website/img/trash.svg') }}"></span>
+            <div class="img-box" style="height: 100%; overflow: auto;">
+                <p style="margin: 0;">${textContent}</p>
+            </div>
+        </div>
+    `;
+
+            document.querySelector('#uploadPreviewContainer').appendChild(col);
+
+            // Close modal
+            const modal = bootstrap.Modal.getInstance(document.getElementById('add_text_post'));
+            modal.hide();
+
+            document.getElementById('reviewUploadStep').classList.remove('d-none');
+        });
+
     });
 </script>
 </body>

@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('templates', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
             $table->string('image_path');
             $table->integer('text_x');
             $table->integer('text_y');

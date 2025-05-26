@@ -24,9 +24,9 @@ class MediaController extends Controller
             $path = $file->store("media/{$event->id}", 'public');
 
             $uploadedFiles[] = [
-                'user_id' => auth()->id(),
+                'user_id' => $event->user_id,
                 'event_id' => $event->id,
-                'is_guest' => false,
+                'is_guest' => !auth()->check(),
                 'file_path' => $path,
                 'file_type' => $file->getClientMimeType(),
                 'file_size' => $file->getSize(),
@@ -43,14 +43,5 @@ class MediaController extends Controller
             'message' => 'Media uploaded successfully!',
             'count' => count($uploadedFiles)
         ]);
-    }
-
-    public function destroy(Event $event, Media $media)
-    {
-        // Add authorization check here
-        Storage::disk('public')->delete($media->file_path);
-        $media->delete();
-
-        return back()->with('success', 'Media deleted successfully!');
     }
 }

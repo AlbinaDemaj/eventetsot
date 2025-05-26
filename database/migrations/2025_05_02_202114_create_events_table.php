@@ -21,6 +21,7 @@ return new class extends Migration
             $table->enum('locale', ['en', 'sq'])->default('en');
             $table->text('note')->nullable();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->boolean('is_public')->default(false);
             $table->enum('type', ['wedding', 'birthday', 'party'])->default('wedding');
             $table->timestamps();
         });

@@ -76,25 +76,6 @@
             }
         });
 
-
-        // Text Post
-        const textarea = document.querySelector('.preview-editor .postbg');
-        const thumbnails = document.querySelectorAll('.thumbnail-single');
-        const bgClasses = ['bg1', 'bg2', 'bg3', 'bg4', 'bg5'];
-
-        thumbnails.forEach(thumbnail => {
-            thumbnail.addEventListener('click', () => {
-                const bg = thumbnail.dataset.bg;
-                if (!bg) return;
-
-                // Remove all background classes
-                textarea.classList.remove(...bgClasses);
-
-                // Add selected background class
-                textarea.classList.add(bg);
-            });
-        });
-
     });
 
     function switchTab(tabId) {

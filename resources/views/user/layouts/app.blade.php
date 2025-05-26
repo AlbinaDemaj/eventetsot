@@ -25,7 +25,7 @@
     <div id="layoutSidenav_nav">
         <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
             <div class="sb-sidenav-menu">
-                <a class="navbar-brand" href="index.html">
+                <a class="navbar-brand" href="{{ route('user.home') }}">
                     <img src="{{ asset('user/assets/img/logo.png') }}" />
                 </a>
                 <div class="form-group">

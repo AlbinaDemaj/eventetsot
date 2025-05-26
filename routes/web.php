@@ -23,19 +23,15 @@ Route::get('/contact', [WebsiteController::class, 'contact'])->name('contact');
 Route::get('/contactAnkesa', [WebsiteController::class, 'contactAnkesa'])->name('contactAnkesa');
 Route::get('/about', [WebsiteController::class, 'about'])->name('about');
 
+Route::get('/events/{code}', [EventController::class, 'show'])->name('events.show');
+Route::get('/upload/{code}', [EventController::class, 'upload'])->name('events.upload');
+Route::post('/media', [MediaController::class, 'store'])->name('media.store');
+
 Route::middleware('auth')->group(function() {
     Route::get('templates', [TemplateMediaController::class, 'create'])->name('templates');
     Route::post('templates', [TemplateMediaController::class, 'store']);
 });
 
-Route::middleware(['auth'])->group(function () {
-
-    Route::get('/events/{code}', [EventController::class, 'show'])->name('events.show');
-    Route::get('/upload/{code}', [EventController::class, 'upload'])->name('events.upload');
-    Route::get('/upload-view/{code}', [EventController::class, 'uploadView'])->name('events.upload-view');
-    Route::post('/media', [MediaController::class, 'store'])->name('media.store');
-
-});
 
 require __DIR__.'/admin.php';
 require __DIR__.'/user.php';

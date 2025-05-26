@@ -11238,6 +11238,7 @@ body {
     background: #fff;
     border-radius: 90px;
     cursor: pointer;
+    z-index: 99999;
 }
 .uploaded-photos .uploaded-img .remove-img,
 .uploaded-photos .uploaded-img .hide-img {

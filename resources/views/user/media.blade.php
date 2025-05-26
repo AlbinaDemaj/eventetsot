@@ -9,7 +9,7 @@
                     <h2>Fotografitë dhe videot tuaja</h2>
                     <p>Këtu mund të gjeni të gjitha fotot dhe videot e ngjarjes tuaj. Ju gjithashtu mund të ngarkoni fotot tuaja dhe ato do të
                         shfaqen në Murin tuaj fotografik dhe <a href="#" >Album dixhital.</a></p>
-                    <button type="submit" class="login-btn">
+                    <button type="button" onclick="window.open('{{ url('events/'.$selectedEvent->code) }}', '_blank');" class="login-btn">
                         Ngarko foto
                     </button>
                 </div>
@@ -51,22 +51,6 @@
     </div>
 
     <div class="main-content">
-        <!-- Nav pills -->
-        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
-            <li class="nav-item" role="presentation">
-                <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home"
-                        type="button" role="tab" aria-controls="pills-home" aria-selected="true"><img width="20" src="assets/img/published.svg">Publikuar <span>(0)</span></button>
-            </li>
-            <li class="nav-item" role="presentation">
-                <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile"
-                        type="button" role="tab" aria-controls="pills-profile" aria-selected="false"><img width="20" src="assets/img/wait.svg">Nevojë për miratim <span>(0)</span></button>
-            </li>
-            <li class="nav-item" role="presentation">
-                <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#pills-contact"
-                        type="button" role="tab" aria-controls="pills-contact" aria-selected="false"><img width="20" src="assets/img/hidden.svg">I fshehur <span>(0)</span></button>
-            </li>
-        </ul>
-
         <!-- Tab content -->
         <div class="tab-content" id="pills-tabContent">
             <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
@@ -75,7 +59,7 @@
                         @foreach($media as $med)
                         <div class="col-md-3">
                             <div class="uploaded-img">
-                                <span class="remove-img" data-bs-toggle="modal" data-bs-target="#deleteModal"><img src="assets/img/trash.svg"></span>
+                                <a href="{{ route('user.media.destroy', $med->id) }}" class="remove-img"><img src="assets/img/trash.svg"></a>
                                 <div class="img-box" data-bs-toggle="modal" data-bs-target="#lightboxModal"><img src="{{ asset('storage/' . $med->file_path) }}"></div>
 
                                 <!-- Show this button when caption is added -->

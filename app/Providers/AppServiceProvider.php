@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\Event;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 
@@ -38,7 +39,10 @@ class AppServiceProvider extends ServiceProvider
                 $selectedEvent = $user->events()->find(session('selected_event_id'));
             }
 
+            $public_event = Event::where('is_public', true)->latest()->first();
+
             $view->with('currentUser', $user);
+            $view->with('publicEvent', $public_event);
             $view->with('selectedEvent', $selectedEvent);
         });
 

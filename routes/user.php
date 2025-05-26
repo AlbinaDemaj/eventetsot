@@ -12,6 +12,7 @@ Route::middleware(['auth'])->prefix('user')->name('user.')->group(function () {
 
     Route::get('/home', [HomeController::class, 'index'])->name('home');
     Route::get('/media', [MediaController::class, 'index'])->name('media');
+    Route::get('/media/{id}', [MediaController::class, 'destroy'])->name('media.destroy');
 
     Route::prefix('onboarding')->name('onboarding.')->group(function () {
         Route::get('/', [OnboardingController::class, 'index'])->name('index');

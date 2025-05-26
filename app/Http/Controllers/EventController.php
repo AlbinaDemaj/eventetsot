@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Event;
+use App\Models\Template;
 use Illuminate\Http\Request;
 
 class EventController extends Controller
@@ -15,11 +16,8 @@ class EventController extends Controller
 
     public function upload()
     {
-        return view('website.events.upload');
+        $templates = Template::get();
+        return view('website.events.upload', ['templates' => $templates]);
     }
 
-    public function uploadView()
-    {
-        return view('website.events.upload-view');
-    }
 }

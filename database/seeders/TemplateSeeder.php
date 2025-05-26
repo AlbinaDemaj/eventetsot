@@ -20,7 +20,7 @@ class TemplateSeeder extends Seeder
             'max_width' => 300,
             'font' => 'arial.ttf',
             'font_size' => 36,
-            'font_color' => '#000000'
+            'font_color' => '#FFFFFF'
         ]);
 
         Template::create([
@@ -30,7 +30,7 @@ class TemplateSeeder extends Seeder
             'max_width' => 300,
             'font' => 'arial.ttf',
             'font_size' => 36,
-            'font_color' => '#000000'
+            'font_color' => '#FFFFFF'
         ]);
 
         Template::create([
@@ -40,7 +40,7 @@ class TemplateSeeder extends Seeder
             'max_width' => 300,
             'font' => 'arial.ttf',
             'font_size' => 36,
-            'font_color' => '#FFFFFF'
+            'font_color' => '#000000'
         ]);
 
         Template::create([
@@ -50,7 +50,7 @@ class TemplateSeeder extends Seeder
             'max_width' => 300,
             'font' => 'arial.ttf',
             'font_size' => 36,
-            'font_color' => '#FFFFFF'
+            'font_color' => '#000000'
         ]);
 
         Template::create([
@@ -60,7 +60,7 @@ class TemplateSeeder extends Seeder
             'max_width' => 300,
             'font' => 'arial.ttf',
             'font_size' => 36,
-            'font_color' => '#FFFFFF'
+            'font_color' => '#000000'
         ]);
 
         Template::create([
@@ -70,7 +70,7 @@ class TemplateSeeder extends Seeder
             'max_width' => 300,
             'font' => 'arial.ttf',
             'font_size' => 36,
-            'font_color' => '#FFFFFF'
+            'font_color' => '#000000'
         ]);
 
         Template::create([
@@ -80,7 +80,7 @@ class TemplateSeeder extends Seeder
             'max_width' => 300,
             'font' => 'arial.ttf',
             'font_size' => 36,
-            'font_color' => '#FFFFFF'
+            'font_color' => '#000000'
         ]);
 
         Template::create([
@@ -90,7 +90,7 @@ class TemplateSeeder extends Seeder
             'max_width' => 300,
             'font' => 'arial.ttf',
             'font_size' => 36,
-            'font_color' => '#000000'
+            'font_color' => '#FFFFFF'
         ]);
 
         Template::create([
@@ -100,7 +100,7 @@ class TemplateSeeder extends Seeder
             'max_width' => 300,
             'font' => 'arial.ttf',
             'font_size' => 36,
-            'font_color' => '#FFFFFF'
+            'font_color' => '#000000'
         ]);
 
         Template::create([
@@ -110,7 +110,7 @@ class TemplateSeeder extends Seeder
             'max_width' => 300,
             'font' => 'arial.ttf',
             'font_size' => 36,
-            'font_color' => '#FFFFFF'
+            'font_color' => '#000000'
         ]);
 
         Template::create([
@@ -120,7 +120,7 @@ class TemplateSeeder extends Seeder
             'max_width' => 300,
             'font' => 'arial.ttf',
             'font_size' => 36,
-            'font_color' => '#FFFFFF'
+            'font_color' => '#000000'
         ]);
 
         Template::create([
@@ -130,7 +130,7 @@ class TemplateSeeder extends Seeder
             'max_width' => 300,
             'font' => 'arial.ttf',
             'font_size' => 36,
-            'font_color' => '#FFFFFF'
+            'font_color' => '#000000'
         ]);
 
         Template::create([
@@ -140,7 +140,7 @@ class TemplateSeeder extends Seeder
             'max_width' => 300,
             'font' => 'arial.ttf',
             'font_size' => 36,
-            'font_color' => '#FFFFFF'
+            'font_color' => '#000000#'
         ]);
     }
 }

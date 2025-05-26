@@ -2,38 +2,6 @@
 
 @section('content')
 
-    <style>
-        /* Add some styles for the preview thumbnails */
-        .preview-thumb {
-            position: relative;
-            display: inline-block;
-            margin: 5px;
-            width: 100px;
-            height: 100px;
-        }
-        .preview-thumb img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        .preview-thumb .remove-thumb {
-            position: absolute;
-            top: 0;
-            right: 0;
-            background: red;
-            color: white;
-            width: 20px;
-            height: 20px;
-            text-align: center;
-            line-height: 20px;
-            cursor: pointer;
-        }
-        .dragover {
-            background-color: #f8f9fa;
-            border: 2px dashed #0d6efd;
-        }
-    </style>
-
     <section class="upload-area p-4 master-head">
         <div class="container">
             <a href="" class="breadcrumb-back text-decoration-none text-body"><img src="{{ asset('website/img/back.svg') }}"> <strong>Kthehu te Albumi</strong></a>
@@ -43,7 +11,6 @@
                 <div class="upload-grid">
                     <div id="dropzone"><img src="{{ asset('website/img/upload.svg') }}" width="50"><strong>Zgjidh Fotografitë dhe videot</strong></div>
                     <input type="file" id="fileInput" multiple accept="image/*,video/*" hidden />
-                    <div id="preview"></div>
                 </div>
                 <p class="text-center">Or add a <span id="text_post_trigger" data-bs-toggle="modal" data-bs-target="#add_text_post">text post</span></p>
             </div>
@@ -65,11 +32,55 @@
 
     <!-- Modals (unchanged from your original) -->
     <div class="modal fade" id="add_text_post" tabindex="-1" aria-labelledby="add_text_postLabel" aria-hidden="true">
-        <!-- ... keep your existing modal HTML ... -->
+        <div class="modal-dialog modal-md"> <!-- Use modal-sm for small size -->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="add_text_postLabel">Create Text Post</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="preview-editor">
+                        <textarea placeholder="What's on your mind?" class="postbg {{ asset('website/img/templates/'.$templates[0]->image_path) }}"></textarea>
+                        <div class="postbg-thumbnails">
+                            @foreach($templates as $template)
+                                <div class="thumbnail-single" data-fg="{{ $template->font_color }}" data-bg="{{ asset('website/img/templates/'.$template->image_path) }}"><img src="{{ asset('website/img/templates/'.$template->image_path) }}"></div>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn e-btn-primary" data-bs-dismiss="modal" id="addTextPostBtn">Add Post</button>
+                    <button type="button" class="btn e-btn-ghost" data-bs-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div class="modal fade" id="addCaption" tabindex="-1" aria-labelledby="addCaptionLabel" aria-hidden="true">
-        <!-- ... keep your existing modal HTML ... -->
+        <div class="modal-dialog modal-md"> <!-- Use modal-sm for small size -->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addCaptionLabel">Add Caption</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label>Caption</label>
+                            <textarea rows="6" cols="6" placeholder="Write a caption for this photo here" class="form-control"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Name</label>
+                            <input type="text" class="form-control" name="name" placeholder="Name">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn e-btn-primary" data-bs-dismiss="modal">Save Caption</button>
+                    <button type="button" class="btn e-btn-ghost" data-bs-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
     </div>
 
 @endsection

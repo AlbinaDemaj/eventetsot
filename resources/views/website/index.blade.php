@@ -368,13 +368,33 @@
 
                     </div>
                   </div>
-
-
-
               </div>
             </div>
           </div>
         </div>
     </section>
+
+    <div class="e-actionsheet">
+        <div class="content-scroll">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-7">
+                        <h2><strong>Try This Yourself</strong></h2>
+                        <p>Here, you can get a glimpse of how we <br> works and what the guest experience would be like.</p>
+                        <span class="l-number"><span class="number">1</span><span><strong>Scan the QR code or enter the</strong> <a href="{{ route('events.show', $publicEvent->code) }}" target="_blank" class="e-link-primary">Link</a> to open the digital album.</span></span>
+                        <span class="l-number"><span class="number">2</span><span><strong>Upload a Post/Photo/Video</strong> and view it on the digital album and photo wall in real-time.</span></span>
+                        <div class="qr-code d-flex align-items-center flex-column gap-3 pt-5">
+                            <img src="{{ $publicEvent->qr_code }}">
+                            <span>Scan with your phone's camera</span>
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <img src="{{ asset('website/img/actionimg.png') }}" class="img-fluid">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <span class="dismiss-action"><img src="{{ asset('website/img/cross-1.svg') }}" /></span>
+    </div>
 
 @endsection

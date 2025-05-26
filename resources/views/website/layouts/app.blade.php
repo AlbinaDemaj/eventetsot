@@ -45,7 +45,7 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('pricing') }}">Abonimi</a>
                         </li>
-                        
+
                     </ul>
                     <div class="d-flex gap-4 align-items-center">
                         <a href="{{ route('login') }}" class="nav-link">Kyçu</a>
@@ -66,16 +66,16 @@
       <div class="row">
         <div class="col-md-3">
           <img src="website/img/logo.svg">
-          
+
         </div>
         <div class="col-md-3">
           <div class="fnav">
-            
+
             <ul class="general">
               <li><a href="{{ route('index') }}">Ballina</a></li>
               <li><a href="{{ route('pricing') }}">Abonimi</a></li>
               <li><a href="{{ route('contact') }}">Kontakto</a></li>
-  
+
             </ul>
           </div>
         </div>
@@ -100,7 +100,7 @@
       </div>
       <div class="d-md-flex align-items-center justify-content-center mt-5">
         <p class="m-0">© 2025 eventetsot.com.</p>
-  
+
       </div>
     </div>
   </footer>
@@ -175,6 +175,24 @@
             }
         ]
     });
+
+    //Action sheet
+    const toggleButtons = document.getElementsByClassName('action-sheet-t');
+    const action_sheet = document.getElementsByClassName('e-actionsheet');
+    const dismissButtons = document.getElementsByClassName('dismiss-action');
+
+
+    for (let i = 0; i < toggleButtons.length; i++) {
+        toggleButtons[i].addEventListener('click', () => {
+            action_sheet[i].classList.toggle('show');
+        });
+
+        for (let i = 0; i < dismissButtons.length; i++) {
+            dismissButtons[i].addEventListener('click', () => {
+                action_sheet[i].classList.toggle('show');
+            });
+        }
+    };
 </script>
 </body>
 </html>
