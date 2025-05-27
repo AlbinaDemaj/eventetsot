@@ -18,7 +18,15 @@
                     <div class="img-collage">
                         <div class="child-wrap">
                             @foreach($event->media()->get() as $media)
-                            <span><img src="{{ asset('storage/' . $media->file_path) }}"></span>
+                                @if($media->type === 'file')
+                                    <span><img src="{{ asset('storage/' . $media->file_path) }}"></span>
+                                @else
+                                    <span style="position: relative;display: grid;place-items: center;background-image: url('{{ asset($media->background_image) }}'); background-size: cover;background-position: center;">
+                                        <div style="color: {{ $media->font_color }}; font-size: clamp(14px, 3vw, 18px); line-height: 1.7;text-shadow: 0 1px 4px rgba(0,0,0,0.2); width: 90%;">
+                                            {!! nl2br(e($media->text_content)) !!}
+                                        </div>
+                                    </span>
+                                @endif
                             @endforeach
                         </div>
                     </div>

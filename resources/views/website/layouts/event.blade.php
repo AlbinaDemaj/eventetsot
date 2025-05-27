@@ -105,8 +105,9 @@
 
 
     document.addEventListener('DOMContentLoaded', function() {
-        // File handling variables
-        let selectedFiles = [];
+        // =============================================
+        // DOM Elements
+        // =============================================
         const fileInput = document.getElementById('fileInput');
         const dropzone = document.getElementById('dropzone');
         const fileSelectionStep = document.getElementById('fileSelectionStep');
@@ -114,33 +115,43 @@
         const uploadPreviewContainer = document.getElementById('uploadPreviewContainer');
         const addMoreFilesBtn = document.getElementById('addMoreFilesBtn');
         const finalUploadBtn = document.getElementById('finalUploadBtn');
-        const fileCountSpan = document.getElementById('fileCount');
+        const saveCaptionBtn = document.getElementById('saveCaptionBtn');
+        const textarea = document.querySelector('.preview-editor .postbg');
+        const thumbnails = document.querySelectorAll('.thumbnail-single');
+        const addTextPostBtn = document.getElementById('addTextPostBtn');
+        const captionTextInput = document.getElementById('captionText');
+        const captionNameInput = document.getElementById('captionName');
+        const captionFileIndexInput = document.getElementById('captionFileIndex');
 
-        // Setup dropzone
+        // =============================================
+        // State Management
+        // =============================================
+        let uploadItems = []; // Combined array for both files and text posts
+        const imagePaths = {
+            caption: "{{ asset('website/img/caption.svg') }}",
+            check2: "{{ asset('website/img/check-2.svg') }}",
+            trash: "{{ asset('website/img/trash.svg') }}"
+        };
+
+        // =============================================
+        // Event Listeners
+        // =============================================
         dropzone.addEventListener('click', () => fileInput.click());
-        dropzone.addEventListener('dragover', (e) => {
-            e.preventDefault();
-            dropzone.classList.add('dragover');
-        });
-        dropzone.addEventListener('dragleave', () => dropzone.classList.remove('dragover'));
-        dropzone.addEventListener('drop', (e) => {
-            e.preventDefault();
-            dropzone.classList.remove('dragover');
-            if (e.dataTransfer.files.length) {
-                handleFiles(e.dataTransfer.files);
-            }
-        });
+        dropzone.addEventListener('dragover', handleDragOver);
+        dropzone.addEventListener('dragleave', handleDragLeave);
+        dropzone.addEventListener('drop', handleDrop);
+        fileInput.addEventListener('change', handleFileInputChange);
+        addMoreFilesBtn.addEventListener('click', showSelectionStep);
+        finalUploadBtn.addEventListener('click', handleFinalUpload);
+        saveCaptionBtn.addEventListener('click', handleCaptionSave);
+        document.addEventListener('click', handleDocumentClick);
+        thumbnails.forEach(thumbnail => thumbnail.addEventListener('click', handleThumbnailClick));
+        addTextPostBtn.addEventListener('click', handleTextPostAdd);
 
-        // Handle file selection
-        fileInput.addEventListener('change', () => {
-            if (fileInput.files.length) {
-                handleFiles(fileInput.files);
-            }
-        });
-
-        // Process selected files
-        function handleFiles(files) {console.log(files, '@files')
-            // Convert to array and filter for images/videos only
+        // =============================================
+        // Core Functions
+        // =============================================
+        function handleFiles(files) {
             const validFiles = Array.from(files).filter(file =>
                 file.type.startsWith('image/') || file.type.startsWith('video/')
             );
@@ -150,50 +161,76 @@
                 return;
             }
 
-            // Add to our selected files
-            selectedFiles = selectedFiles.concat(validFiles);
+            // Add files to uploadItems with type 'file'
+            validFiles.forEach(file => {
+                uploadItems.push({
+                    type: 'file',
+                    file: file,
+                    caption: {
+                        text: '',
+                        name: ''
+                    }
+                });
+            });
+
             updatePreviews();
             showReviewStep();
         }
 
-        // Update preview thumbnails
         function updatePreviews() {
-            // Clear existing previews
             uploadPreviewContainer.innerHTML = '';
 
-            // Update file count
-            fileCountSpan.textContent = selectedFiles.length;
-
-            // Create preview items
-            selectedFiles.forEach((file, index) => {
+            uploadItems.forEach((item, index) => {
                 const col = document.createElement('div');
                 col.className = 'col-md-4 mb-3';
 
-                if (file.type.startsWith('image/')) {
-                    // Handle image files
-                    const reader = new FileReader();
-                    reader.onload = function(e) {
-                        col.innerHTML = `
+                if (item.type === 'file') {
+                    const file = item.file;
+                    const hasCaption = item.caption &&
+                        (item.caption.text.trim() || item.caption.name.trim());
+
+                    if (file.type.startsWith('image/')) {
+                        createImagePreview(col, file, index, hasCaption, item.caption);
+                    } else if (file.type.startsWith('video/')) {
+                        createVideoPreview(col, file, index, hasCaption, item.caption);
+                    }
+                } else if (item.type === 'text') {
+                    createTextPostPreview(col, item, index);
+                }
+
+                uploadPreviewContainer.appendChild(col);
+            });
+        }
+
+        function createImagePreview(container, file, index, hasCaption, caption) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                container.innerHTML = `
                 <div class="uploaded-img">
-                    <span class="remove-img" data-name="${file.name}" data-size="${file.size}">
+                    <span class="remove-img" data-type="file" data-index="${index}">
                         <img src="{{ asset('website/img/trash.svg') }}">
                     </span>
                     <div class="img-box">
                         <img src="${e.target.result}">
                     </div>
-                    <span class="btn e-btn-ghost d-flex align-items-center justify-content-center gap-4" data-bs-toggle="modal" data-bs-target="#addCaption">
-                        <img src="{{ asset('website/img/caption.svg') }}"> Add Caption
+                    <span class="btn ${hasCaption ? 'btn-outline-success disabled' : 'e-btn-ghost'} d-flex align-items-center justify-content-center gap-4"
+                          data-bs-toggle="modal"
+                          data-bs-target="#addCaption"
+                          data-item-index="${index}">
+                        <img src="${hasCaption ? imagePaths.check2 : imagePaths.caption}">
+                        ${hasCaption ? 'Caption Added' : 'Add Caption'}
                     </span>
                 </div>
             `;
-                    };
-                    reader.readAsDataURL(file);
-                } else if (file.type.startsWith('video/')) {
-                    // Handle video files
-                    const videoURL = URL.createObjectURL(file);
-                    col.innerHTML = `
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function createVideoPreview(container, file, index, hasCaption, caption) {
+            const videoURL = URL.createObjectURL(file);
+            container.innerHTML = `
             <div class="uploaded-img">
-                <span class="remove-img" data-name="${file.name}" data-size="${file.size}">
+                <span class="remove-img" data-type="file" data-index="${index}">
                     <img src="{{ asset('website/img/trash.svg') }}">
                 </span>
                 <div class="img-box">
@@ -202,69 +239,205 @@
                         Your browser does not support the video tag.
                     </video>
                 </div>
-                <span class="btn e-btn-ghost d-flex align-items-center justify-content-center gap-4" data-bs-toggle="modal" data-bs-target="#addCaption">
-                    <img src="{{ asset('website/img/caption.svg') }}"> Add Caption
+                <span class="btn ${hasCaption ? 'btn-outline-success disabled' : 'e-btn-ghost'} d-flex align-items-center justify-content-center gap-4"
+                      data-bs-toggle="modal"
+                      data-bs-target="#addCaption"
+                      data-item-index="${index}">
+                    <img src="${hasCaption ? imagePaths.check2 : imagePaths.caption}">
+                    ${hasCaption ? 'Caption Added' : 'Add Caption'}
                 </span>
             </div>
         `;
-                }
-
-                uploadPreviewContainer.appendChild(col);
-            });
         }
 
-        // Add event delegation for remove handlers
-        document.addEventListener('click', function(e) {
+        function createTextPostPreview(container, item, index) {
+            const hasCaption = item.caption &&
+                (item.caption.text.trim() || item.caption.name.trim());
+
+            container.innerHTML = `
+            <div class="uploaded-img text-post-preview"
+                 style="background-image: url('${item.backgroundImage}');
+                        background-size: cover;
+                        height: 200px;
+                        position: relative;
+                        color: ${item.fontColor};
+                        padding: 1rem;">
+                <span class="remove-img" data-type="text" data-index="${index}"
+                      style="position: absolute; top: 5px; right: 5px; cursor: pointer;">
+                    <img src="{{ asset('website/img/trash.svg') }}">
+                </span>
+                <div class="img-box" style="height: 100%; overflow: auto;">
+                    <p style="margin: 0;">${item.textContent}</p>
+                </div>
+                <span class="btn ${hasCaption ? 'btn-outline-success disabled' : 'e-btn-ghost'} d-flex align-items-center justify-content-center gap-4"
+                      data-bs-toggle="modal"
+                      data-bs-target="#addCaption"
+                      data-item-index="${index}"
+                      style="margin-top: 10px;">
+                    <img src="${hasCaption ? imagePaths.check2 : imagePaths.caption}">
+                    ${hasCaption ? 'Caption Added' : 'Add Caption'}
+                </span>
+            </div>
+        `;
+        }
+
+        // =============================================
+        // Event Handlers
+        // =============================================
+        function handleDragOver(e) {
+            e.preventDefault();
+            dropzone.classList.add('dragover');
+        }
+
+        function handleDragLeave() {
+            dropzone.classList.remove('dragover');
+        }
+
+        function handleDrop(e) {
+            e.preventDefault();
+            dropzone.classList.remove('dragover');
+            if (e.dataTransfer.files.length) {
+                handleFiles(e.dataTransfer.files);
+            }
+        }
+
+        function handleFileInputChange() {
+            if (fileInput.files.length) {
+                handleFiles(fileInput.files);
+            }
+        }
+
+        function handleCaptionSave() {
+            const itemIndex = captionFileIndexInput.value;
+            const captionText = captionTextInput.value.trim();
+            const captionName = captionNameInput.value.trim();
+
+            if (uploadItems[itemIndex]) {
+                uploadItems[itemIndex].caption = {
+                    text: captionText,
+                    name: captionName
+                };
+            }
+
+            bootstrap.Modal.getInstance(document.getElementById('addCaption')).hide();
+            updatePreviews();
+        }
+
+        function handleDocumentClick(e) {
+            // Handle caption button clicks
+            if (e.target.closest('[data-bs-target="#addCaption"]')) {
+                const btn = e.target.closest('[data-bs-target="#addCaption"]');
+                const itemIndex = btn.getAttribute('data-item-index');
+                captionFileIndexInput.value = itemIndex;
+
+                if (uploadItems[itemIndex]?.caption) {
+                    captionTextInput.value = uploadItems[itemIndex].caption.text || '';
+                    captionNameInput.value = uploadItems[itemIndex].caption.name || '';
+                } else {
+                    captionTextInput.value = '';
+                    captionNameInput.value = '';
+                }
+            }
+
+            // Handle remove button clicks
             if (e.target.closest('.remove-img')) {
                 const removeBtn = e.target.closest('.remove-img');
-                const fileName = removeBtn.getAttribute('data-name');
-                const fileSize = removeBtn.getAttribute('data-size');
+                const itemType = removeBtn.getAttribute('data-type');
+                const index = removeBtn.getAttribute('data-index');
 
-                // Find the file by name and size (more reliable than just name)
-                const index = selectedFiles.findIndex(file =>
-                    file.name === fileName && file.size.toString() === fileSize
-                );
-
-                if (index !== -1) {
-                    selectedFiles.splice(index, 1);
+                if (index !== null) {
+                    uploadItems.splice(index, 1);
                 }
 
                 updatePreviews();
-                if (selectedFiles.length === 0) {
+                if (uploadItems.length === 0) {
                     showSelectionStep();
                 }
             }
-        });
-
-        // Navigation between steps
-        function showReviewStep() {
-            fileSelectionStep.classList.add('d-none');
-            reviewUploadStep.classList.remove('d-none');
         }
 
-        function showSelectionStep() {
-            fileSelectionStep.classList.remove('d-none');
-            reviewUploadStep.classList.add('d-none');
-            fileInput.value = ''; // Reset file input
+        function handleThumbnailClick() {
+            const imageName = this.dataset.bg;
+            if (!imageName) return;
+
+            textarea.style.backgroundImage = `url('${imageName}')`;
+            textarea.style.color = this.dataset.fg;
+            textarea.style.setProperty('--placeholder-color', this.dataset.fg);
+
+            const placeholderStyles = `
+            textarea::placeholder { color: ${this.dataset.fg} !important; }
+            textarea::-webkit-input-placeholder { color: ${this.dataset.fg} !important; }
+            textarea::-moz-placeholder { color: ${this.dataset.fg} !important; opacity: 1; }
+        `;
+
+            const styleTag = document.createElement('style');
+            styleTag.innerHTML = placeholderStyles;
+            document.head.appendChild(styleTag);
+
+            const oldStyles = document.querySelectorAll('style[data-placeholder-style]');
+            oldStyles.forEach(style => style.remove());
+            styleTag.setAttribute('data-placeholder-style', '');
         }
 
-        // Button handlers
-        addMoreFilesBtn.addEventListener('click', showSelectionStep);
+        function handleTextPostAdd() {
+            const textContent = textarea.value.trim();
+            const backgroundImage = textarea.style.backgroundImage;
+            const cleanBgUrl = backgroundImage.replace(/^url\(["']?/, '').replace(/["']?\)$/, '');
+            const fontColor = textarea.style.color || '#000';
 
-        finalUploadBtn.addEventListener('click', function() {
-            if (selectedFiles.length === 0) {
-                alert('Please select at least one file to upload.');
+            if (!textContent) return;
+
+            // Add text post to uploadItems with type 'text'
+            uploadItems.push({
+                type: 'text',
+                textContent: textContent,
+                backgroundImage: cleanBgUrl,
+                fontColor: fontColor,
+                caption: {
+                    text: '',
+                    name: ''
+                }
+            });
+
+            // Clear the textarea
+            textarea.value = '';
+            textarea.style.backgroundImage = '';
+            textarea.style.color = '';
+            textarea.style.setProperty('--placeholder-color', '');
+
+            // Close modal and update UI
+            bootstrap.Modal.getInstance(document.getElementById('add_text_post')).hide();
+            updatePreviews();
+            showReviewStep();
+        }
+
+        function handleFinalUpload() {
+            if (uploadItems.length === 0) {
+                alert('Please add at least one file or text post to upload.');
                 return;
             }
 
             const formData = new FormData();
-            selectedFiles.forEach((file, index) => {
-                formData.append(`media[${index}]`, file);
+
+            // Add all items to formData with their type and captions
+            uploadItems.forEach((item, index) => {
+                if (item.type === 'file') {
+                    formData.append(`items[${index}][type]`, 'file');
+                    formData.append(`items[${index}][file]`, item.file);
+                    formData.append(`items[${index}][caption][text]`, item.caption.text || '');
+                    formData.append(`items[${index}][caption][name]`, item.caption.name || '');
+                } else if (item.type === 'text') {
+                    formData.append(`items[${index}][type]`, 'text');
+                    formData.append(`items[${index}][textContent]`, item.textContent);
+                    formData.append(`items[${index}][backgroundImage]`, item.backgroundImage);
+                    formData.append(`items[${index}][fontColor]`, item.fontColor);
+                    formData.append(`items[${index}][caption][text]`, item.caption.text || '');
+                    formData.append(`items[${index}][caption][name]`, item.caption.name || '');
+                }
             });
 
-            formData.append('code', '{{request()->route('code')}}')
+            formData.append('code', '{{request()->route('code')}}');
 
-            // Submit to server
             fetch('{{ route("media.store") }}', {
                 method: 'POST',
                 body: formData,
@@ -285,70 +458,21 @@
                     console.error('Error:', error);
                     alert('An error occurred during upload');
                 });
-        });
+        }
 
-        // Text Post
-        const textarea = document.querySelector('.preview-editor .postbg');
-        const thumbnails = document.querySelectorAll('.thumbnail-single');
+        // =============================================
+        // UI Helper Functions
+        // =============================================
+        function showReviewStep() {
+            fileSelectionStep.classList.add('d-none');
+            reviewUploadStep.classList.remove('d-none');
+        }
 
-        thumbnails.forEach(thumbnail => {
-            thumbnail.addEventListener('click', () => {
-                const imageName = thumbnail.dataset.bg;
-                if (!imageName) return;
-
-                textarea.style.backgroundImage = `url('${imageName}')`;
-                textarea.style.color = thumbnail.dataset.fg;
-                textarea.style.setProperty('--placeholder-color', thumbnail.dataset.fg);
-
-                const placeholderStyles = `
-                  textarea::placeholder { color: ${thumbnail.dataset.fg} !important; }
-                  textarea::-webkit-input-placeholder { color: ${thumbnail.dataset.fg} !important; }
-                  textarea::-moz-placeholder { color: ${thumbnail.dataset.fg} !important; opacity: 1; }
-                `;
-
-                const styleTag = document.createElement('style');
-                styleTag.innerHTML = placeholderStyles;
-                document.head.appendChild(styleTag);
-
-                // Remove previous style tags to avoid duplication
-                const oldStyles = document.querySelectorAll('style[data-placeholder-style]');
-                oldStyles.forEach(style => style.remove());
-                styleTag.setAttribute('data-placeholder-style', '');
-            });
-        });
-
-
-        document.querySelector('#addTextPostBtn').addEventListener('click', function () {
-            const textarea = document.querySelector('.preview-editor textarea');
-            const backgroundImage = textarea.style.backgroundImage;
-            const cleanBgUrl = backgroundImage.replace(/^url\(["']?/, '').replace(/["']?\)$/, '');
-
-            const textContent = textarea.value;
-            const fontColor = textarea.style.color || '#000';
-
-            if (!textContent.trim()) return;
-
-            const col = document.createElement('div');
-            col.className = 'col-md-4 mb-3';
-
-            col.innerHTML = `
-        <div class="uploaded-img text-post-preview" style="background-image: url('${cleanBgUrl}'); background-size: cover; height: 200px; position: relative; color: ${fontColor}; padding: 1rem;">
-            <span class="remove-img" data-index="-1" style="position: absolute; top: 5px; right: 5px; cursor: pointer;"><img src="{{ asset('website/img/trash.svg') }}"></span>
-            <div class="img-box" style="height: 100%; overflow: auto;">
-                <p style="margin: 0;">${textContent}</p>
-            </div>
-        </div>
-    `;
-
-            document.querySelector('#uploadPreviewContainer').appendChild(col);
-
-            // Close modal
-            const modal = bootstrap.Modal.getInstance(document.getElementById('add_text_post'));
-            modal.hide();
-
-            document.getElementById('reviewUploadStep').classList.remove('d-none');
-        });
-
+        function showSelectionStep() {
+            fileSelectionStep.classList.remove('d-none');
+            reviewUploadStep.classList.add('d-none');
+            fileInput.value = '';
+        }
     });
 </script>
 </body>

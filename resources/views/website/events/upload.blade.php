@@ -25,7 +25,7 @@
                     </div>
                 </div>
                 <button class="add-photos btn" id="addMoreFilesBtn"><img src="{{ asset('website/img/addphotos.svg') }}"></button>
-                <button class="btn e-btn-primary upload-selected" id="finalUploadBtn">Upload <span id="fileCount">0</span> Item(s)</button>
+                <button class="btn e-btn-primary upload-selected" id="finalUploadBtn">Upload Item(s)</button>
             </div>
         </div>
     </section>
@@ -57,26 +57,27 @@
     </div>
 
     <div class="modal fade" id="addCaption" tabindex="-1" aria-labelledby="addCaptionLabel" aria-hidden="true">
-        <div class="modal-dialog modal-md"> <!-- Use modal-sm for small size -->
+        <div class="modal-dialog modal-md">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="addCaptionLabel">Add Caption</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form>
+                    <form id="captionForm">
+                        <input type="hidden" id="captionFileIndex">
                         <div class="form-group">
                             <label>Caption</label>
-                            <textarea rows="6" cols="6" placeholder="Write a caption for this photo here" class="form-control"></textarea>
+                            <textarea id="captionText" rows="6" cols="6" placeholder="Write a caption for this photo here" class="form-control"></textarea>
                         </div>
                         <div class="form-group">
                             <label>Name</label>
-                            <input type="text" class="form-control" name="name" placeholder="Name">
+                            <input type="text" id="captionName" value="{{ auth()->check() ? auth()->user()->name : '' }}" class="form-control" name="name" placeholder="Name">
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn e-btn-primary" data-bs-dismiss="modal">Save Caption</button>
+                    <button type="button" class="btn e-btn-primary" id="saveCaptionBtn">Save Caption</button>
                     <button type="button" class="btn e-btn-ghost" data-bs-dismiss="modal">Cancel</button>
                 </div>
             </div>
