@@ -417,6 +417,11 @@
                 return;
             }
 
+            const originalBtnText = finalUploadBtn.textContent;
+
+            finalUploadBtn.textContent = 'Uploading...';
+            finalUploadBtn.disabled = true;
+
             const formData = new FormData();
 
             // Add all items to formData with their type and captions
@@ -452,11 +457,15 @@
                         window.location.href = '{{ route('events.show', request()->route('code')) }}';
                     } else {
                         alert(data.message || 'Upload failed');
+                        finalUploadBtn.textContent = originalBtnText;
+                        finalUploadBtn.disabled = false;
                     }
                 })
                 .catch(error => {
                     console.error('Error:', error);
                     alert('An error occurred during upload');
+                    finalUploadBtn.textContent = originalBtnText;
+                    finalUploadBtn.disabled = false;
                 });
         }
 
