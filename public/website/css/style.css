@@ -475,7 +475,7 @@ footer {
   position: fixed;
   bottom: -100%;
   z-index: 999;
-  background: #222634;
+  background: #fff;
   width: 100%;
   padding: 4rem;
   color:  #fff !important;
