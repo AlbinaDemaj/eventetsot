@@ -55,4 +55,16 @@ class User extends Authenticatable
     {
         return $this->hasMany(Media::class);
     }
+
+    public function subscriptions()
+    {
+        return $this->hasMany(UserSubscription::class);
+    }
+
+    public function activeSubscription()
+    {
+        return $this->hasOne(UserSubscription::class)
+            ->active()
+            ->latestOfMany();
+    }
 }

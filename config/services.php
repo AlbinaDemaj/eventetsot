@@ -35,4 +35,11 @@ return [
         ],
     ],
 
+    'ibas' => [
+        'key' => env('IBAS_KEY'),
+        'secret' => env('IBAS_SECRET'),
+        'callback_url' => env('IBAS_CALLBACK_URL'),
+        'redirect_url' => env('IBAS_REDIRECT_URL')
+    ],
+
 ];

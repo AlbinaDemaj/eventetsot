@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\MediaController;
+use App\Http\Controllers\SubscriptionController;
 use App\Http\Controllers\TemplateMediaController;
 use App\Http\Controllers\WebsiteController;
 use Illuminate\Support\Facades\Route;
@@ -30,6 +31,19 @@ Route::post('/media', [MediaController::class, 'store'])->name('media.store');
 Route::middleware('auth')->group(function() {
     Route::get('templates', [TemplateMediaController::class, 'create'])->name('templates');
     Route::post('templates', [TemplateMediaController::class, 'store']);
+
+
+    Route::post('/subscriptions/{plan}/subscribe', [SubscriptionController::class, 'subscribe'])
+        ->name('subscriptions.subscribe');
+
+    // Payment handling routes
+    Route::post('/subscriptions/{plan}/payment/callback',
+        [SubscriptionController::class, 'handlePaymentCallback'])
+        ->name('subscription.payment.callback');
+
+    Route::get('/subscriptions/{plan}/payment/redirect',
+        [SubscriptionController::class, 'handlePaymentRedirect'])
+        ->name('subscription.payment.redirect');
 });
 
 
