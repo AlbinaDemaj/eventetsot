@@ -28,6 +28,10 @@
                 <a class="navbar-brand" href="{{ route('user.home') }}">
                     <img src="{{ asset('user/assets/img/logo.png') }}" />
                 </a>
+                <!-- Sidebar Toggle-->
+                <button class="btn btn-link sidebar-expand btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!">
+                    <i class="fa-solid fa-arrow-right-arrow-left"></i>
+                </button>
                 <div class="form-group">
                     <label for="email">Current Event</label>
                     <form method="POST" action="{{ route('user.switch-event') }}">
