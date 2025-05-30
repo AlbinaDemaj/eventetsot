@@ -38,7 +38,7 @@ class SubscriptionController extends Controller
                 plan: $plan,
                 autoRenew: $request->boolean('auto_renew', true),
                 paymentMethod: 'free',
-                status: 'active' // Activate immediately for free plans
+                status: 'active'
             );
 
             return redirect()->route('pricing')
@@ -96,6 +96,8 @@ class SubscriptionController extends Controller
     public function handlePaymentCallback(Request $request, SubscriptionPlan $plan, UserSubscription $subscription)
     {
         try {
+            Log::info('IBAS Callback: ', $request->all());
+            return response('OK');
             $callbackData = $this->paymentService->handleCallback($request->all());
 
             if ($callbackData['success']) {
@@ -143,7 +145,6 @@ class SubscriptionController extends Controller
                 ->with('error', __('Payment failed. Please try again.'));
 
         } catch (\Exception $e) {
-            dd($e->getMessage());
             $subscription->update(['status' => 'failed']);
             return redirect()->route('pricing')
                 ->with('error', __('There was an error processing your payment.'));

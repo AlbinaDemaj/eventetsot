@@ -48,7 +48,7 @@ class PaymentService
         ];
 
         if ($redirectUrl) {
-//            $payload['RedirectUrl'] = $redirectUrl;
+            $payload['RedirectUrl'] = $redirectUrl;
         }
 
         $response = Http::withHeaders([
@@ -94,7 +94,7 @@ class PaymentService
     }
 
     public function handleCallback(array $data): array
-    {dd($data);
+    {
         return [
             'success' => filter_var($data['IsSuccess'] ?? false, FILTER_VALIDATE_BOOLEAN),
             'transaction_id' => $data['OrderId'] ?? null,
