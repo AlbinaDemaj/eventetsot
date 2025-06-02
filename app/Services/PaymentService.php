@@ -4,7 +4,6 @@ namespace App\Services;
 
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Str;
 
 class PaymentService
 {
@@ -19,17 +18,11 @@ class PaymentService
         $this->secret = config('services.ibas.secret');
     }
 
-    /**
-     * Generate authentication token
-     */
     public function generateToken(): void
     {
         $this->token = $this->key.':'.$this->secret;
     }
 
-    /**
-     * Process payment with IBAS
-     */
     public function processPayment(
         string $clientOrderId,
         float $amount,
@@ -44,11 +37,11 @@ class PaymentService
             'ClientOrderId' => $clientOrderId,
             'Amount' => $amount,
             'CallbackUrl' => $callbackUrl,
-            'Language' => 'EN'
+            'Language' => 'EN',
         ];
 
         if ($redirectUrl) {
-            $payload['RedirectUrl'] = $redirectUrl;
+//            $payload['RedirectUrl'] = $redirectUrl;
         }
 
         $response = Http::withHeaders([
