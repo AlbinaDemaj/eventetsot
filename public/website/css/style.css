@@ -541,9 +541,7 @@ footer {
   display: flex;
   justify-content: space-between;
   gap: 15px;
-  max-width: 200px;
-  height: 200px;
-  width: 100%;
+ 
 }
 .e-actionsheet .dismiss-action {
   position: absolute;
@@ -600,9 +598,31 @@ footer {
 
 .center-card .img-wrap {
   border-radius: 100%;
-  width: 50px;
-  height: 50px;
+  width: 100px;
+  height: 100px;
   overflow: hidden;
+  animation: fadeIn 500ms ease-in both;
+}
+.welcome-bg .center-card .card-caption h4 {
+  animation: fadeIn 1500ms ease-in both;
+  font-size: 32px;
+}
+.welcome-bg .center-card .card-caption p{
+  animation: fadeIn 2000ms ease-in both;
+}
+.welcome-bg .center-card .card-caption .input-wrap{
+  animation: fadeIn 2500ms ease-in both;
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translate3d(0, -30%, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
 }
 
 .center-card .img-wrap img {
@@ -618,6 +638,8 @@ footer {
   gap: 10px;
   color: #fff;
   position: relative;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 .center-card .input-wrap {
@@ -769,9 +791,6 @@ footer {
   border-radius: 15px;
   position: relative;
   text-align: center;
-  max-width: 200px;
-  height: 200px;
-  width: 100%;
 }
 
 .uploaded-photos .uploaded-img img {
@@ -784,7 +803,8 @@ footer {
   border-radius: 15px;
   overflow: hidden;
   margin-bottom: 1rem;
-  height: 100%;
+  width: 200px;
+  height: 200px;
 }
 
 .uploaded-photos .uploaded-img .img-box img, .uploaded-photos .uploaded-img .img-box video {
@@ -908,7 +928,8 @@ footer {
   bottom: 20px;
   left: 50%;
   transform: translateX(-50%);
-  min-width: 300px;
+  min-width: 200px;
+  z-index: 9;
 }
 
 .e-steps {
@@ -1104,6 +1125,21 @@ footer {
   .master-head {
     padding: 10rem 20px 3rem !important;
   }
+  .center-card{
+    width: 100%;
+    padding: 1rem;
+  }
+  
+  .add-photos img{
+    width: 50px;
+  }
+  #dropzone{
+    font-size: 12px;
+  }
+  #uploadPreviewContainer{
+    flex-direction: column;
+    align-items: center;
+  }
 }
 
 @media (max-width: 480px) {
@@ -1131,6 +1167,10 @@ footer {
   .master-head:after {
     display: none;
   }
+    .add-photos {
+      top: 30px;
+      right: 0px;
+    }
 
 }
 .dismiss-action img{
