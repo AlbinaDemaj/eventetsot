@@ -260,8 +260,7 @@
                         background-size: cover;
                         height: 200px;
                         position: relative;
-                        color: ${item.fontColor};
-                        padding: 1rem;">
+                        color: ${item.fontColor};">
                 <span class="remove-img" data-type="text" data-index="${index}"
                       style="position: absolute; top: 5px; right: 5px; cursor: pointer;">
                     <img src="{{ asset('website/img/trash.svg') }}">
@@ -269,7 +268,7 @@
                 <div class="img-box" style="height: 100%; overflow: auto;">
                     <p style="margin: 0;">${item.textContent}</p>
                 </div>
-                <span class="btn ${hasCaption ? 'btn-outline-success disabled' : 'e-btn-ghost'} d-flex align-items-center justify-content-center gap-4"
+                <span class="btn ${hasCaption ? 'btn-outline-success add-caption disabled' : 'e-btn-ghost'} d-flex align-items-center justify-content-center gap-4"
                       data-bs-toggle="modal"
                       data-bs-target="#addCaption"
                       data-item-index="${index}"

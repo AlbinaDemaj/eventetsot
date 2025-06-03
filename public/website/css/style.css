@@ -66,7 +66,7 @@ header .nav-link {
   background-size: cover;
   background-position: center;
   padding: 10rem 3rem;
-  min-height: 800px;
+  min-height: 100vh;
   position: relative;
   overflow: hidden;
 
@@ -107,12 +107,20 @@ header .nav-link {
 .text-post-preview .img-box{
   display: flex;
   align-items: center;
+  justify-content: center;
 }
 .e-btn-ghost:hover {
   background-color: #D38D00;
   color: #fff;
 }
-
+#add-caption{
+  display: flex;
+  gap: 10px;
+}
+#uploadPreviewContainer{
+  display: flex;
+  gap: 10px;
+}
 .e-steps .icon {
   box-shadow: 0px 15px 50px 0px #676ED22E;
   background: #fff;
@@ -533,6 +541,9 @@ footer {
   display: flex;
   justify-content: space-between;
   gap: 15px;
+  max-width: 200px;
+  height: 200px;
+  width: 100%;
 }
 .e-actionsheet .dismiss-action {
   position: absolute;
@@ -785,22 +796,23 @@ footer {
 
 .uploaded-photos .uploaded-img .remove-img {
   position: absolute;
-  top: 20px;
-  right: 20px;
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #fff;
-  border-radius: 90px;
-  cursor: pointer;
-    z-index: 99999;
+    top: 10px;
+    right: 10px;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+    border-radius: 90px;
+    cursor: pointer;
+    z-index: 9;
+
 }
 
 .uploaded-photos .uploaded-img .remove-img img {
-  width: 20px;
-  height: 20px;
+  width: 15px;
+  height: 15px;
 }
 
 .add-photos {
