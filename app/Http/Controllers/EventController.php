@@ -8,6 +8,12 @@ use Illuminate\Http\Request;
 
 class EventController extends Controller
 {
+    public function welcome(Request $request)
+    {
+        $event = Event::with('media')->where('code', $request->code)->first();
+        return view('website.events.welcome', ['event' => $event]);
+    }
+
     public function show(Request $request)
     {
         $event = Event::with('media')->where('code', $request->code)->first();
