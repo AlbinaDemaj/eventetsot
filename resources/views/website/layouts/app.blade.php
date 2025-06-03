@@ -178,21 +178,27 @@
 
     //Action sheet
     const toggleButtons = document.getElementsByClassName('action-sheet-t');
-    const action_sheet = document.getElementsByClassName('e-actionsheet');
-    const dismissButtons = document.getElementsByClassName('dismiss-action');
+        const action_sheet = document.getElementsByClassName('e-actionsheet');
+        const dismissButtons = document.getElementsByClassName('dismiss-action');
+        const body = document.body;
 
-
-    for (let i = 0; i < toggleButtons.length; i++) {
-        toggleButtons[i].addEventListener('click', () => {
+        for (let i = 0; i < toggleButtons.length; i++) {
+          toggleButtons[i].addEventListener('click', () => {
             action_sheet[i].classList.toggle('show');
-        });
 
-        for (let i = 0; i < dismissButtons.length; i++) {
-            dismissButtons[i].addEventListener('click', () => {
-                action_sheet[i].classList.toggle('show');
-            });
+            // Add or remove class on body based on sheet visibility
+            if (action_sheet[i].classList.contains('show')) {
+              body.classList.add('action-sheet-open');
+            } else {
+              body.classList.remove('action-sheet-open');
+            }
+          });
+
+          dismissButtons[i].addEventListener('click', () => {
+            action_sheet[i].classList.remove('show');
+            body.classList.remove('action-sheet-open');
+          });
         }
-    };
 </script>
 </body>
 </html>

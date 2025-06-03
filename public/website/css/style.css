@@ -94,8 +94,20 @@ header .nav-link {
 
 .e-btn-ghost {
   border: 1px solid #D38D00;
+  font-size: 14px;
+  gap: 10px !important;
 }
-
+.add-caption{
+  font-size: 14px;
+  gap: 10px !important;
+}
+.add-caption img{
+  width: 20px;
+}
+.text-post-preview .img-box{
+  display: flex;
+  align-items: center;
+}
 .e-btn-ghost:hover {
   background-color: #D38D00;
   color: #fff;
@@ -258,6 +270,8 @@ header .nav-link {
 .e-link-primary {
   text-decoration: none;
   color: #D38D00;
+  border-bottom: 1px dotted #D38D00;
+  font-weight: bold;
 }
 
 .cta-grid-wrap {
@@ -512,8 +526,14 @@ footer {
   justify-content: center;
   margin-right: 10px;
   flex: 0 0 30px;
+  color: #fff !important;
+  font-weight: 700;
 }
-
+.post-main {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+}
 .e-actionsheet .dismiss-action {
   position: absolute;
   top: 20px;
@@ -619,7 +639,15 @@ footer {
   color: #fff;
   text-align: center;
 }
-
+.flex-caption img{
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.flex-caption h4{
+  margin: 20px 0;
+}
 .add-album .flex-caption .btn span {
   width: 20px;
   height: 20px;
@@ -635,8 +663,18 @@ footer {
 .add-album .flex-banner {
   background: url(../img/flex-banner.jpg);
   background-size: cover;
+  min-height: 70vh;
+  background-position: center;
+  position: relative;
 }
-
+.media-count{
+  position: absolute;
+  bottom: 0;
+}
+.media-count p{
+  color: #fff;
+  font-weight: 400;
+}
 .add-album .img-collage {
   width: 100%;
   height: calc(100vh - 280px);
@@ -718,15 +756,24 @@ footer {
 .uploaded-photos .uploaded-img {
   box-shadow: 1px 5px 20px -1px #676ED22E;
   border-radius: 15px;
-  padding: 1rem;
   position: relative;
   text-align: center;
+  max-width: 200px;
+  height: 200px;
+  width: 100%;
 }
 
+.uploaded-photos .uploaded-img img {
+  height: 100%;
+}
+.e-btn-ghost img {
+  width: 20px;
+}
 .uploaded-photos .uploaded-img .img-box {
   border-radius: 15px;
   overflow: hidden;
   margin-bottom: 1rem;
+  height: 100%;
 }
 
 .uploaded-photos .uploaded-img .img-box img, .uploaded-photos .uploaded-img .img-box video {
@@ -1073,4 +1120,9 @@ footer {
     display: none;
   }
 
+}
+.dismiss-action img{
+  background: #000;
+  border-radius: 50%;
+  width: 25px;
 }

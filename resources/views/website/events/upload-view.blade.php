@@ -37,7 +37,8 @@
                         <span class="remove-img"><img src="img/trash.svg"></span>
                         <div class="img-box"><img src="img/cta-img.png"></div>
 
-                        <span class="btn e-btn-ghost d-flex align-items-center justify-content-center gap-4" data-bs-toggle="modal" data-bs-target="#addCaption"><img src="img/caption.svg"> Add Caption</span>
+                        <span class="btn e-btn-ghost d-flex align-items-center justify-content-center gap-4" data-bs-toggle="modal" data-bs-target="#addCaption">
+                            <img src="img/caption.svg"> Add Caption</span>
 
                         <!-- Show this button when caption is added -->
                         <!-- <span class="btn btn-outline-success disabled d-flex align-items-center justify-content-center gap-4" data-bs-toggle="modal" data-bs-target="#addCaption"><img src="img/check-2.svg"> Caption Added</span> -->
@@ -65,7 +66,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="addCaptionLabel">Add Caption</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    {{-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> --}}
                 </div>
                 <div class="modal-body">
                     <form>
@@ -81,7 +82,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn e-btn-primary" data-bs-dismiss="modal">Save Caption</button>
-                    <button type="button" class="btn e-btn-ghost" data-bs-dismiss="modal">Cancel</button>
+                    {{-- <button type="button" class="btn e-btn-ghost" data-bs-dismiss="modal">Cancel</button> --}}
                 </div>
             </div>
         </div>

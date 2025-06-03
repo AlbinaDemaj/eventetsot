@@ -19,7 +19,7 @@
             <div class="upload-step d-none" id="reviewUploadStep">
                 <div class="uploaded-photos mt-4 mb-5 pb-5">
                     <div class="container">
-                        <div class="row" id="uploadPreviewContainer">
+                        <div id="uploadPreviewContainer">
                             <!-- Dynamic preview items will be inserted here -->
                         </div>
                     </div>
@@ -66,11 +66,11 @@
                 <div class="modal-body">
                     <form id="captionForm">
                         <input type="hidden" id="captionFileIndex">
-                        <div class="form-group">
+                        <div class="form-group mb-3">
                             <label>Caption</label>
                             <textarea id="captionText" rows="6" cols="6" placeholder="Write a caption for this photo here" class="form-control"></textarea>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group mb-3">
                             <label>Name</label>
                             <input type="text" id="captionName" value="{{ auth()->check() ? auth()->user()->name : '' }}" class="form-control" name="name" placeholder="Name">
                         </div>
@@ -78,7 +78,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn e-btn-primary" id="saveCaptionBtn">Save Caption</button>
-                    <button type="button" class="btn e-btn-ghost" data-bs-dismiss="modal">Cancel</button>
+                    {{-- <button type="button" class="btn e-btn-ghost" data-bs-dismiss="modal">Cancel</button> --}}
                 </div>
             </div>
         </div>

@@ -182,7 +182,7 @@
 
             uploadItems.forEach((item, index) => {
                 const col = document.createElement('div');
-                col.className = 'col-md-4 mb-3';
+                col.className = 'post-main';
 
                 if (item.type === 'file') {
                     const file = item.file;
@@ -213,7 +213,7 @@
                     <div class="img-box">
                         <img src="${e.target.result}">
                     </div>
-                    <span class="btn ${hasCaption ? 'btn-outline-success disabled' : 'e-btn-ghost'} d-flex align-items-center justify-content-center gap-4"
+                    <span class="btn ${hasCaption ? 'btn-outline-success disabled add-caption' : 'e-btn-ghost'} d-flex align-items-center justify-content-center gap-4"
                           data-bs-toggle="modal"
                           data-bs-target="#addCaption"
                           data-item-index="${index}">

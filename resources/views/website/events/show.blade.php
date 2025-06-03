@@ -4,17 +4,21 @@
 
     <div class="add-album h-100">
         <div class="row h-100 g-0">
-            <div class="col-md-6">
+            <div class="col-md-12">
                 <div class="flex-banner h-100 d-flex align-items-center justify-content-center">
                     <div class="flex-caption">
+                        <img src="../website/img/card-bg.png" />
                         <h4>Sam Dasma</h4>
                         <a href="{{ route('events.upload', request()->route('code')) }}" class="btn e-btn-primary"><span>+</span> Shtoni Album</a>
                     </div>
+                    <div class="media-count">
+                        <p><strong>{{ $event->media()->count() }} Fotografitë, videot dhe postimet</strong></p>
+                    </div>
                 </div>
             </div>
-            <div class="col-md-6 text-center">
+            <div class="col-md-12 text-center">
                 <div class="collage-box px-4 h-100 d-flex align-items-center justify-content-center flex-column">
-                    <p><strong>{{ $event->media()->count() }} Fotografitë, videot dhe postimet</strong></p>
+                    
                     <div class="img-collage">
                         <div class="child-wrap">
                             @foreach($event->media()->get() as $media)
