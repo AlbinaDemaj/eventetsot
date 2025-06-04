@@ -97,7 +97,6 @@ class SubscriptionController extends Controller
     {
         try {
             Log::info('IBAS Callback: ', $request->all());
-            return response('OK');
             $callbackData = $this->paymentService->handleCallback($request->all());
 
             if ($callbackData['success']) {
@@ -128,6 +127,7 @@ class SubscriptionController extends Controller
     public function handlePaymentRedirect(Request $request, SubscriptionPlan $plan, UserSubscription $subscription)
     {
         try {
+            Log::info('IBAS Redirect: ', $request->all());
             $callbackData = $this->paymentService->handleCallback($request->all());
 
             if ($callbackData['success']) {

@@ -36,12 +36,11 @@ class PaymentService
         $payload = [
             'ClientOrderId' => $clientOrderId,
             'Amount' => $amount,
-            'CallbackUrl' => $callbackUrl,
-            'Language' => 'EN',
+            'CallbackUrl' => $callbackUrl
         ];
 
         if ($redirectUrl) {
-//            $payload['RedirectUrl'] = $redirectUrl;
+            $payload['RedirectUrl'] = $redirectUrl;
         }
 
         $response = Http::withHeaders([
