@@ -23,6 +23,7 @@
     <link rel="stylesheet" href="{{ asset('website/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ url('website/css/style.css') }}">
     <link rel="stylesheet" href="{{ url('website/css/responsive.css') }}">
+    
 
     <link rel="stylesheet" type="text/css" href="{{ url('website/css/slick.css') }}"/>
     <!-- Font Awesome 6 CDN -->
@@ -106,10 +107,12 @@
   </footer>
 
 <script type="text/javascript" src="{{ asset('website/js/bootstrap.bundle.min.js') }}"></script>
-<script type="text/javascript" src="{{ asset('website/js//jquery-1.11.0.min.js') }}"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript" src="{{ asset('website/js/jquery-migrate-1.2.1.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('website/js/slick.min.js') }}"></script>
+
 <script type="text/javascript">
+  
     $('.eslider.a').slick({
         slidesToShow: 3,
         slidesToScroll: 3,
@@ -199,6 +202,30 @@
             body.classList.remove('action-sheet-open');
           });
         }
+
+
+        $(document).ready(function () {
+          $('.image-popup-vertical-fit').magnificPopup({
+            
+            type: 'image',
+            mainClass: 'mfp-with-zoom',
+            gallery: {
+              enabled: true
+            },
+            zoom: {
+              enabled: true,
+              duration: 300,
+              easing: 'ease-in-out',
+              opener: function (openerElement) {
+                return openerElement.is('img') ? openerElement : openerElement.find('img');
+              }
+            }
+          });
+        });
 </script>
+<script>
+  
+  
+  </script>
 </body>
 </html>

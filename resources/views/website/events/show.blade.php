@@ -16,20 +16,30 @@
                     </div>
                 </div>
             </div>
+            
             <div class="col-md-12 text-center">
-                <div class="collage-box px-4 h-100 d-flex align-items-center justify-content-center flex-column">
+                <div class="collage-box d-flex align-items-center justify-content-center flex-column">
                     
                     <div class="img-collage">
-                        <div class="child-wrap">
+                        <div class="child-wrap img-gallery-magnific">
                             @foreach($event->media()->get() as $media)
                                 @if($media->type === 'file')
-                                    <span><img src="{{ asset('storage/' . $media->file_path) }}"></span>
+                                    <div class="post-img magnific-img">
+                                        <a href="{{ asset('storage/' . $media->file_path) }}" class="image-popup-vertical-fit">
+                                            <img src="{{ asset('storage/' . $media->file_path) }}">
+                                            <img src="../website/img/comment.png" class="cmnt-img" />
+                                        </a>
+                                    </div>
                                 @else
-                                    <span style="position: relative;display: grid;place-items: center;background-image: url('{{ asset($media->background_image) }}'); background-size: cover;background-position: center;">
-                                        <div style="color: {{ $media->font_color }}; font-size: clamp(14px, 3vw, 18px); line-height: 1.7;text-shadow: 0 1px 4px rgba(0,0,0,0.2); width: 90%;">
-                                            {!! nl2br(e($media->text_content)) !!}
-                                        </div>
-                                    </span>
+                                    <div class="post-text magnific-img">
+                                        <a href="javescript:0" class="image-popup-vertical-fit">
+                                            <span  style="background-image: url('{{ asset($media->background_image) }}'); ">
+                                                <div style="color: {{ $media->font_color }}; font-size: clamp(14px, 3vw, 18px); line-height: 1.7;text-shadow: 0 1px 4px rgba(0,0,0,0.2); width: 90%;">
+                                                    {!! nl2br(e($media->text_content)) !!}
+                                                </div>
+                                            </span>
+                                        </a>
+                                    </div>
                                 @endif
                             @endforeach
                         </div>

@@ -27,15 +27,31 @@
     <link rel="stylesheet" type="text/css" href="{{ url('website/css/slick.css') }}"/>
     <!-- Font Awesome 6 CDN -->
     <link rel="stylesheet" href="{{ url('website/css/fa.min.css') }}" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/magnific-popup@1.1.0/dist/magnific-popup.css">
 </head>
 <body>
 
 @yield('content')
-
+<div class="offcanvas offcanvas-bottom" tabindex="-1" id="actionSheetCanvas">
+    <div class="offcanvas-body text-center">
+        <div class="sheet-content">
+            <div class="caption-action">
+                <h2>Caption</h2>
+                <p>Double tap</p>
+            </div>
+            <div class="caption-action">
+                <h2>Name</h2>
+                <p>Double tap</p>
+            </div>
+        </div>
+      <div class="cross-button" data-bs-dismiss="offcanvas"><img src="../website/img/cross-1.svg" /></div>
+    </div>
+  </div>
 <script type="text/javascript" src="{{ asset('website/js/bootstrap.bundle.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('website/js//jquery-1.11.0.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('website/js/jquery-migrate-1.2.1.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('website/js/slick.min.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/magnific-popup@1.1.0/dist/jquery.magnific-popup.min.js"></script>
 <script type="text/javascript">
     $('.eslider.a').slick({
         slidesToShow: 3,
@@ -482,6 +498,46 @@
             fileInput.value = '';
         }
     });
+</script>
+<script>
+    $(document).ready(function () {
+  const $gallery = $('.img-gallery-magnific');
+
+  if ($gallery.length) {
+    $gallery.magnificPopup({
+      delegate: 'a.image-popup-vertical-fit',
+      type: 'image',
+      gallery: {
+        enabled: true
+      },
+      callbacks: {
+        open: function () {
+          const current = $.magnificPopup.instance.currItem.el;
+          const imageSrc = current.attr('href');
+
+          const iconContainer = `
+            <div class="mfp-icon-container">
+              <a href="${imageSrc}" download class="mfp-custom-icon mfp-download-icon">
+                <img src="../website/img/download.png" />
+              </a>
+              <div class="mfp-custom-icon mfp-comment-icon" data-bs-toggle="offcanvas" data-bs-target="#actionSheetCanvas">
+                <img src="../website/img/comment.png" />
+              </div>
+            </div>`;
+
+          $('.mfp-container').append(iconContainer);
+        },
+        change: function () {
+          $('.mfp-icon-container').remove();
+        },
+        close: function () {
+          $('.mfp-icon-container').remove();
+        }
+      }
+    });
+  }
+});
+
 </script>
 </body>
 </html>
