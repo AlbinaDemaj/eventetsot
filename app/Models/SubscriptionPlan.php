@@ -11,13 +11,14 @@ class SubscriptionPlan extends Model
 
     protected $fillable = [
         'name', 'slug', 'description', 'price', 'currency',
-        'billing_cycle_days', 'is_active', 'features'
+        'billing_cycle_days', 'is_active', 'features', 'limits'
     ];
 
     protected $casts = [
         'price' => 'decimal:2',
         'is_active' => 'boolean',
         'features' => 'array',
+        'limits' => 'array'
     ];
 
     public function subscriptions()

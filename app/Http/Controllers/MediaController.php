@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Event;
-use App\Models\Media;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -31,6 +30,14 @@ class MediaController extends Controller
                 'errors' => $validator->errors()
             ], 422);
         }
+
+//        if (!$request->user()->canUpload()) {
+//            return response()->json([
+//                'success' => false,
+//                'message' => 'Upload limit reached for your subscription'
+//            ]);
+//        }
+
 
         $event = Event::where('code', $request->code)->firstOrFail();
         $uploadedItems = [];
