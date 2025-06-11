@@ -18,7 +18,12 @@
                             <li>Aktive për 3 orë nga data e eventit</li>
                             <li>Të gjitha ngarkimet ruhen në cilësi të mirë</li>
                         </ul>
-                        <a href="#" class="btn e-btn-primary">Krijoni Eventin Tuaj</a>
+                        @guest
+                            <a href="{{ route('register') }}" class="btn e-btn-primary">Krijoni Eventin Tuaj</a>
+                        @endguest
+                        @auth
+                            <a href="javascript:" class="btn e-btn-primary">Krijoni Eventin Tuaj</a>
+                        @endauth
                     </div>
                 </div>
 
@@ -35,11 +40,17 @@
                             <li>Të gjitha ngarkimet ruhën në cilësi të lartë</li>
                             <li>Shkarkoni të gjitha fotot dhe videot menjëherë</li>
                         </ul>
-                        <a href="javascript:" onclick="event.preventDefault(); document.getElementById('subscribe-form-1').submit();" class="btn e-btn-primary">
-                            Krijoni Eventin Tuaj
-                        </a>
+                        @guest
+                            <a href="{{ route('register') }}" class="btn e-btn-primary">Krijoni Eventin Tuaj</a>
+                        @endguest
 
-                        <form id="subscribe-form-1" action="{{ route('subscriptions.subscribe', 1) }}" method="POST" style="display: none;">
+                        @auth
+                            <a href="javascript:" onclick="event.preventDefault(); document.getElementById('subscribe-form-1').submit();" class="btn e-btn-primary">
+                                Krijoni Eventin Tuaj
+                            </a>
+                        @endauth
+
+                        <form id="subscribe-form-1" action="{{ route('subscriptions.subscribe', 2) }}" method="POST" style="display: none;">
                             @csrf
                         </form>
                     </div>

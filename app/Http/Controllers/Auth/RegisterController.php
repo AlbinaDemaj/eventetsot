@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\SubscriptionPlan;
 use App\Models\User;
+use App\Services\SubscriptionService;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -35,7 +37,9 @@ class RegisterController extends Controller
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(
+        protected SubscriptionService $subscriptionService
+    )
     {
         $this->middleware('guest');
     }
@@ -63,10 +67,22 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+
+        $plan = SubscriptionPlan::where('price', 0)->first();
+
+        $this->subscriptionService->createSubscription(
+            user: $user,
+            plan: $plan,
+            autoRenew: false,
+            paymentMethod: 'free',
+            status: 'active'
+        );
+
+        return $user;
     }
 }

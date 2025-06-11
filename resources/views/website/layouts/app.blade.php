@@ -23,7 +23,7 @@
     <link rel="stylesheet" href="{{ asset('website/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ url('website/css/style.css') }}">
     <link rel="stylesheet" href="{{ url('website/css/responsive.css') }}">
-    
+
 
     <link rel="stylesheet" type="text/css" href="{{ url('website/css/slick.css') }}"/>
     <!-- Font Awesome 6 CDN -->
@@ -49,8 +49,14 @@
 
                     </ul>
                     <div class="d-flex gap-4 align-items-center">
-                        <a href="{{ route('login') }}" class="nav-link">Kyçu</a>
-                        <a href="{{ route('register') }}" class="btn e-btn-primary">Filloni</a>
+                        @guest
+                            <a href="{{ route('login') }}" class="nav-link">Kyçu</a>
+                            <a href="{{ route('register') }}" class="btn e-btn-primary">Filloni</a>
+                        @endguest
+                        @auth
+                            <a href="{{ route('user.home') }}" class="nav-link">Kyçu</a>
+                            <a href="{{ route('user.home') }}" class="btn e-btn-primary">Filloni</a>
+                        @endauth
                     </div>
                 </div>
             </div>
@@ -112,7 +118,7 @@
 <script type="text/javascript" src="{{ asset('website/js/slick.min.js') }}"></script>
 
 <script type="text/javascript">
-  
+
     $('.eslider.a').slick({
         slidesToShow: 3,
         slidesToScroll: 3,
@@ -206,7 +212,7 @@
 
         $(document).ready(function () {
           $('.image-popup-vertical-fit').magnificPopup({
-            
+
             type: 'image',
             mainClass: 'mfp-with-zoom',
             gallery: {
@@ -224,8 +230,8 @@
         });
 </script>
 <script>
-  
-  
+
+
   </script>
 </body>
 </html>

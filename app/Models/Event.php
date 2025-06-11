@@ -44,4 +44,19 @@ class Event extends Model
     {
         return $this->hasMany(Media::class);
     }
+
+    public function isActive(): bool
+    {
+        $subscription = $this->user->activeSubscription;
+
+        if (!$subscription) return false;
+
+        if ($subscription->plan->slug === 'free') {
+            $activeHours = $subscription->plan->limits['active_hours'] ?? 3;
+            return $this->created_at->addHours($activeHours)->isFuture();
+        }
+
+        $activeDays = $subscription->plan->limits['active_days'] ?? 30;
+        return $this->created_at->addDays($activeDays)->isFuture();
+    }
 }

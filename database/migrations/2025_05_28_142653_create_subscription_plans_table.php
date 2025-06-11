@@ -21,6 +21,7 @@ return new class extends Migration
             $table->integer('billing_cycle_days'); // Duration in days
             $table->boolean('is_active')->default(true);
             $table->json('features')->nullable();
+            $table->json('limits')->nullable();
             $table->timestamps();
         });
     }

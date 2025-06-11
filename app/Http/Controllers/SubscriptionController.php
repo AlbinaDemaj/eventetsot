@@ -81,7 +81,6 @@ class SubscriptionController extends Controller
             ]);
 
         } catch (\Exception $e) {
-            // Mark as failed if error occurs
             if (isset($subscription)) {
                 $subscription->update(['status' => 'failed']);
             }
@@ -136,17 +135,17 @@ class SubscriptionController extends Controller
                     $callbackData['transaction_id'] ?? $request->input('OrderId')
                 );
 
-                return redirect()->route('pricing')
+                return redirect()->route('user.home')
                     ->with('success', __('Subscription activated successfully!'));
             }
 
             $subscription->update(['status' => 'failed']);
-            return redirect()->route('pricing')
+            return redirect()->route('user.home')
                 ->with('error', __('Payment failed. Please try again.'));
 
         } catch (\Exception $e) {
             $subscription->update(['status' => 'failed']);
-            return redirect()->route('pricing')
+            return redirect()->route('user.home')
                 ->with('error', __('There was an error processing your payment.'));
         }
     }

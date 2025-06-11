@@ -67,4 +67,14 @@ class User extends Authenticatable
             ->active()
             ->latestOfMany();
     }
+
+    public function canUpload(int $count = 1): bool
+    {
+        return checkUploadLimit($this, $count);
+    }
+
+    public function uploads()
+    {
+        return $this->hasMany(Upload::class);
+    }
 }
