@@ -15,6 +15,7 @@ class Event extends Model
         'qr_code',
         'user_id',
         'type',
+        'is_public'
     ];
 
     protected static function booted()
