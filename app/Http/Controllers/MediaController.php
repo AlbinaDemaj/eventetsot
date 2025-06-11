@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Event;
+use App\Services\ImageGeneratorService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -62,13 +63,30 @@ class MediaController extends Controller
                     'updated_at' => now()
                 ];
             } elseif ($item['type'] === 'text') {
-                // Handle text post
+                // Handle text post with image generation
+                $textToImageService = new ImageGeneratorService();
+
+                $filename = basename(parse_url( $item['backgroundImage'], PHP_URL_PATH));
+
+                // Generate the image
+                $image = $textToImageService->createTextImage(
+                    $item['textContent'],
+                    $filename,
+                    $item['fontColor']
+                );
+
+                // Save the generated image
+                $path = $textToImageService->saveImage($image, $event->id);
+
                 $uploadedItems[] = [
                     'user_id' => $event->user_id,
                     'event_id' => $event->id,
                     'is_guest' => !auth()->check(),
+                    'file_path' => $path,
+                    'file_type' => 'image/jpg',
+                    'file_size' => filesize(storage_path("app/public/{$path}")),
                     'text_content' => $item['textContent'],
-                    'background_image' => $item['backgroundImage'],
+                    'background_image' => $filename,
                     'font_color' => $item['fontColor'],
                     'caption_text' => $item['caption']['text'] ?? null,
                     'caption_name' => $item['caption']['name'] ?? null,
