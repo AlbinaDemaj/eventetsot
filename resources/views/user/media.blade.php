@@ -39,7 +39,7 @@
                     </div>
 
                     <div class="progress-btn">
-                        <button type="submit" class="login-btn">
+                        <button type="submit" class="login-btn" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo">
                             Merr më shumë
                         </button>
                     </div>
@@ -79,4 +79,61 @@
         </div>
     </div>
 
+    {{-- Price Modal --}}
+    <div class="modal fade pricing-modal" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered">
+          <div class="modal-content">
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div class="modal-body">
+                <section class="epricing my-5">
+                    <div class="container">
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="pricing-table">
+                                    <h2><strong>Falas</strong><br><small>€</small>0</h2>
+                                    <p>E shkëlqyeshme për ditëlindje, mbledhje familjare dhe ngjarje apo raste të tjera të vogla.</p>
+                                    <ul class="checkitems mb-4 pricing text-start">
+                                        <li>Deri në 20 ngarkime fotosh dhe videosh</li>
+                                        <li>Të ftuar dhe pjesëmarrës të pakufizuar</li>
+                                        <li>Ngarkimet ruhen për 7 ditë</li>
+                                        <li>Opsione bazë për personalizim</li>
+                                        <li>Aktive për 3 orë nga data e eventit</li>
+                                        <li>Të gjitha ngarkimet ruhen në cilësi të mirë</li>
+                                    </ul>
+                                    <a href="#" class="btn login-btn">Krijoni Eventin Tuaj</a>
+                                </div>
+                            </div>
+            
+                            <div class="col-md-6">
+                                <div class="pricing-table">
+                                    <h2><strong>Plus</strong><br><small>€</small>100</h2>
+                                    <p>Ideale për dasma të mëdha, konferenca, koncerte, festa dhe eventet publike.</p>
+                                    <ul class="checkitems mb-4 pricing text-start">
+                                        <li>Ngarkime të pakufizuara të fotove dhe videove</li>
+                                        <li>Të ftuar dhe pjesëmarrës të pakufizuar</li>
+                                        <li>Ngarkimet ruhën për 6 muaj</li>
+                                        <li>Opsione të avancuara për personalizim</li>
+                                        <li>Aktive për 30 ditë nga data e eventit</li>
+                                        <li>Të gjitha ngarkimet ruhën në cilësi të lartë</li>
+                                        <li>Shkarkoni të gjitha fotot dhe videot menjëherë</li>
+                                    </ul>
+                                    <a href="javascript:" onclick="event.preventDefault(); document.getElementById('subscribe-form-1').submit();" class="btn login-btn">
+                                        Krijoni Eventin Tuaj
+                                    </a>
+            
+                                    <form id="subscribe-form-1" action="{{ route('subscriptions.subscribe', 1) }}" method="POST" style="display: none;">
+                                        @csrf
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </section>
+            </div>
+            
+          </div>
+        </div>
+      </div>
 @endsection

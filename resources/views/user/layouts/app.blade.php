@@ -46,6 +46,9 @@
                         </select>
                     </form>
                 </div>
+                <div class="upgrade-event">
+                    <h3><i class="fa-solid fa-star"></i>Upgrade your event</h3>
+                </div>
                 <div class="nav">
                     <ul>
                         <li>
@@ -88,6 +91,17 @@
     </div>
     <div id="layoutSidenav_content">
         <main>
+            <div class="payment-alert">
+                <div class="alert alert-warning" role="alert">
+                  <i class="fa-solid fa-info-circle"></i>
+                  You're currently using the limited free plan. Upgrade your event to unlock all the features we are offering!
+                  <div class="progress-btn">
+                    <button type="submit" class="login-btn">Upgrade Plan</button>
+                  </div>
+                  <button type="button" class="close-alert" aria-label="Close">&times;</button>
+                </div>
+              </div>
+              
             <nav class="sb-topnav navbar navbar-expand">
                 <!-- Sidebar Toggle-->
                 <!-- <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!">
@@ -170,5 +184,23 @@
         $('.selectpicker').selectpicker();
     });
 </script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const closeBtn = document.querySelector(".close-alert");
+      const alertBox = document.querySelector(".payment-alert");
+  
+      if (closeBtn && alertBox) {
+        closeBtn.addEventListener("click", function () {
+          alertBox.style.display = "none";
+        });
+      }
+    });
+  </script>
+  <script>
+    var firstTabEl = document.querySelector('#myTab li:last-child a')
+    var firstTab = new bootstrap.Tab(firstTabEl)
+  
+    firstTab.show()
+  </script>
 </body>
 </html>

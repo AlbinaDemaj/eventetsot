@@ -14,8 +14,10 @@
                             Share it by sending a direct link or a unique QR code perfect for printing or
                             displaying on screens.</p>
                     </div>
+
                     <div class="form-area pt-3">
                         <div class="form-group">
+                            
                             <div class="input-wrapper">
                                 <i class="fa-solid fa-copy" onclick="copyURL()"></i>
                                 <input type="text" readonly id="url" value="{{ url('events/'.$selectedEvent->code) }}" required>
