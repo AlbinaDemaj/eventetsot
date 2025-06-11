@@ -1321,15 +1321,23 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination {
 .welcome-tabbing .nav-pills .nav-item .nav-link.active,
 .welcome-tabbing .nav-pills .nav-item .nav-link:hover{
     background: #D28D01 !important;
-        color: #fff !important;
-        border-radius: 10px !important;
-        font-size: 18px;
+    color: #fff !important;
+    border-radius: 10px !important;
+    font-size: 18px;
 }
 .event-link p a{
     color: #fff;
 }
 .welcome-tabbing .tab-content{
     display: block !important;
+    padding: 20px 0;
+}
+.welcome-modal-ft .login-btn{
+    max-width: 120px;
+}
+.welcome-modal-ft .login-btn:hover {
+    border: 1px solid #D28D01;
+    color: #161321;
 }
 .welcome-screen-appearnce label{
     color: #161321;
@@ -1350,6 +1358,20 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination {
     margin: 10px 0 0;
 }
 .welcome-screen-appearnce .form-area input{
+    max-width: 100%;
+    padding: 15px;
+}
+.guest-tab-detail p{
+    font-size: 14px;
+    color: #161321;
+    font-weight: 200;
+}
+.guest-tab-detail .form-area{
+    max-width: 100%;
+    width: 100%;
+    margin: 0;
+}
+.guest-tab-detail .form-area input{
     max-width: 100%;
     padding: 15px;
 }
@@ -1437,12 +1459,58 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination {
     font-weight: bold;
     color: #fff;
 }
-/* .welcomescreen-mbl-view{
-
-} */
+.welcomescreen-mbl-view {
+    background: url(../../user/assets/img/cta-img.png);
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    border: 10px solid #000;
+    border-radius: 40px;
+    display: flex;
+    align-items: flex-end;
+    margin-left: 30px;
+}
+.welcomescreen-mbl-view .center-card{
+    width: 100%;
+}
+.welcomescreen-mbl-view .center-card .card-caption {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    color: #fff;
+    position: relative;
+    padding: 20px;
+}
+.welcomescreen-mbl-view .center-card .img-wrap img{
+    border-radius: 100%;
+    width: 80px;
+    height: 80px;
+    overflow: hidden;
+    animation: fadeIn 500ms ease-in both;
+}
+.welcomescreen-mbl-view .center-card .card-caption h4 {
+    animation: fadeIn 1500ms ease-in both;
+    font-size: 32px;
+}
+.welcomescreen-mbl-view .center-card .card-caption p {
+    margin-bottom: 0;
+}
+.welcomescreen-mbl-view .center-card .card-caption .input-wrap {
+    animation: fadeIn 2500ms ease-in both;
+}
+.welcomescreen-mbl-view .login-btn{
+    margin-top: 10px;
+    font-size: 13px;
+    padding: 10px;
+    border-radius: 5px;
+}
 .welcome-screen-appearnce li{
     list-style: none;
     margin: 15px 0;
+}
+.welcomescreen-mbl-view .center-card .card-caption .input-wrap input{
+    padding: 0.7rem 0.75rem;
+    font-size: 14px;
 }
 .sidebar-expand svg {
     font-size: 16px;
