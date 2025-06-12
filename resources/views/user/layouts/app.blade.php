@@ -46,9 +46,11 @@
                         </select>
                     </form>
                 </div>
-                <div class="upgrade-event">
-                    <h3><i class="fa-solid fa-star"></i>Upgrade your event</h3>
-                </div>
+                @if($userActiveSubscription->payment_method === 'free')
+                    <div class="upgrade-event">
+                        <h3><i class="fa-solid fa-star"></i>Upgrade your event</h3>
+                    </div>
+                @endif
                 <div class="nav">
                     <ul>
                         <li>
@@ -91,24 +93,30 @@
     </div>
     <div id="layoutSidenav_content">
         <main>
-            <div class="payment-alert">
-                <div class="alert alert-warning" role="alert">
-                  <i class="fa-solid fa-info-circle"></i>
-                  You're currently using the limited free plan. Upgrade your event to unlock all the features we are offering!
-                  <div class="progress-btn">
-                    <button type="submit" class="login-btn">Upgrade Plan</button>
-                  </div>
-                  <button type="button" class="close-alert" aria-label="Close">&times;</button>
+            @if($userActiveSubscription->payment_method === 'free')
+                <div class="payment-alert">
+                    <div class="alert alert-warning" role="alert">
+                        <i class="fa-solid fa-info-circle"></i>
+                        You're currently using the limited free plan. Upgrade your event to unlock all the features we are offering!
+                        <div class="progress-btn">
+                            <button type="submit" class="login-btn">Upgrade Plan</button>
+                        </div>
+                        <button type="button" class="close-alert" aria-label="Close">&times;</button>
+                    </div>
                 </div>
-              </div>
-              
+            @endif
+
             <nav class="sb-topnav navbar navbar-expand">
                 <!-- Sidebar Toggle-->
                 <!-- <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!">
                     <i class="fas fa-bars"></i>
                 </button> -->
                 <div class="header-text">
-                    <h2>Welcome {{ auth()->user()->name }} <span>Free Plan</span></h2>
+                    <h2>Welcome {{ auth()->user()->name }}
+                        @if($userActiveSubscription->payment_method === 'free')
+                            <span>Free Plan</span>
+                        @endif
+                    </h2>
                 </div>
                 <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
                     <li class="nav-item dropdown">
@@ -188,7 +196,7 @@
     document.addEventListener("DOMContentLoaded", function () {
       const closeBtn = document.querySelector(".close-alert");
       const alertBox = document.querySelector(".payment-alert");
-  
+
       if (closeBtn && alertBox) {
         closeBtn.addEventListener("click", function () {
           alertBox.style.display = "none";
@@ -199,7 +207,7 @@
   <script>
     var firstTabEl = document.querySelector('#myTab li:last-child a')
     var firstTab = new bootstrap.Tab(firstTabEl)
-  
+
     firstTab.show()
   </script>
 </body>

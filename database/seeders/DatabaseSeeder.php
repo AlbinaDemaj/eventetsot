@@ -20,8 +20,8 @@ class DatabaseSeeder extends Seeder
 
         $this->call([
             AdminSeeder::class,
-            TestUserSeeder::class,
             SubscriptionPlanSeeder::class,
+            TestUserSeeder::class,
             EventSeeder::class,
             TemplateSeeder::class,
         ]);
