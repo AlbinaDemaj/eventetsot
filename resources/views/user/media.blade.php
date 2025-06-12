@@ -118,7 +118,7 @@
                                         <li>Të gjitha ngarkimet ruhën në cilësi të lartë</li>
                                         <li>Shkarkoni të gjitha fotot dhe videot menjëherë</li>
                                     </ul>
-                                    <a href="javascript:" onclick="event.preventDefault(); document.getElementById('subscribe-form-1').submit();" class="btn login-btn">
+                                    <a href="javascript:" class="btn login-btn" data-bs-toggle="modal" data-bs-target="#paymentpay">
                                         Krijoni Eventin Tuaj
                                     </a>
             
@@ -131,6 +131,54 @@
                         
                     </div>
                 </section>
+            </div>
+            
+          </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="paymentpay" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+          <div class="modal-content ">
+            <div class="modal-header">
+              
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-0">
+                <div class="payment-modal">
+                    <div class="payment-right-side">
+                        <h3>Order Summary</h3>
+                        <h2>$99.00</h2>
+                        <h5><img src="{{ asset('user/assets/img/logo.png') }}" /> Pro Event</h5>
+                        <div class="price-total-main">
+                            <div class="price-subtotal">
+                                <h4>Subtotal</h4>
+                                <h5>$99.00</h5>
+                            </div>
+                            <div class="price-vat">
+                                <h4>VAT</h4>
+                                <h5>$0.00</h5>
+                            </div>
+                            <div class="price-total">
+                                <h4>Total</h4>
+                                <h5>$99.00</h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="payment-left-side">
+                        <h3>Your details</h3> 
+                        <p>We collect this information to help combat fraud, and to keep your payment secure.</p>   
+                        <div class="form-group mb-3">
+                            <label>Email</label>
+                            <input type="text" class="form-control" name="name" placeholder="Email">
+                        </div>
+                        <div class="form-group mb-3">
+                            <label>Country</label>
+                            <input type="text" class="form-control" name="name" placeholder="Country">
+                        </div>
+                        <button type="button" class="btn login-btn" data-bs-dismiss="modal">Continue</button>
+                    </div>
+                </div>
             </div>
             
           </div>
