@@ -28,6 +28,7 @@ Route::middleware(['auth'])->prefix('user')->name('user.')->group(function () {
     Route::post('/settings', [SettingController::class, 'saveSettings']);
     Route::get('/events', [EventController::class, 'index'])->name('events');
     Route::post('/events', [EventController::class, 'store']);
+    Route::put('/events/{event}', [EventController::class, 'update'])->name('events.update');
     Route::post('/switch-event', [EventController::class, 'switchEvent'])->name('switch-event');
 
 });

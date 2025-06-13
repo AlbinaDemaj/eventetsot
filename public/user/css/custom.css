@@ -1225,7 +1225,7 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination {
 }
 
 .pricing-modal .pricing-table strong {
-    font-size: 2rem; 
+    font-size: 2rem;
 }
 .pricing-modal .checkitems {
     list-style-type: none;
@@ -1267,7 +1267,7 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination {
     border-right: none;
     border-top-right-radius: 0 !important;
     border-bottom-right-radius: 0 !important;
-    max-width: 150px;
+    max-width: 220px;
 }
 .setting-event-custom .custom-url {
     border-right: none;
@@ -1281,7 +1281,7 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination {
     display: flex;
     gap: 20px;
     font-weight: 600;
-    
+
 }
 .event-link p{
     background: #d28d01;
@@ -1419,7 +1419,7 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination {
 .animation-checkbox .styled-checkbox:disabled+label:before {
     box-shadow: none;
     background: #ddd;
-    
+
 }
 
 .animation-checkbox .styled-checkbox:checked+label:after {
@@ -1578,7 +1578,7 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination {
     max-width: 100%;
     display: flex;
     align-items: center;
-    gap: 10px;   
+    gap: 10px;
     font-size: 14px;
 }
 .payment-right-side h5 img{

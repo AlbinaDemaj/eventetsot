@@ -23,6 +23,14 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->boolean('is_public')->default(false);
             $table->enum('type', ['wedding', 'birthday', 'party'])->default('wedding');
+
+            $table->text('description')->nullable();
+            $table->string('font')->nullable();
+            $table->string('button_text')->nullable();
+            $table->boolean('is_animated')->default(false);
+            $table->text('background')->nullable();
+            $table->json('dynamic_fields')->nullable();
+
             $table->timestamps();
         });
     }

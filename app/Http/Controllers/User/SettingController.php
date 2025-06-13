@@ -10,7 +10,7 @@ class SettingController extends Controller
 {
     public function index()
     {
-        return view('user.settings', []);
+        return view('user.settings', ['event' => null]);
     }
 
     public function saveSettings(Request $request)
