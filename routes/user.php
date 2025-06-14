@@ -26,6 +26,7 @@ Route::middleware(['auth'])->prefix('user')->name('user.')->group(function () {
 
     Route::get('/settings', [SettingController::class, 'index'])->name('settings');
     Route::post('/settings', [SettingController::class, 'saveSettings']);
+    Route::post('/settings-code/{id}', [SettingController::class, 'updateCode'])->name('settings-code');
     Route::get('/events', [EventController::class, 'index'])->name('events');
     Route::post('/events', [EventController::class, 'store']);
     Route::put('/events/{event}', [EventController::class, 'update'])->name('events.update');

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use App\Models\Event;
 use Illuminate\Http\Request;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class SettingController extends Controller
 {
@@ -43,6 +44,28 @@ class SettingController extends Controller
         $event->save();
 
         return response()->json(['success' => true]);
+    }
+
+    public function updateCode(Request $request)
+    {
+        $request->validate([
+            'code' => 'required|unique:events,code,'.$request->id,
+        ]);
+
+        $event = Event::findOrFail($request->id);
+
+        $event->code = $request->code;
+
+        $url = url('/' . $event->code);
+        $qrCode = base64_encode(
+            QrCode::format('png')->size(200)->generate($url)
+        );
+
+        $event->qr_code = 'data:image/png;base64,' . $qrCode;
+
+        $event->save();
+
+        return redirect()->back();
     }
 
 }

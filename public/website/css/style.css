@@ -541,7 +541,7 @@ footer {
   display: flex;
   justify-content: space-between;
   gap: 15px;
- 
+
 }
 .e-actionsheet .dismiss-action {
   position: absolute;
@@ -572,7 +572,6 @@ footer {
   width: 90%;
   max-width: 420px;
   border-radius: 20px;
-  background-image: url(../img/card-bg.png);
   min-height: 800px;
   display: flex;
   align-items: end;
@@ -601,28 +600,37 @@ footer {
   width: 100px;
   height: 100px;
   overflow: hidden;
-  animation: fadeIn 500ms ease-in both;
 }
 .welcome-bg .center-card .card-caption h4 {
-  animation: fadeIn 1500ms ease-in both;
   font-size: 32px;
 }
-.welcome-bg .center-card .card-caption p{
-  animation: fadeIn 2000ms ease-in both;
-}
-.welcome-bg .center-card .card-caption .input-wrap{
-  animation: fadeIn 2500ms ease-in both;
-}
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translate3d(0, -30%, 0);
-  }
 
-  to {
-    opacity: 1;
-    transform: translate3d(0, 0, 0);
-  }
+/* In your CSS file (e.g., animations.css) */
+.animated-element {
+    animation: fadeIn 500ms ease-in both;
+}
+
+.animated-element-delay-1 {
+    animation: fadeIn 1500ms ease-in both;
+}
+
+.animated-element-delay-2 {
+    animation: fadeIn 2000ms ease-in both;
+}
+
+.animated-element-delay-3 {
+    animation: fadeIn 2500ms ease-in both;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translate3d(0, -30%, 0);
+    }
+    to {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+    }
 }
 
 .center-card .img-wrap img {
@@ -700,15 +708,7 @@ footer {
   height: 100%;
 }
 .add-album .flex-banner {
-  background: url(../img/flex-banner.jpg);
-  background-size: cover;
-  min-height: 70vh;
-  background-position: center;
-  position: relative;
-  flex-direction: column;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+
 }
 .add-album .flex-banner img{
   max-width: 150px;
@@ -1730,7 +1730,7 @@ screen and (max-height: 300px) {
     width: 100%;
     padding: 1rem;
   }
-  
+
   .add-photos img{
     width: 50px;
   }
@@ -1744,7 +1744,7 @@ screen and (max-height: 300px) {
     .img-collage .child-wrap .post-img {
       width: 24.2%;
     }
-    
+
 }
 
 @media (max-width: 480px) {

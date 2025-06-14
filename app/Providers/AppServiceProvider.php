@@ -29,6 +29,7 @@ class AppServiceProvider extends ServiceProvider
             if ($user) {
                 $userActiveSubscription = $user->activeSubscription()->first();
             }
+
             $selectedEvent = null;
             if ($user && session()->has('selected_event_id')) {
                 $selectedEvent = $user->events()->find(session('selected_event_id'));

@@ -129,6 +129,8 @@
     let timeout;
 
     document.querySelectorAll('.event-setting input[name], .event-setting select[name], .event-setting .my-select').forEach((el) => {
+        if (el.name === 'code') return;
+
         el.addEventListener('input', function () {
             const field = this.name;
 

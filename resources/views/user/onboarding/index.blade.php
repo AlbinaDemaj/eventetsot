@@ -4,7 +4,7 @@
     <div class="lets-go-main">
         <div class="lets-inner">
             <div class="lets-logo">
-                <img src="{{ asset('user/assets/img/logo.png') }}" alt="" />
+                <img src="{{ asset('website/img/logo.svg') }}" alt="" />
             </div>
             <div class="lets-card">
                 <h2>Welcome {{ auth()->user()->name }}</h2>

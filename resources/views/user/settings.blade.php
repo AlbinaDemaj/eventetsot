@@ -40,23 +40,30 @@
                             </div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <div for="event_link" class="event-link">Event Custom Link
-                            <p><i class="fa-solid fa-star"></i> Pro <a href="#">Upgrade</a></p>
-                        </div>
-                        <p>Choose a unique link ending to easily share your event with guests.</p>
-                        <div class="form-area custom-url-main">
-                            <div class="input-wrapper setting-event-custom">
-                                <input type="text" value="{{ url('events/') }}/" readonly class="event-url"/>
-                                <input type="text" name="code" class="custom-url" id="url" value="{{ $selectedEvent->code }}" required>
-                                <button class="opn-btn">Save</button>
+                    <form action="{{ route('user.settings-code', $selectedEvent->id) }}" method="POST">
+                        @csrf
+                        <div class="form-group">
+                            <div for="event_link" class="event-link">Event Custom Link
+                                @if($userActiveSubscription->payment_method === 'free')
+                                    <p><i class="fa-solid fa-star"></i> Pro <a href="javascript:">Upgrade</a></p>
+                                @endif
                             </div>
-                            <button type="button" class="login-btn suggest-btn">
-                                <i class="fa-solid fa-wand-magic-sparkles"></i> Suggestions
-                            </button>
-                        </div>
+                            <p>Choose a unique link ending to easily share your event with guests.</p>
+                            <div class="form-area custom-url-main">
+                                <div class="input-wrapper setting-event-custom">
+                                    <input type="text" value="{{ url('events/') }}/" readonly class="event-url"/>
+                                    <input type="text" name="code"
+                                           class="custom-url" id="url"
+                                           value="{{ $selectedEvent->code }}"
+                                           {{ $userActiveSubscription->payment_method === 'free' ? 'readonly' : '' }}
+                                           required
+                                    >
+                                    <button class="opn-btn">Save</button>
+                                </div>
+                            </div>
 
-                    </div>
+                        </div>
+                    </form>
                 </div>
 
                 <div class="tab-content" id="appearance" style="display:none;">
@@ -249,56 +256,66 @@
                                             <div class="guest-tab-detail">
                                                 <p>Create a form to collect guest information before they proceed to your album. Add new fields as needed, or rearrange existing ones by dragging.</p>
 
-                                                <div id="dynamic-fields-container">
-                                                    @foreach(old('dynamic_fields', $selectedEvent->dynamic_fields ?? []) as $index => $field)
-                                                        <div class="form-group dynamic-field mb-3 p-3 border rounded" data-index="{{ $index }}">
-                                                            <div class="row">
-                                                                <div class="col-md-4">
-                                                                    <div class="form-group">
-                                                                        <label>Field Label</label>
-                                                                        <input type="text"
-                                                                               name="dynamic_fields[{{ $index }}][label]"
-                                                                               value="{{ $field['label'] ?? '' }}"
-                                                                               class="form-control field-label"
-                                                                               placeholder="e.g. Full Name"
-                                                                               required>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-4">
-                                                                    <div class="form-group">
-                                                                        <label>Field Type</label>
-                                                                        <select name="dynamic_fields[{{ $index }}][type]" class="form-control field-type">
-                                                                            <option value="text" {{ isset($field['type']) && $field['type'] == 'text' ? 'selected' : '' }}>Text</option>
-                                                                            <option value="email" {{ isset($field['type']) && $field['type'] == 'email' ? 'selected' : '' }}>Email</option>
-                                                                            <option value="tel" {{ isset($field['type']) && $field['type'] == 'tel' ? 'selected' : '' }}>Telephone</option>
-                                                                            <option value="number" {{ isset($field['type']) && $field['type'] == 'number' ? 'selected' : '' }}>Number</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-3">
-                                                                    <div class="form-group">
-                                                                        <label>Required</label>
-                                                                        <div class="form-check">
-                                                                            <input type="checkbox"
-                                                                                   name="dynamic_fields[{{ $index }}][required]"
-                                                                                   class="form-check-input field-required">
-                                                                            <label class="form-check-label">Required field</label>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-1 d-flex align-items-end">
-                                                                    <button type="button" class="btn btn-sm btn-danger remove-field mb-3">
-                                                                        <i class="fas fa-trash"></i>
-                                                                    </button>
-                                                                </div>
+                                                <div class="form-group">
+                                                    <div class="form-area">
+                                                        <div class="form-group">
+                                                            <div class="input-wrapper">
+                                                                <input type="text" value="" placeholder="Name" >
                                                             </div>
                                                         </div>
-                                                    @endforeach
+                                                    </div>
                                                 </div>
 
-                                                <button type="button" id="add-field" class="btn btn-primary mt-3">
-                                                    <i class="fas fa-plus"></i> Add Field
-                                                </button>
+{{--                                                <div id="dynamic-fields-container">--}}
+{{--                                                    @foreach(old('dynamic_fields', $selectedEvent->dynamic_fields ?? []) as $index => $field)--}}
+{{--                                                        <div class="form-group dynamic-field mb-3 p-3 border rounded" data-index="{{ $index }}">--}}
+{{--                                                            <div class="row">--}}
+{{--                                                                <div class="col-md-4">--}}
+{{--                                                                    <div class="form-group">--}}
+{{--                                                                        <label>Field Label</label>--}}
+{{--                                                                        <input type="text"--}}
+{{--                                                                               name="dynamic_fields[{{ $index }}][label]"--}}
+{{--                                                                               value="{{ $field['label'] ?? '' }}"--}}
+{{--                                                                               class="form-control field-label"--}}
+{{--                                                                               placeholder="e.g. Full Name"--}}
+{{--                                                                               required>--}}
+{{--                                                                    </div>--}}
+{{--                                                                </div>--}}
+{{--                                                                <div class="col-md-4">--}}
+{{--                                                                    <div class="form-group">--}}
+{{--                                                                        <label>Field Type</label>--}}
+{{--                                                                        <select name="dynamic_fields[{{ $index }}][type]" class="form-control field-type">--}}
+{{--                                                                            <option value="text" {{ isset($field['type']) && $field['type'] == 'text' ? 'selected' : '' }}>Text</option>--}}
+{{--                                                                            <option value="email" {{ isset($field['type']) && $field['type'] == 'email' ? 'selected' : '' }}>Email</option>--}}
+{{--                                                                            <option value="tel" {{ isset($field['type']) && $field['type'] == 'tel' ? 'selected' : '' }}>Telephone</option>--}}
+{{--                                                                            <option value="number" {{ isset($field['type']) && $field['type'] == 'number' ? 'selected' : '' }}>Number</option>--}}
+{{--                                                                        </select>--}}
+{{--                                                                    </div>--}}
+{{--                                                                </div>--}}
+{{--                                                                <div class="col-md-3">--}}
+{{--                                                                    <div class="form-group">--}}
+{{--                                                                        <label>Required</label>--}}
+{{--                                                                        <div class="form-check">--}}
+{{--                                                                            <input type="checkbox"--}}
+{{--                                                                                   name="dynamic_fields[{{ $index }}][required]"--}}
+{{--                                                                                   class="form-check-input field-required">--}}
+{{--                                                                            <label class="form-check-label">Required field</label>--}}
+{{--                                                                        </div>--}}
+{{--                                                                    </div>--}}
+{{--                                                                </div>--}}
+{{--                                                                <div class="col-md-1 d-flex align-items-end">--}}
+{{--                                                                    <button type="button" class="btn btn-sm btn-danger remove-field mb-3">--}}
+{{--                                                                        <i class="fas fa-trash"></i>--}}
+{{--                                                                    </button>--}}
+{{--                                                                </div>--}}
+{{--                                                            </div>--}}
+{{--                                                        </div>--}}
+{{--                                                    @endforeach--}}
+{{--                                                </div>--}}
+
+{{--                                                <button type="button" id="add-field" class="btn btn-primary mt-3">--}}
+{{--                                                    <i class="fas fa-plus"></i> Add Field--}}
+{{--                                                </button>--}}
                                             </div>
                                         </div>
                                     </div>
@@ -319,14 +336,19 @@
                                                 <h4 class="m-0" id="preview-title">{{ $selectedEvent->name }}</h4>
                                                 <p id="preview-description">{{ $selectedEvent->description ?? 'Share your photo & video with us' }}</p>
                                                 <div id="preview-fields-container">
-                                                    @foreach($selectedEvent->dynamic_fields ?? [] as $index => $field)
-                                                        <div class="input-wrap mb-2" data-index="{{ $index }}">
-                                                            <input type="{{ $field['type'] ?? 'text' }}"
-                                                                   class="form-control"
-                                                                   placeholder="{{ $field['label'] ?? 'Field ' . ($index + 1) }}"
-                                                                {{ isset($field['required']) && $field['required'] ? 'required' : '' }}>
-                                                        </div>
-                                                    @endforeach
+{{--                                                    @foreach($selectedEvent->dynamic_fields ?? [] as $index => $field)--}}
+{{--                                                        <div class="input-wrap mb-2" data-index="{{ $index }}">--}}
+{{--                                                            <input type="{{ $field['type'] ?? 'text' }}"--}}
+{{--                                                                   class="form-control"--}}
+{{--                                                                   placeholder="{{ $field['label'] ?? 'Field ' . ($index + 1) }}"--}}
+{{--                                                                {{ isset($field['required']) && $field['required'] ? 'required' : '' }}>--}}
+{{--                                                        </div>--}}
+{{--                                                    @endforeach--}}
+                                                    <div class="input-wrap mb-2">
+                                                        <input type="text"
+                                                               class="form-control"
+                                                               placeholder="Name">
+                                                    </div>
                                                 </div>
                                                 <div class="submit-wrap">
                                                     <button type="button" class="login-btn" id="preview-button">{{ $selectedEvent->button_text ?? 'Continue' }}</button>

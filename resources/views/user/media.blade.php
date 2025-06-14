@@ -39,7 +39,7 @@
                     </div>
 
                     <div class="progress-btn">
-                        <button type="submit" class="login-btn" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo">
+                        <button type="submit" class="login-btn" data-bs-toggle="modal" data-bs-target="#pricingModal" data-bs-whatever="@mdo">
                             Merr më shumë
                         </button>
                     </div>
@@ -79,109 +79,5 @@
         </div>
     </div>
 
-    {{-- Price Modal --}}
-    <div class="modal fade pricing-modal" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-xl modal-dialog-centered">
-          <div class="modal-content">
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            <div class="modal-body">
-                <section class="epricing my-5">
-                    <div class="container">
-                        
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="pricing-table">
-                                    <h2><strong>Falas</strong><br><small>€</small>0</h2>
-                                    <p>E shkëlqyeshme për ditëlindje, mbledhje familjare dhe ngjarje apo raste të tjera të vogla.</p>
-                                    <ul class="checkitems mb-4 pricing text-start">
-                                        <li>Deri në 20 ngarkime fotosh dhe videosh</li>
-                                        <li>Të ftuar dhe pjesëmarrës të pakufizuar</li>
-                                        <li>Ngarkimet ruhen për 7 ditë</li>
-                                        <li>Opsione bazë për personalizim</li>
-                                        <li>Aktive për 3 orë nga data e eventit</li>
-                                        <li>Të gjitha ngarkimet ruhen në cilësi të mirë</li>
-                                    </ul>
-                                    <a href="#" class="btn login-btn">Krijoni Eventin Tuaj</a>
-                                </div>
-                            </div>
-            
-                            <div class="col-md-6">
-                                <div class="pricing-table">
-                                    <h2><strong>Plus</strong><br><small>€</small>100</h2>
-                                    <p>Ideale për dasma të mëdha, konferenca, koncerte, festa dhe eventet publike.</p>
-                                    <ul class="checkitems mb-4 pricing text-start">
-                                        <li>Ngarkime të pakufizuara të fotove dhe videove</li>
-                                        <li>Të ftuar dhe pjesëmarrës të pakufizuar</li>
-                                        <li>Ngarkimet ruhën për 6 muaj</li>
-                                        <li>Opsione të avancuara për personalizim</li>
-                                        <li>Aktive për 30 ditë nga data e eventit</li>
-                                        <li>Të gjitha ngarkimet ruhën në cilësi të lartë</li>
-                                        <li>Shkarkoni të gjitha fotot dhe videot menjëherë</li>
-                                    </ul>
-                                    <a href="javascript:" class="btn login-btn" data-bs-toggle="modal" data-bs-target="#paymentpay">
-                                        Krijoni Eventin Tuaj
-                                    </a>
-            
-                                    <form id="subscribe-form-1" action="{{ route('subscriptions.subscribe', 1) }}" method="POST" style="display: none;">
-                                        @csrf
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                        
-                    </div>
-                </section>
-            </div>
-            
-          </div>
-        </div>
-    </div>
 
-    <div class="modal fade" id="paymentpay" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-centered">
-          <div class="modal-content ">
-            <div class="modal-header">
-              
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body p-0">
-                <div class="payment-modal">
-                    <div class="payment-right-side">
-                        <h3>Order Summary</h3>
-                        <h2>$99.00</h2>
-                        <h5><img src="{{ asset('user/assets/img/logo.png') }}" /> Pro Event</h5>
-                        <div class="price-total-main">
-                            <div class="price-subtotal">
-                                <h4>Subtotal</h4>
-                                <h5>$99.00</h5>
-                            </div>
-                            <div class="price-vat">
-                                <h4>VAT</h4>
-                                <h5>$0.00</h5>
-                            </div>
-                            <div class="price-total">
-                                <h4>Total</h4>
-                                <h5>$99.00</h5>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="payment-left-side">
-                        <h3>Your details</h3> 
-                        <p>We collect this information to help combat fraud, and to keep your payment secure.</p>   
-                        <div class="form-group mb-3">
-                            <label>Email</label>
-                            <input type="text" class="form-control" name="name" placeholder="Email">
-                        </div>
-                        <div class="form-group mb-3">
-                            <label>Country</label>
-                            <input type="text" class="form-control" name="name" placeholder="Country">
-                        </div>
-                        <button type="button" class="btn login-btn" data-bs-dismiss="modal">Continue</button>
-                    </div>
-                </div>
-            </div>
-            
-          </div>
-        </div>
-      </div>
 @endsection

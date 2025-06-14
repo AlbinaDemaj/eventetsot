@@ -16,7 +16,7 @@
             <div class="col-lg-6 col-md-12">
                 <div class="right-area">
                     <div class="logo">
-                        <img src="{{ asset('user/assets/img/logo.png') }}" alt=""/>
+                        <img src="{{ asset('website/img/logo.svg') }}" alt=""/>
                     </div>
                     <div class="auth-btn">
 
