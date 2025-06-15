@@ -90,7 +90,7 @@ class PaymentService
         return [
 //            'success' => filter_var($data['IsSuccess'] ?? false, FILTER_VALIDATE_BOOLEAN),
             'success' => true,
-            'transaction_id' => $data['OrderId'] ?? null,
+            'transaction_id' => $data['orderId'] ?? null,
             'client_order_id' => $data['ClientOrderId'] ?? null
         ];
     }
