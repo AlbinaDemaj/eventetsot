@@ -1213,7 +1213,7 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination {
     text-align: center;
     margin-top: 2rem;
 }
-.pricing-modal .pricing-table.active {
+.active-subs {
     background: #e4e4e4;
 }
 .pricing-modal .pricing-table .active-message {
