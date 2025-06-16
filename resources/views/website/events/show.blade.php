@@ -20,14 +20,26 @@
             <div class="img-collage">
                 <div class="child-wrap img-gallery-magnific">
                     @foreach($event->media()->get() as $media)
+                        @if($media->file_type === 'video/mp4')
                         <div class="post-img magnific-img">
-                            <a href="{{ asset('storage/' . $media->file_path) }}" class="image-popup-vertical-fit">
-                                <img src="{{ asset('storage/' . $media->file_path) }}">
-                                @if($media->caption_name || $media->caption_text)
-                                    <img src="../website/img/comment.png" class="cmnt-img" />
-                                @endif
-                            </a>
+                            <video controls>
+                                <source src="{{ asset('storage/' . $media->file_path) }}" type="{{ $media->file_type }}">
+                                Your browser does not support the video tag.
+                            </video>
+                            @if($media->caption_name || $media->caption_text)
+                                <img src="../website/img/comment.png" class="cmnt-img" />
+                            @endif
                         </div>
+                        @else
+                            <div class="post-img magnific-img">
+                                <a href="{{ asset('storage/' . $media->file_path) }}" class="image-popup-vertical-fit">
+                                    <img src="{{ asset('storage/' . $media->file_path) }}">
+                                    @if($media->caption_name || $media->caption_text)
+                                        <img src="../website/img/comment.png" class="cmnt-img" />
+                                    @endif
+                                </a>
+                            </div>
+                        @endif
                     @endforeach
                 </div>
             </div>
