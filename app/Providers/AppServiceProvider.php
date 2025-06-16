@@ -23,9 +23,14 @@ class AppServiceProvider extends ServiceProvider
     {
         // Share common variables with all views
         view()->composer('*', function ($view) {
-            $userActiveSubscription = null;
             $user = auth()->user();
 
+            // Skip all checks for admin users
+            if (auth()->guard()->name === 'admin') {
+                return;
+            }
+
+            $userActiveSubscription = null;
             if ($user) {
                 $userActiveSubscription = $user->activeSubscription()->first();
             }
@@ -35,8 +40,7 @@ class AppServiceProvider extends ServiceProvider
                 $selectedEvent = $user->events()->find(session('selected_event_id'));
             }
 
-            if (
-                $user &&
+            if ($user &&
                 !session()->has('selected_event_id') &&
                 !request()->routeIs('user.onboarding.*')
             ) {
@@ -46,10 +50,12 @@ class AppServiceProvider extends ServiceProvider
 
             $public_event = Event::where('is_public', true)->latest()->first();
 
-            $view->with('userActiveSubscription', $userActiveSubscription);
-            $view->with('currentUser', $user);
-            $view->with('publicEvent', $public_event);
-            $view->with('selectedEvent', $selectedEvent);
+            $view->with([
+                'userActiveSubscription' => $userActiveSubscription,
+                'currentUser' => $user,
+                'publicEvent' => $public_event,
+                'selectedEvent' => $selectedEvent
+            ]);
         });
 
         // Set default string length for migrations

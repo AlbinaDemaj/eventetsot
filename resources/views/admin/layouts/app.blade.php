@@ -28,38 +28,13 @@
                 <a class="navbar-brand" href="index.html">
                     <img src="{{ asset('admin/assets/img/logo.png') }}" />
                 </a>
-                <div class="form-group">
-                    <label for="email">Current Event</label>
-                    <select class="my-select selectpicker" data-container="body">
-                        <option>View Event</option>
-                        <option>Create New Event</option>
 
-                    </select>
-                </div>
                 <div class="nav">
                     <ul>
-                        <li>
-                            <a class="nav-link" href="index.html">
+                        <li class="active">
+                            <a class="nav-link" href="{{ route('admin.dashboard') }}">
                                 <div class="sb-nav-link-icon"><i class="fa-solid fa-house-chimney"></i></div>
                                 Home
-                            </a>
-                        </li>
-                        <li>
-                            <a class="nav-link" href="#">
-                                <div class="sb-nav-link-icon"><i class="fa-solid fa-photo-film"></i></div>
-                                Photo & Video
-                            </a>
-                        </li>
-                        <li>
-                            <a class="nav-link" href="#">
-                                <div class="sb-nav-link-icon"><i class="fa-solid fa-sliders"></i></div>
-                                Event Setting
-                            </a>
-                        </li>
-                        <li>
-                            <a class="nav-link" href="#">
-                                <div class="sb-nav-link-icon"><img src="{{ asset('admin/assets/img/red-carpet.png') }}" alt=""></div>
-                                View Event
                             </a>
                         </li>
                     </ul>
@@ -69,8 +44,8 @@
                         <img src="{{ asset('admin/assets/img/user.png') }}" />
                     </div>
                     <div class="name-area">
-                        <div class="small">Sam Wheelerc</div>
-                        <p>samwheeler@example.com</p>
+                        <div class="small">Admin</div>
+                        <p>admin@eventetsot.com</p>
                     </div>
                 </div>
             </div>
@@ -84,22 +59,20 @@
                     <i class="fas fa-bars"></i>
                 </button> -->
                 <div class="header-text">
-                    <h2>Welcome Sam <span>Free Plan</span></h2>
+                    <h2>Welcome Back</h2>
                 </div>
                 <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown"
-                           aria-expanded="false"><img src="{{ asset('admin/assets/img/user.png') }}" alt="" /> Sam Wheeler</a>
+                           aria-expanded="false"><img src="{{ asset('admin/assets/img/user.png') }}" alt="" /> Admin</a>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="#!">Settings</a></li>
-                            <li><a class="dropdown-item" href="#!">Activity Log</a></li>
-                            <li>
-                                <hr class="dropdown-divider" />
-                            </li>
-                            <li><a class="dropdown-item" href="#!">Logout</a></li>
+                            <li><a class="dropdown-item" href="{{ route('admin.logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">Logout</a></li>
                         </ul>
                     </li>
                 </ul>
+                <form id="logout-form" action="{{ route('admin.logout') }}" method="POST" class="d-none">
+                    @csrf
+                </form>
             </nav>
             @yield('content')
         </main>
