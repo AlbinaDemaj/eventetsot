@@ -1835,7 +1835,7 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination {
     }
 
     .header-text h2 {
-        font-size: 14px;
+        font-size: 12px;
         display: flex;
         flex-direction: column;
         gap: 10px;
@@ -1845,6 +1845,7 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination {
         font-size: 10px;
         padding: 5px 5px;
         text-align: center;
+        width: 95px;
     }
 
     #layoutSidenav_content .main-content .mbl-area p {
