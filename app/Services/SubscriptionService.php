@@ -36,7 +36,7 @@ class SubscriptionService
         ]);
     }
 
-    public function activateSubscription(UserSubscription $subscription, string $paymentReference): UserSubscription
+    public function activateSubscription(UserSubscription $subscription, string $paymentReference)
     {
         return $subscription->update([
             'is_active' => true,
@@ -48,10 +48,12 @@ class SubscriptionService
     public function cancelActiveSubscriptions(User $user): void
     {
         $user->subscriptions()
-            ->active()
-            ->get()
-            ->each
-            ->cancel();
+            ->where('status', 'active')
+            ->update([
+                'status' => 'cancelled',
+                'is_active' => false,
+                'canceled_at' => now()
+            ]);
     }
 
     public function renewExpiredSubscriptions(): void

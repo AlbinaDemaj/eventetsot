@@ -197,7 +197,11 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="pricing-table">
-                                    <h2><strong>Falas</strong><br><small>€</small>0</h2>
+                                    <h2><strong>Falas</strong><br><small>€</small>0
+                                        @if($userActiveSubscription->payment_method === 'free')
+                                            <small class="active-message">Abonimi Aktuale</small>
+                                        @endif
+                                    </h2>
                                     <p>E shkëlqyeshme për ditëlindje, mbledhje familjare dhe ngjarje apo raste të tjera të vogla.</p>
                                     <ul class="checkitems mb-4 pricing text-start">
                                         <li>Deri në 20 ngarkime fotosh dhe videosh</li>
@@ -207,13 +211,23 @@
                                         <li>Aktive për 3 orë nga data e eventit</li>
                                         <li>Të gjitha ngarkimet ruhen në cilësi të mirë</li>
                                     </ul>
-                                    <a href="#" class="btn login-btn">Krijoni Eventin Tuaj</a>
+                                    <a href="javascript;" class="btn login-btn {{ $userActiveSubscription->payment_method === 'free' ? 'active-subs' : '' }}">
+                                        @if($userActiveSubscription->payment_method === 'free')
+                                            Abonimi Aktuale
+                                        @else
+                                            Krijoni Eventin Tuaj
+                                        @endif
+                                    </a>
                                 </div>
                             </div>
 
                             <div class="col-md-6">
-                                <div class="pricing-table">
-                                    <h2><strong>Plus</strong><br><small>€</small>100</h2>
+                                <div class="pricing-table {{ $userActiveSubscription->payment_method === 'ibas' ? 'active' : '' }}">
+                                    <h2><strong>Plus</strong><br><small>€</small>100
+                                        @if($userActiveSubscription->payment_method === 'ibas')
+                                            <small class="active-message">Abonimi Aktuale</small>
+                                        @endif
+                                    </h2>
                                     <p>Ideale për dasma të mëdha, konferenca, koncerte, festa dhe eventet publike.</p>
                                     <ul class="checkitems mb-4 pricing text-start">
                                         <li>Ngarkime të pakufizuara të fotove dhe videove</li>

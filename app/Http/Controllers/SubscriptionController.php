@@ -57,16 +57,13 @@ class SubscriptionController extends Controller
 
             $callbackUrl = route('subscription.payment.callback', [
                 'plan' => $plan->id,
-                'subscription' => $subscription->id,
             ]);
             $callbackUrl = $callbackUrl . '?' . http_build_query(['orderId' => $subscription->id]);
 
             $redirectUrl = route('subscription.payment.redirect', [
                 'plan' => $plan->id,
-                'subscription' => $subscription->id
             ]);
             $redirectUrl = $redirectUrl . '?' . http_build_query(['orderId' => $subscription->id]);
-
 
             $paymentFormHtml = $this->paymentService->processPayment(
                 clientOrderId: $subscription->id, // Use subscription ID as ClientOrderId
@@ -101,7 +98,7 @@ class SubscriptionController extends Controller
             if ($callbackData['success']) {
                 $this->subscriptionService->activateSubscription(
                     $subscription,
-                    $callbackData['transaction_id'] ?? $request->input('OrderId')
+                    $callbackData['transaction_id'] ?? $request->input('orderId')
                 );
 
                 // Additional payment success logic if needed
@@ -125,26 +122,28 @@ class SubscriptionController extends Controller
 
     public function handlePaymentRedirect(Request $request, SubscriptionPlan $plan, UserSubscription $subscription)
     {
+        $userSubscription = UserSubscription::findOrFail($request->input('orderId'));
+
         try {
             Log::info('IBAS Redirect: ', $request->all());
             $callbackData = $this->paymentService->handleCallback($request->all());
 
             if ($callbackData['success']) {
                 $this->subscriptionService->activateSubscription(
-                    $subscription,
-                    $callbackData['transaction_id'] ?? $request->input('OrderId')
+                    $userSubscription,
+                    $callbackData['transaction_id'] ?? $request->input('orderId')
                 );
 
                 return redirect()->route('user.home')
                     ->with('success', __('Subscription activated successfully!'));
             }
 
-            $subscription->update(['status' => 'failed']);
+            $userSubscription->update(['status' => 'failed']);
             return redirect()->route('user.home')
                 ->with('error', __('Payment failed. Please try again.'));
 
         } catch (\Exception $e) {
-            $subscription->update(['status' => 'failed']);
+            $userSubscription->update(['status' => 'failed']);
             return redirect()->route('user.home')
                 ->with('error', __('There was an error processing your payment.'));
         }
