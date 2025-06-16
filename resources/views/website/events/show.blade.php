@@ -5,7 +5,7 @@
     <div class="add-album">
          <div class="add-album-banner">
 
-             <div class="flex-banner" style="background: url({{ $event->background ? asset('storage/' . $event->background) : asset('website/img/flex-banner.jpg') }}); background-size: cover; min-height: 70vh; background-position: center; position: relative; flex-direction: column; display: flex; align-items: center; justify-content: center;">
+             <div class="flex-banner" style="background: url({{ $event->background ? asset('storage/' . $event->background) : '../website/img/flex-banner.jpg'}}); background-size: cover; min-height: 70vh; background-position: center; position: relative; flex-direction: column; display: flex; align-items: center; justify-content: center;">
                     <img src="{{ asset($event->logo ?: 'website/img/card-bg.png') }}" />
                     <h4>{{ $event->name }}</h4>
                     <a href="{{ route('events.upload', request()->route('code')) }}" class="btn e-btn-primary"><span>+</span> Shtoni Album</a>
