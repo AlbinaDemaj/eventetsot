@@ -96,8 +96,9 @@
             @if($userActiveSubscription->payment_method === 'free')
                 <div class="payment-alert">
                     <div class="alert alert-warning" role="alert">
-                        <i class="fa-solid fa-info-circle"></i>
-                        You're currently using the limited free plan. Upgrade your event to unlock all the features we are offering!
+                        <p><i class="fa-solid fa-info-circle"></i>
+                            You're currently using the limited free plan. Upgrade your event to unlock all the features we are offering!</p>
+                            
                         <div class="progress-btn">
                             <button type="submit" class="login-btn" data-bs-toggle="modal" data-bs-target="#pricingModal" data-bs-whatever="@mdo">Upgrade Plan</button>
                         </div>

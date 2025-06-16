@@ -1241,6 +1241,10 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination {
     gap: 10px;
     position: relative;
 }
+.payment-alert .alert-warning p {
+    font-size: 14px;
+    margin-bottom: 0; 
+}
 .close-alert {
     background: transparent;
     border: none;
@@ -1248,7 +1252,7 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination {
     position: absolute;
     right: 5px;
     color: #d28d01;
-    top: 50%;
+    top: 10px;
     transform: translateY(-50%);
 }
 .setting-content .form-area .opn-btn {
@@ -1690,6 +1694,16 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination {
     height: 45px;
 }
 /* Media Query */
+@media (max-width: 1200px) {
+    .payment-alert .progress-btn {
+        position: relative;
+        width: 110px;
+        margin-top: 10px; 
+        right: 0;
+        top: 0;
+        transform: none;  
+    }
+}
 @media (max-width: 992px) {
     .login-main {
         display: block;
