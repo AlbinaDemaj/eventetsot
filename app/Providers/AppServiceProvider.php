@@ -3,6 +3,9 @@
 namespace App\Providers;
 
 use App\Models\Event;
+use App\Models\SubscriptionPlan;
+use App\Services\TranslationService;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 
@@ -13,7 +16,13 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->singleton('translation.service', function($app) {
+            return new TranslationService();
+        });
+
+        Blade::directive('lang', function ($expression) {
+            return "<?php echo lang($expression); ?>";
+        });
     }
 
     /**
@@ -31,6 +40,7 @@ class AppServiceProvider extends ServiceProvider
             }
 
             $userActiveSubscription = null;
+            $allSubscriptionPlans = SubscriptionPlan::get();
             if ($user) {
                 $userActiveSubscription = $user->activeSubscription()->first();
             }
@@ -54,7 +64,8 @@ class AppServiceProvider extends ServiceProvider
                 'userActiveSubscription' => $userActiveSubscription,
                 'currentUser' => $user,
                 'publicEvent' => $public_event,
-                'selectedEvent' => $selectedEvent
+                'selectedEvent' => $selectedEvent,
+                'allSubscriptionPlans' => $allSubscriptionPlans
             ]);
         });
 

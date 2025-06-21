@@ -170,7 +170,7 @@
                                         <div class="tab-pane fade show active" id="pills-appearance" role="tabpanel" aria-labelledby="pills-appearance-tab">
                                             <div class="welcome-screen-appearnce">
                                                 <div class="row">
-                                                    <div class="col-md-8">
+                                                    <div class="col-md-12">
                                                         <div class="form-group">
                                                             <label for="title">Title</label>
                                                             <p>Enter the main title for your welcome screen.</p>
@@ -178,19 +178,6 @@
                                                                 <div class="form-group">
                                                                     <div class="input-wrapper">
                                                                         <input type="text" name="title" id="title" value="{{ old('title', $selectedEvent->name) }}" required>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-4">
-                                                        <div class="form-group">
-                                                            <label for="font"></label>
-                                                            <p class="pt-1">Choose font:</p>
-                                                            <div class="form-area">
-                                                                <div class="form-group">
-                                                                    <div class="input-wrapper">
-                                                                        <input type="text" name="font" id="font" value="{{ old('font', $selectedEvent->font) }}" required>
                                                                     </div>
                                                                 </div>
                                                             </div>

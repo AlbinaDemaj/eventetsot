@@ -67,8 +67,7 @@ class User extends Authenticatable
     public function activeSubscription()
     {
         return $this->hasOne(UserSubscription::class)
-            ->active()
-            ->latestOfMany();
+            ->active();
     }
 
     public function canUpload(int $count = 1): bool

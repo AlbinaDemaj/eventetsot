@@ -34,6 +34,7 @@
     <div class="container">
         <nav class="navbar navbar-expand-lg">
             <div class="container-fluid">
+                <x-language-switcher />
                 <a class="navbar-brand" href="{{ route('index') }}"><img src="{{ asset('website/img/logo.svg') }}"></a>
                 <button class="navbar-toggler shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -41,21 +42,20 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('index') }}">Ballina</a>
+                            <a class="nav-link" href="{{ route('index') }}">{{lang('website', 'header.home')}}</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('pricing') }}">Abonimi</a>
+                            <a class="nav-link" href="{{ route('pricing') }}">{{lang('website', 'header.pricing')}}</a>
                         </li>
-
                     </ul>
                     <div class="d-flex gap-4 align-items-center">
                         @guest
-                            <a href="{{ route('login') }}" class="nav-link">Kyçu</a>
-                            <a href="{{ route('register') }}" class="btn e-btn-primary">Filloni</a>
+                            <a href="{{ route('login') }}" class="nav-link">{{lang('website', 'header.login')}}</a>
+                            <a href="{{ route('register') }}" class="btn e-btn-primary">{{lang('website', 'header.get_started')}}</a>
                         @endguest
                         @auth
-                            <a href="{{ route('user.home') }}" class="nav-link">Kyçu</a>
-                            <a href="{{ route('user.home') }}" class="btn e-btn-primary">Filloni</a>
+                            <a href="{{ route('user.home') }}" class="nav-link">{{lang('website', 'header.login')}}</a>
+                            <a href="{{ route('user.home') }}" class="btn e-btn-primary">{{lang('website', 'header.get_started')}}</a>
                         @endauth
                     </div>
                 </div>
@@ -66,51 +66,45 @@
 
 @yield('content')
 
-
-
 <footer>
     <div class="container">
-      <div class="row">
-        <div class="col-md-3">
-          <img src="website/img/logo.svg">
-
-        </div>
-        <div class="col-md-3">
-          <div class="fnav">
-
-            <ul class="general">
-              <li><a href="{{ route('index') }}">Ballina</a></li>
-              <li><a href="{{ route('pricing') }}">Abonimi</a></li>
-              <li><a href="{{ route('contact') }}">Kontakto</a></li>
-
-            </ul>
-          </div>
-        </div>
-        <div class="col-md-3">
-          <div class="fnav">
-            <strong>QENDRA E KLIENTIT</strong>
-            <ul>
-              <li><a href="#faq">Pyetjet më të shpeshta</a></li>
-              <li><a href="{{ route('contactAnkesa') }}">Ankesa dhe Sygjerime</a></li>
-              <li><a href="{{ route('about') }}">Rreth Nesh</a></li>
-            </ul>
-          </div>
-        </div>
-        <div class="col-md-3">
-          <div class="fnav">
-            <strong>Rrjetet Sociale</strong>
-            <div class="social-links mt-2">
-              <a href="https://instagram.com/eventetsot"><img src="website/img/ig.svg"></a>
+        <div class="row">
+            <div class="col-md-3">
+                <img src="{{ asset('website/img/logo.svg') }}">
             </div>
-          </div>
+            <div class="col-md-3">
+                <div class="fnav">
+                    <ul class="general">
+                        <li><a href="{{ route('index') }}">{{lang('website', 'header.home')}}</a></li>
+                        <li><a href="{{ route('pricing') }}">{{lang('website', 'header.pricing')}}</a></li>
+                        <li><a href="{{ route('contact') }}">{{lang('website', 'contactAnkesa')}}</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="fnav">
+                    <strong>{{lang('website', 'footer.client_center')}}</strong>
+                    <ul>
+                        <li><a href="#faq">{{lang('website', 'footer.faq')}}</a></li>
+                        <li><a href="{{ route('contactAnkesa') }}">{{lang('website', 'footer.complaints')}}</a></li>
+                        <li><a href="{{ route('about') }}">{{lang('website', 'footer.about')}}</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="fnav">
+                    <strong>{{lang('website', 'footer.social')}}</strong>
+                    <div class="social-links mt-2">
+                        <a href="https://instagram.com/eventetsot"><img src="{{ asset('website/img/ig.svg') }}"></a>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-      <div class="d-md-flex align-items-center justify-content-center mt-5">
-        <p class="m-0">© 2025 eventetsot.com.</p>
-
-      </div>
+        <div class="d-md-flex align-items-center justify-content-center mt-5">
+            <p class="m-0">{{lang('website', 'footer.copyright')}}</p>
+        </div>
     </div>
-  </footer>
+</footer>
 
 <script type="text/javascript" src="{{ asset('website/js/bootstrap.bundle.min.js') }}"></script>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

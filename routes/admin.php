@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Admin\SubscriptionPlanController;
+use App\Http\Controllers\Admin\TranslationController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\UserController;
@@ -15,5 +17,8 @@ Route::prefix('admin')->group(function() {
         Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
         Route::resource('users', UserController::class);
         Route::get('users/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
+        Route::resource('subscription-plans', SubscriptionPlanController::class);
+        Route::resource('translations', TranslationController::class);
+
     });
 });

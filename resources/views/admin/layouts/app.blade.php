@@ -32,10 +32,24 @@
 
                 <div class="nav">
                     <ul>
-                        <li class="active">
+                        <li>
                             <a class="nav-link" href="{{ route('admin.dashboard') }}">
                                 <div class="sb-nav-link-icon"><i class="fa-solid fa-house-chimney"></i></div>
-                                Home
+                                Users
+                            </a>
+                        </li>
+
+                        <li>
+                            <a class="nav-link" href="{{ route('admin.subscription-plans.index') }}">
+                                <div class="sb-nav-link-icon"><i class="fa-solid fa-briefcase"></i></div>
+                                Subscription Plans
+                            </a>
+                        </li>
+
+                        <li>
+                            <a class="nav-link" href="{{ route('admin.translations.index') }}">
+                                <div class="sb-nav-link-icon"><i class="fa-solid fa-globe"></i></div>
+                                Translations
                             </a>
                         </li>
                     </ul>

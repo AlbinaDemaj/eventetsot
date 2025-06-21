@@ -29,6 +29,13 @@ Route::get('/events/{code}', [EventController::class, 'show'])->name('events.sho
 Route::get('/upload/{code}', [EventController::class, 'upload'])->name('events.upload');
 Route::post('/media', [MediaController::class, 'store'])->name('media.store');
 
+Route::get('set-locale/{locale}', function ($locale) {
+    if (in_array($locale, ['en', 'sq'])) {
+        session()->put('locale', $locale);
+    }
+    return back();
+})->name('set-locale');
+
 Route::middleware('auth')->group(function() {
     Route::get('templates', [TemplateMediaController::class, 'create'])->name('templates');
     Route::post('templates', [TemplateMediaController::class, 'store']);

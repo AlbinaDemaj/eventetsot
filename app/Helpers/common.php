@@ -64,3 +64,10 @@ if (!function_exists('getStorageDays')) {
         return $subscription->plan->limits['storage_days'] ?? 0;
     }
 }
+
+if (!function_exists('lang')) {
+    function lang($group, $key, $replace = [])
+    {
+        return app('translation.service')->get($group, $key, $replace, session()->get('locale'));
+    }
+}

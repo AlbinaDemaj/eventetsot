@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\SubscriptionPlan;
 use Illuminate\Http\Request;
 
 class WebsiteController extends Controller
@@ -43,7 +44,8 @@ class WebsiteController extends Controller
      */
     public function pricing()
     {
-        return view('website.pricing');
+        $subscription_plans = SubscriptionPlan::get();
+        return view('website.pricing', compact('subscription_plans'));
     }
 
     public function contact()

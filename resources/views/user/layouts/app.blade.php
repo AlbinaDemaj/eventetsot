@@ -98,7 +98,7 @@
                     <div class="alert alert-warning" role="alert">
                         <p><i class="fa-solid fa-info-circle"></i>
                             You're currently using the limited free plan. Upgrade your event to unlock all the features we are offering!</p>
-                            
+
                         <div class="progress-btn">
                             <button type="submit" class="login-btn" data-bs-toggle="modal" data-bs-target="#pricingModal" data-bs-whatever="@mdo">Upgrade Plan</button>
                         </div>
@@ -197,7 +197,7 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="pricing-table">
-                                    <h2><strong>Falas</strong><br><small>€</small>0
+                                    <h2><strong>{{ $allSubscriptionPlans[0]->name }}</strong><br><small>€</small>{{ substr($allSubscriptionPlans[0]->price , 0, -3) }}
                                         @if($userActiveSubscription->payment_method === 'free')
                                             <small class="active-message">Abonimi Aktuale</small>
                                         @endif
@@ -223,7 +223,7 @@
 
                             <div class="col-md-6">
                                 <div class="pricing-table {{ $userActiveSubscription->payment_method === 'ibas' ? 'active' : '' }}">
-                                    <h2><strong>Plus</strong><br><small>€</small>100
+                                    <h2><strong>{{ $allSubscriptionPlans[1]->name }}</strong><br><small>€</small>{{ substr($allSubscriptionPlans[1]->price , 0, -3) }}
                                         @if($userActiveSubscription->payment_method === 'ibas')
                                             <small class="active-message">Abonimi Aktuale</small>
                                         @endif
@@ -264,12 +264,12 @@
                 <div class="payment-modal">
                     <div class="payment-right-side">
                         <h3>Order Summary</h3>
-                        <h2>€100.00</h2>
+                        <h2>€{{ $allSubscriptionPlans[1]->price }}</h2>
                         <h5><img src="{{ asset('website/img/logo.svg') }}" /> Pro Event</h5>
                         <div class="price-total-main">
                             <div class="price-subtotal">
                                 <h4>Subtotal</h4>
-                                <h5>€100.00</h5>
+                                <h5>€{{ $allSubscriptionPlans[1]->price }}</h5>
                             </div>
                             <div class="price-vat">
                                 <h4>VAT</h4>
@@ -277,7 +277,7 @@
                             </div>
                             <div class="price-total">
                                 <h4>Total</h4>
-                                <h5>€100.00</h5>
+                                <h5>€{{ $allSubscriptionPlans[1]->price }}</h5>
                             </div>
                         </div>
                     </div>
@@ -289,7 +289,7 @@
                             <input type="text" class="form-control" readonly value="{{ auth()->user()->name }}" name="name" placeholder="Email">
                         </div>
                         <div class="form-group mb-3">
-                            <label>Country</label>
+                            <label>Email</label>
                             <input type="text" class="form-control" name="email" value="{{ auth()->user()->email }}" readonly placeholder="email">
                         </div>
                         <button type="button" class="btn login-btn" onclick="event.preventDefault(); document.getElementById('subscribe-form-1').submit();">Continue</button>
