@@ -3,50 +3,50 @@
 @section('content')
     <section class="epricing my-5 py-5">
         <div class="container">
-            <h1><strong>Çmimet</strong></h1>
-            <p>Zgjidhni planin që i përshtatet më së miri ngjarjes suaj.</p>
+            <h1><strong>{{lang('website', 'pricing.title')}}</strong></h1>
+            <p>{{lang('website', 'pricing.subtitle')}}</p>
             <div class="row">
                 <div class="col-md-6">
                     <div class="pricing-table">
-                        <h2><strong>Falas</strong><br><small>€</small>0</h2>
-                        <p>E shkëlqyeshme për ditëlindje, mbledhje familjare dhe ngjarje apo raste të tjera të vogla.</p>
+                        <h2><strong>{{ $subscription_plans[0]->name }}</strong><br><small>€</small>{{ substr($subscription_plans[0]->price , 0, -3) }}</h2>
+                        <p>{{lang('website', 'pricing.plan1.description')}}</p>
                         <ul class="checkitems mb-4 pricing text-start">
-                            <li>Deri në 20 ngarkime fotosh dhe videosh</li>
-                            <li>Të ftuar dhe pjesëmarrës të pakufizuar</li>
-                            <li>Ngarkimet ruhen për 7 ditë</li>
-                            <li>Opsione bazë për personalizim</li>
-                            <li>Aktive për 3 orë nga data e eventit</li>
-                            <li>Të gjitha ngarkimet ruhen në cilësi të mirë</li>
+                            <li>{{lang('website', 'pricing.plan1.features.1')}}</li>
+                            <li>{{lang('website', 'pricing.plan1.features.2')}}</li>
+                            <li>{{lang('website', 'pricing.plan1.features.3')}}</li>
+                            <li>{{lang('website', 'pricing.plan1.features.4')}}</li>
+                            <li>{{lang('website', 'pricing.plan1.features.5')}}</li>
+                            <li>{{lang('website', 'pricing.plan1.features.6')}}</li>
                         </ul>
                         @guest
-                            <a href="{{ route('register') }}" class="btn e-btn-primary">Krijoni Eventin Tuaj</a>
+                            <a href="{{ route('register') }}" class="btn e-btn-primary">{{lang('website', 'pricing.cta')}}</a>
                         @endguest
                         @auth
-                            <a href="javascript:" class="btn e-btn-primary">Krijoni Eventin Tuaj</a>
+                            <a href="javascript:" class="btn e-btn-primary">{{lang('website', 'pricing.cta')}}</a>
                         @endauth
                     </div>
                 </div>
 
                 <div class="col-md-6">
                     <div class="pricing-table">
-                        <h2><strong>Plus</strong><br><small>€</small>100</h2>
-                        <p>Ideale për dasma të mëdha, konferenca, koncerte, festa dhe eventet publike.</p>
+                        <h2><strong>{{ $subscription_plans[1]->name }}</strong><br><small>€</small>{{ substr($subscription_plans[1]->price , 0, -3) }}</h2>
+                        <p>{{lang('website', 'pricing.plan2.description')}}</p>
                         <ul class="checkitems mb-4 pricing text-start">
-                            <li>Ngarkime të pakufizuara të fotove dhe videove</li>
-                            <li>Të ftuar dhe pjesëmarrës të pakufizuar</li>
-                            <li>Ngarkimet ruhën për 6 muaj</li>
-                            <li>Opsione të avancuara për personalizim</li>
-                            <li>Aktive për 30 ditë nga data e eventit</li>
-                            <li>Të gjitha ngarkimet ruhën në cilësi të lartë</li>
-                            <li>Shkarkoni të gjitha fotot dhe videot menjëherë</li>
+                            <li>{{lang('website', 'pricing.plan2.features.1')}}</li>
+                            <li>{{lang('website', 'pricing.plan2.features.2')}}</li>
+                            <li>{{lang('website', 'pricing.plan2.features.3')}}</li>
+                            <li>{{lang('website', 'pricing.plan2.features.4')}}</li>
+                            <li>{{lang('website', 'pricing.plan2.features.5')}}</li>
+                            <li>{{lang('website', 'pricing.plan2.features.6')}}</li>
+                            <li>{{lang('website', 'pricing.plan2.features.7')}}</li>
                         </ul>
                         @guest
-                            <a href="{{ route('register') }}" class="btn e-btn-primary">Krijoni Eventin Tuaj</a>
+                            <a href="{{ route('register') }}" class="btn e-btn-primary">{{lang('website', 'pricing.cta')}}</a>
                         @endguest
 
                         @auth
                             <a href="javascript:" onclick="event.preventDefault(); document.getElementById('subscribe-form-1').submit();" class="btn e-btn-primary">
-                                Krijoni Eventin Tuaj
+                                {{lang('website', 'pricing.cta')}}
                             </a>
                         @endauth
 
@@ -56,8 +56,7 @@
                     </div>
                 </div>
             </div>
-            <p class="p-4 text-center">Çmimet janë në euro. Të gjitha planet tona i nënshtrohen kushteve tona të përdorimit dhe politikës së përdorimit të
-                drejtë.</p>
+            <p class="p-4 text-center">{{lang('website', 'pricing.footer_note')}}</p>
         </div>
     </section>
 @endsection

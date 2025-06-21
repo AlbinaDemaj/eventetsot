@@ -82,6 +82,14 @@ class SubscriptionController extends Controller
                 $subscription->update(['status' => 'failed']);
             }
 
+            $user->subscriptions()
+                ->where('payment_method', 'free')
+                ->update([
+                    'status' => 'active',
+                    'is_active' => true,
+                    'canceled_at' => null
+                ]);
+
             return redirect()->back()
                 ->with('error', __('Payment failed: :message', [
                     'message' => $e->getMessage()

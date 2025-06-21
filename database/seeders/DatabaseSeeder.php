@@ -24,6 +24,8 @@ class DatabaseSeeder extends Seeder
             TestUserSeeder::class,
             EventSeeder::class,
             TemplateSeeder::class,
+            LanguageSeeder::class,
+            TranslationSeeder::class,
         ]);
     }
 }
