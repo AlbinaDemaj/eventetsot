@@ -19,7 +19,7 @@ class TranslationController extends Controller
 
     public function index()
     {
-        $translations = Translation::with('items.language')->paginate(25);
+        $translations = Translation::with('items.language')->get();
         $languages = Language::all();
 
         return view('admin.translations.index', compact('translations', 'languages'));

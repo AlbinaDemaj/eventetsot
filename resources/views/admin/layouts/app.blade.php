@@ -35,27 +35,21 @@
                         <li>
                             <a class="nav-link" href="{{ route('admin.dashboard') }}">
                                 <div class="sb-nav-link-icon"><i class="fa-solid fa-house-chimney"></i></div>
-                                Ballina
+                                Users
                             </a>
                         </li>
 
                         <li>
-                            <a class="nav-link" href="#">
-                                <div class="sb-nav-link-icon"><i class="fa-solid fa-photo-film"></i></div>
-                                Foto & video
+                            <a class="nav-link" href="{{ route('admin.subscription-plans.index') }}">
+                                <div class="sb-nav-link-icon"><i class="fa-solid fa-briefcase"></i></div>
+                                Subscription Plans
                             </a>
                         </li>
 
                         <li>
-                            <a class="nav-link" href="#">
-                                <div class="sb-nav-link-icon"><i class="fa-solid fa-sliders"></i></div>
-                                Cilësimet e Eventit
-                            </a>
-                        </li>
-                        <li>
-                            <a class="nav-link" href="#">
-                                <div class="sb-nav-link-icon"><img src="{{ asset('admin/assets/img/red-carpet.png') }}" alt=""></div>
-                                Shiko Eventin
+                            <a class="nav-link" href="{{ route('admin.translations.index') }}">
+                                <div class="sb-nav-link-icon"><i class="fa-solid fa-globe"></i></div>
+                                Translations
                             </a>
                         </li>
                     </ul>
