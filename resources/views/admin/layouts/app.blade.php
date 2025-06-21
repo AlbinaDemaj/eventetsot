@@ -41,25 +41,25 @@
                         <li>
                             <a class="nav-link" href="index.html">
                                 <div class="sb-nav-link-icon"><i class="fa-solid fa-house-chimney"></i></div>
-                                Home
+                                Ballina
                             </a>
                         </li>
                         <li>
                             <a class="nav-link" href="#">
                                 <div class="sb-nav-link-icon"><i class="fa-solid fa-photo-film"></i></div>
-                                Photo & Video
+                                Foto & video
                             </a>
                         </li>
                         <li>
                             <a class="nav-link" href="#">
                                 <div class="sb-nav-link-icon"><i class="fa-solid fa-sliders"></i></div>
-                                Event Setting
+                                Cilësimet e Eventit
                             </a>
                         </li>
                         <li>
                             <a class="nav-link" href="#">
                                 <div class="sb-nav-link-icon"><img src="{{ asset('admin/assets/img/red-carpet.png') }}" alt=""></div>
-                                View Event
+                                Shiko Eventin
                             </a>
                         </li>
                     </ul>
@@ -84,7 +84,7 @@
                     <i class="fas fa-bars"></i>
                 </button> -->
                 <div class="header-text">
-                    <h2>Welcome Sam <span>Free Plan</span></h2>
+                    <h2>Mirë se erdhe, Sam<span>Plani Falas</span></h2>
                 </div>
                 <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
                     <li class="nav-item dropdown">

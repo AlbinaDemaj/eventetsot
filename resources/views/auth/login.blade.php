@@ -22,7 +22,7 @@
                             <a href="javascript:">
                                 <button class="spectacledcoder-hover-fill-button active login" type="button">
                                     <div class="color-fill"></div>
-                                    <p>Sign In</p>
+                                    <p>In-Kyçu </p>
                                 </button>
                             </a>
                         </div>
@@ -30,7 +30,7 @@
                             <a href="{{ route('register') }}">
                                 <button class="spectacledcoder-hover-fill-button signup" type="button">
                                     <div class="color-fill"></div>
-                                    <p>Sign Up</p>
+                                    <p>Up-Regjistrohu</p>
                                 </button>
                             </a>
                         </div>
@@ -44,7 +44,7 @@
                                     <div class="input-wrapper">
                                         <i class="fa-solid fa-envelope"></i>
                                         <input id="email" type="email" name="email" value="{{ old('email') }}"
-                                               placeholder="Enter Email" required>
+                                               placeholder="Email" required>
 
                                         @error('email')
                                         <span class="invalid-feedback" role="alert">
@@ -56,10 +56,10 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="password">Password</label>
+                                <label for="password">Fjalkalimi</label>
                                 <div class="input-wrapper">
                                     <i class="fas fa-lock"></i>
-                                    <input id="password" type="password" name="password" placeholder="Enter Password"
+                                    <input id="password" type="password" name="password" placeholder="Fjalkalimi"
                                            required>
 
                                     @error('password')
@@ -71,7 +71,7 @@
                             </div>
 
                             <div class="forgot-password">
-                                <a href="{{ route('password.request') }}">Forgot Password?</a>
+                                <a href="{{ route('password.request') }}">Harrove fjalkalimin ?</a>
                             </div>
 
                             <button type="submit" class="login-btn">

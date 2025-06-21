@@ -24,7 +24,7 @@
                             <a href="{{ route('login') }}">
                                 <button class="spectacledcoder-hover-fill-button login" type="button">
                                     <div class="color-fill"></div>
-                                    <p>Sign in</p>
+                                    <p>In-Kyçu </p>
                                 </button>
                             </a>
                         </div>
@@ -32,7 +32,7 @@
                             <a href="javascript:">
                                 <button class="spectacledcoder-hover-fill-button active signup" type="button">
                                     <div class="color-fill"></div>
-                                    <p>Sign Up</p>
+                                    <p>Up-Regjistrohu</p>
                                 </button>
                             </a>
                         </div>
@@ -41,7 +41,7 @@
                         <form method="POST" action="{{ route('register') }}">
                             @csrf
                             <div class="form-group">
-                                <label for="name">Name</label>
+                                <label for="name">Emri</label>
                                 <div class="input-wrapper">
                                     <i class="fas fa-user"></i>
                                     <input id="name" type="text" name="name" value="{{ old('name') }}"
@@ -71,7 +71,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="password">Password</label>
+                                <label for="password">Fjalkalimi</label>
                                 <div class="input-wrapper">
                                     <i class="fas fa-lock"></i>
                                     <input id="password" type="password" name="password" placeholder="Enter Password"
@@ -86,7 +86,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="password-confirm">Confirm Password</label>
+                                <label for="password-confirm">Konfirmo Fjalkalimin</label>
                                 <div class="input-wrapper">
                                     <i class="fas fa-lock"></i>
                                     <input id="password-confirm" type="password" name="password_confirmation"
@@ -94,7 +94,7 @@
                                 </div>
                             </div>
                             <button type="submit" class="login-btn">
-                                Create Account <i class="fa-solid fa-user-plus"></i>
+                                Krijo Llogarinë <i class="fa-solid fa-user-plus"></i>
                             </button>
                         </form>
                     </div>
