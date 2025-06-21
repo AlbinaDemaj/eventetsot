@@ -1906,3 +1906,27 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination {
         padding: 15px 10px;
     }
 }
+.translation-table{
+    background-color: #fff;
+    border-radius: 10px;
+    
+}
+.translation-table table thead{
+    background: #e5e5e5;
+}
+.edit-form h1{
+    color: #161321;
+    font-size: 32px;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+.edit-form-inner .login-btn{
+    max-width: 200px;
+}
+
+.edit-form-inner {
+    background: #fff;
+    padding: 30px;
+    border-radius: 15px;
+}

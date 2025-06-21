@@ -34,7 +34,7 @@
     <div class="container">
         <nav class="navbar navbar-expand-lg">
             <div class="container-fluid">
-                <x-language-switcher />
+                
                 <a class="navbar-brand" href="{{ route('index') }}"><img src="{{ asset('website/img/logo.svg') }}"></a>
                 <button class="navbar-toggler shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -48,6 +48,7 @@
                             <a class="nav-link" href="{{ route('pricing') }}">{{lang('website', 'header.pricing')}}</a>
                         </li>
                     </ul>
+                    <x-language-switcher />
                     <div class="d-flex gap-4 align-items-center">
                         @guest
                             <a href="{{ route('login') }}" class="nav-link">{{lang('website', 'header.login')}}</a>

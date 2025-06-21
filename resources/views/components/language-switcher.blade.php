@@ -4,6 +4,6 @@
            class="{{ app()->getLocale() === $language->code ? 'active' : '' }}">
             {{ strtoupper($language->code) }}
         </a>
-        @if(!$loop->last) | @endif
+        @if(!$loop->last)  @endif
     @endforeach
 </div>
