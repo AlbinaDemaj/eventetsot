@@ -7,8 +7,8 @@
                 <div class="left-area">
                     <img src="{{ asset('user/assets/img/login-img.png') }}" alt=""/>
                     <div class="img-text">
-                        <h2>Welcome to Eventesot.</h2>
-                        <p>Easily gather every guest's photos and videos into a shareable live slideshow</p>
+                        <h2>{{ lang('website', 'welcome_title') }}</h2>
+                        <p>{{ lang('website', 'welcome_subtitle') }}</p>
                     </div>
                 </div>
             </div>
@@ -22,7 +22,7 @@
                             <a href="javascript:">
                                 <button class="spectacledcoder-hover-fill-button active login" type="button">
                                     <div class="color-fill"></div>
-                                    <p>In-Kyçu </p>
+                                    <p>{{ lang('website', 'login') }}</p>
                                 </button>
                             </a>
                         </div>
@@ -30,7 +30,7 @@
                             <a href="{{ route('register') }}">
                                 <button class="spectacledcoder-hover-fill-button signup" type="button">
                                     <div class="color-fill"></div>
-                                    <p>Up-Regjistrohu</p>
+                                    <p>{{ lang('website', 'register') }}</p>
                                 </button>
                             </a>
                         </div>
@@ -39,12 +39,12 @@
                         <form method="POST" action="{{ route('login') }}">
                             @csrf
                             <div class="form-group">
-                                <label for="email">Email</label>
+                                <label for="email">{{ lang('website', 'email') }}</label>
                                 <div class="input-wrapper">
                                     <div class="input-wrapper">
                                         <i class="fa-solid fa-envelope"></i>
                                         <input id="email" type="email" name="email" value="{{ old('email') }}"
-                                               placeholder="Email" required>
+                                               placeholder="{{ lang('website', 'email') }}" required>
 
                                         @error('email')
                                         <span class="invalid-feedback" role="alert">
@@ -56,11 +56,11 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="password">Fjalkalimi</label>
+                                <label for="password">{{ lang('website', 'password') }}</label>
                                 <div class="input-wrapper">
                                     <i class="fas fa-lock"></i>
-                                    <input id="password" type="password" name="password" placeholder="Fjalkalimi"
-                                           required>
+                                    <input id="password" type="password" name="password"
+                                           placeholder="{{ lang('website', 'password') }}" required>
 
                                     @error('password')
                                     <span class="invalid-feedback" role="alert">
@@ -71,11 +71,11 @@
                             </div>
 
                             <div class="forgot-password">
-                                <a href="{{ route('password.request') }}">Harrove fjalkalimin ?</a>
+                                <a href="{{ route('password.request') }}">{{ lang('website', 'forgot_password') }}</a>
                             </div>
 
                             <button type="submit" class="login-btn">
-                                Login <i class="fas fa-right-to-bracket"></i>
+                                {{ lang('website', 'submit_login') }} <i class="fas fa-right-to-bracket"></i>
                             </button>
                         </form>
                     </div>

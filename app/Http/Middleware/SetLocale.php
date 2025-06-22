@@ -20,6 +20,7 @@ class SetLocale
             $defaultLanguage = Language::where('is_default', true)->first();
             if ($defaultLanguage) {
                 app()->setLocale($defaultLanguage->code);
+                session()->put('locale', $defaultLanguage->code);
             }
         }
 

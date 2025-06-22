@@ -7,9 +7,8 @@
                 <div class="left-area">
                     <img src="{{ asset('user/assets/img/login-img.png') }}" alt=""/>
                     <div class="img-text">
-                        <h2>Welcome to Eventesot.</h2>
-                        <p>Easily gather every guest's photos and videos
-                            into a shareable live slideshow</p>
+                        <h2>{{ lang('website', 'welcome_title') }}</h2>
+                        <p>{{ lang('website', 'welcome_subtitle') }}</p>
                     </div>
                 </div>
             </div>
@@ -19,12 +18,11 @@
                         <img src="{{ asset('website/img/logo.svg') }}" alt=""/>
                     </div>
                     <div class="auth-btn">
-
                         <div class="btn-single">
                             <a href="{{ route('login') }}">
                                 <button class="spectacledcoder-hover-fill-button login" type="button">
                                     <div class="color-fill"></div>
-                                    <p>In-Kyçu </p>
+                                    <p>{{ lang('website', 'login') }}</p>
                                 </button>
                             </a>
                         </div>
@@ -32,7 +30,7 @@
                             <a href="javascript:">
                                 <button class="spectacledcoder-hover-fill-button active signup" type="button">
                                     <div class="color-fill"></div>
-                                    <p>Up-Regjistrohu</p>
+                                    <p>{{ lang('website', 'register') }}</p>
                                 </button>
                             </a>
                         </div>
@@ -41,11 +39,11 @@
                         <form method="POST" action="{{ route('register') }}">
                             @csrf
                             <div class="form-group">
-                                <label for="name">Emri</label>
+                                <label for="name">{{ lang('website', 'name') }}</label>
                                 <div class="input-wrapper">
                                     <i class="fas fa-user"></i>
                                     <input id="name" type="text" name="name" value="{{ old('name') }}"
-                                           placeholder="Enter Name" required>
+                                           placeholder="{{ lang('website', 'name_placeholder') }}" required>
 
                                     @error('name')
                                     <span class="invalid-feedback" role="alert">
@@ -56,11 +54,11 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="email">Email</label>
+                                <label for="email">{{ lang('website', 'email') }}</label>
                                 <div class="input-wrapper">
                                     <i class="fas fa-envelope"></i>
                                     <input id="email" type="email" name="email" value="{{ old('email') }}"
-                                           placeholder="Enter Email" required>
+                                           placeholder="{{ lang('website', 'email_placeholder') }}" required>
 
                                     @error('email')
                                     <span class="invalid-feedback" role="alert">
@@ -71,11 +69,11 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="password">Fjalkalimi</label>
+                                <label for="password">{{ lang('website', 'password') }}</label>
                                 <div class="input-wrapper">
                                     <i class="fas fa-lock"></i>
-                                    <input id="password" type="password" name="password" placeholder="Enter Password"
-                                           required>
+                                    <input id="password" type="password" name="password"
+                                           placeholder="{{ lang('website', 'password_placeholder') }}" required>
 
                                     @error('password')
                                     <span class="invalid-feedback" role="alert">
@@ -86,15 +84,15 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="password-confirm">Konfirmo Fjalkalimin</label>
+                                <label for="password-confirm">{{ lang('website', 'confirm_password') }}</label>
                                 <div class="input-wrapper">
                                     <i class="fas fa-lock"></i>
                                     <input id="password-confirm" type="password" name="password_confirmation"
-                                           placeholder="Enter Password" required>
+                                           placeholder="{{ lang('website', 'password_placeholder') }}" required>
                                 </div>
                             </div>
                             <button type="submit" class="login-btn">
-                                Krijo Llogarinë <i class="fa-solid fa-user-plus"></i>
+                                {{ lang('website', 'create_account') }} <i class="fa-solid fa-user-plus"></i>
                             </button>
                         </form>
                     </div>

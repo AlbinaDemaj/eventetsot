@@ -7,9 +7,8 @@
                 <div class="left-area">
                     <img src="{{ asset('user/assets/img/login-img.png') }}" alt=""/>
                     <div class="img-text">
-                        <h2>Welcome to Eventesot.</h2>
-                        <p>Easily gather every guest's photos and videos
-                            into a shareable live slideshow</p>
+                        <h2>{{ lang('website', 'welcome_title') }}</h2>
+                        <p>{{ lang('website', 'welcome_subtitle') }}</p>
                     </div>
                 </div>
             </div>
@@ -24,11 +23,11 @@
                             @csrf
 
                             <div class="form-group">
-                                <label for="password">Password</label>
+                                <label for="password">{{ lang('website', 'password_label') }}</label>
                                 <div class="input-wrapper">
-                                    <i class="fas fa-envelope"></i>
-                                    <input id="password" type="password" name="password" placeholder="Enter Password"
-                                           required>
+                                    <i class="fas fa-lock"></i>
+                                    <input id="password" type="password" name="password"
+                                           placeholder="{{ lang('website', 'password_placeholder') }}" required>
 
                                     @error('password')
                                     <span class="invalid-feedback" role="alert">
@@ -39,11 +38,11 @@
                             </div>
 
                             <button type="submit" class="login-btn">
-                                Confirm Password <i class="fa-solid fa-rotate"></i>
+                                {{ lang('website', 'confirm_password_button') }} <i class="fa-solid fa-rotate"></i>
                             </button>
                         </form>
                         <div class="alread-account">
-                            <p>Don’t Have account <a href="{{ route('register') }}">Sign Up</a></p>
+                            <p>{{ lang('website', 'dont_have_account') }} <a href="{{ route('register') }}">{{ lang('website', 'sign_up') }}</a></p>
                         </div>
                     </div>
                 </div>

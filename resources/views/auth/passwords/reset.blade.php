@@ -7,9 +7,8 @@
                 <div class="left-area">
                     <img src="{{ asset('user/assets/img/login-img.png') }}" alt=""/>
                     <div class="img-text">
-                        <h2>Welcome to Eventesot.</h2>
-                        <p>Easily gather every guest's photos and videos
-                            into a shareable live slideshow</p>
+                        <h2>{{ lang('website', 'welcome_title') }}</h2>
+                        <p>{{ lang('website', 'welcome_subtitle') }}</p>
                     </div>
                 </div>
             </div>
@@ -22,16 +21,14 @@
                     <div class="form-area">
                         <form method="POST" action="{{ route('password.update') }}">
                             @csrf
-
                             <input type="hidden" name="token" value="{{ $token }}">
 
                             <div class="form-group">
-                                <label for="email">Email</label>
+                                <label for="email">{{ lang('website', 'email_label') }}</label>
                                 <div class="input-wrapper">
                                     <i class="fas fa-envelope"></i>
                                     <input id="email" type="email" name="email" value="{{ $email ?? old('email') }}"
-                                           placeholder="Enter Email" required>
-
+                                           placeholder="{{ lang('website', 'email_placeholder') }}" required>
                                     @error('email')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -41,12 +38,11 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="password">Password</label>
+                                <label for="password">{{ lang('website', 'password_label') }}</label>
                                 <div class="input-wrapper">
-                                    <i class="fas fa-envelope"></i>
-                                    <input id="password" type="password" name="password" placeholder="Enter Password"
-                                           required>
-
+                                    <i class="fas fa-lock"></i>
+                                    <input id="password" type="password" name="password"
+                                           placeholder="{{ lang('website', 'password_placeholder') }}" required>
                                     @error('password')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -56,20 +52,20 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="password-confirm">Confirm Password</label>
+                                <label for="password-confirm">{{ lang('website', 'confirm_password_label') }}</label>
                                 <div class="input-wrapper">
-                                    <i class="fas fa-envelope"></i>
+                                    <i class="fas fa-lock"></i>
                                     <input id="password-confirm" type="password" name="password_confirmation"
-                                           placeholder="Enter Password" required>
+                                           placeholder="{{ lang('website', 'password_placeholder') }}" required>
                                 </div>
                             </div>
 
                             <button type="submit" class="login-btn">
-                                Reset Instructions <i class="fa-solid fa-rotate"></i>
+                                {{ lang('website', 'reset_password_button') }} <i class="fa-solid fa-rotate"></i>
                             </button>
                         </form>
                         <div class="alread-account">
-                            <p>Don’t Have account <a href="{{ route('register') }}">Sign Up</a></p>
+                            <p>{{ lang('website', 'dont_have_account') }} <a href="{{ route('register') }}">{{ lang('website', 'sign_up') }}</a></p>
                         </div>
                     </div>
                 </div>

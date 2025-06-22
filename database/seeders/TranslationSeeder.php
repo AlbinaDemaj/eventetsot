@@ -616,7 +616,115 @@ class TranslationSeeder extends Seeder
             'event_welcome.continue_button' => [
                 'en' => 'Continue',
                 'al' => 'Vazhdo'
-            ]
+            ],
+            'welcome_title' => [
+                'en' => 'Welcome to Eventesot.',
+                'al' => 'Mirë se vini në Eventesot.'
+            ],
+            'welcome_subtitle' => [
+                'en' => 'Easily gather every guest\'s photos and videos into a shareable live slideshow',
+                'al' => 'Mblidhni lehtësisht fotot dhe videot e çdo mysafiri në një slideshow të drejtpërdrejtë të ndashëm'
+            ],
+            'login' => [
+                'en' => 'Login',
+                'al' => 'In-Kyçu'
+            ],
+            'register' => [
+                'en' => 'Sign Up',
+                'al' => 'Up-Regjistrohu'
+            ],
+            'email' => [
+                'en' => 'Email',
+                'al' => 'Email'
+            ],
+            'password' => [
+                'en' => 'Password',
+                'al' => 'Fjalkalimi'
+            ],
+            'forgot_password' => [
+                'en' => 'Forgot your password?',
+                'al' => 'Harrove fjalkalimin?'
+            ],
+            'submit_login' => [
+                'en' => 'Login',
+                'al' => 'Hyr'
+            ],
+            'name' => [
+                'en' => 'Name',
+                'al' => 'Emri'
+            ],
+            'name_placeholder' => [
+                'en' => 'Enter Name',
+                'al' => 'Shkruaj Emrin'
+            ],
+            'email_placeholder' => [
+                'en' => 'Enter Email',
+                'al' => 'Shkruaj Email'
+            ],
+            'password_placeholder' => [
+                'en' => 'Enter Password',
+                'al' => 'Shkruaj Fjalkalimin'
+            ],
+            'confirm_password' => [
+                'en' => 'Confirm Password',
+                'al' => 'Konfirmo Fjalkalimin'
+            ],
+            'create_account' => [
+                'en' => 'Create Account',
+                'al' => 'Krijo Llogarinë'
+            ],
+            'verify_email_title' => [
+                'en' => 'Verify Your Email Address',
+                'al' => 'Verifiko Adresën tuaj të Emailit'
+            ],
+            'fresh_link_sent' => [
+                'en' => 'A fresh verification link has been sent to your email address.',
+                'al' => 'Një lidhje e re verifikimi është dërguar në adresën tuaj të emailit.'
+            ],
+            'check_email_message' => [
+                'en' => 'Before proceeding, please check your email for a verification link.',
+                'al' => 'Para se të vazhdoni, ju lutemi kontrolloni emailin tuaj për një lidhje verifikimi.'
+            ],
+            'not_received_email' => [
+                'en' => 'If you did not receive the email',
+                'al' => 'Nëse nuk keni marrë emailin'
+            ],
+            'request_another_link' => [
+                'en' => 'Click here to request another',
+                'al' => 'Kliko këtu për të kërkuar një tjetër'
+            ],
+            'password_label' => [
+                'en' => 'Password',
+                'al' => 'Fjalkalimi'
+            ],
+            'confirm_password_button' => [
+                'en' => 'Confirm Password',
+                'al' => 'Konfirmo Fjalkalimin'
+            ],
+            'dont_have_account' => [
+                'en' => 'Don\'t Have account',
+                'al' => 'Nuk keni llogari'
+            ],
+            'sign_up' => [
+                'en' => 'Sign Up',
+                'al' => 'Regjistrohu'
+            ],
+            'email_label' => [
+                'en' => 'Email',
+                'al' => 'Email'
+            ],
+            'reset_instructions_button' => [
+                'en' => 'Reset Instructions',
+                'al' => 'Udhëzime për Rikthim'
+            ],
+            'confirm_password_label' => [
+                'en' => 'Confirm Password',
+                'al' => 'Konfirmo Fjalkalimin'
+            ],
+            'reset_password_button' => [
+                'en' => 'Reset Password',
+                'al' => 'Rikthe Fjalkalimin'
+            ],
     ];
 
         foreach ($translations as $key => $languageValues) {
