@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\SubscriptionPlan;
 use App\Models\User;
+use App\Notifications\SubscriptionSuccess;
+use App\Notifications\WelcomeEmail;
 use App\Services\SubscriptionService;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
@@ -82,6 +84,8 @@ class RegisterController extends Controller
             paymentMethod: 'free',
             status: 'active'
         );
+
+        $user->notify(new WelcomeEmail);
 
         return $user;
     }

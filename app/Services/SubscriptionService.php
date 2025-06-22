@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\User;
 use App\Models\SubscriptionPlan;
 use App\Models\UserSubscription;
+use App\Notifications\SubscriptionSuccess;
 use Carbon\Carbon;
 
 class SubscriptionService
@@ -38,6 +39,9 @@ class SubscriptionService
 
     public function activateSubscription(UserSubscription $subscription, string $paymentReference)
     {
+        $user = User::findOrFail($subscription->user_id);
+        $user->notify(new SubscriptionSuccess);
+
         return $subscription->update([
             'is_active' => true,
             'status' => 'active',

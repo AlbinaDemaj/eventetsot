@@ -66,7 +66,7 @@ if (!function_exists('getStorageDays')) {
 }
 
 if (!function_exists('lang')) {
-    function lang($group, $key, $replace = [])
+    function lang($group, $key = null, $replace = [])
     {
         return app('translation.service')->get($group, $key, $replace, session()->get('locale'));
     }

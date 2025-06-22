@@ -20,7 +20,7 @@
                         </ul>
                         <div class="d-flex gap-4 align-items-center">
                             <a href="{{ route('login') }}" class="nav-link">{{lang('website', 'header.login')}}</a>
-                            <a href="{{ route('register') }}" class="btn e-btn-primary">{{lang('website', 'header.get_started')</a>
+                            <a href="{{ route('register') }}" class="btn e-btn-primary">{{lang('website', 'header.get_started')}}</a>
                         </div>
                     </div>
                 </div>
@@ -70,7 +70,7 @@
                 <div class="modal-body">
                     <form>
                         <div class="form-group">
-                            <label>{{lang('website', 'modal.caption.text_label')</label>
+                            <label>{{lang('website', 'modal.caption.text_label')}}</label>
                             <textarea rows="6" cols="6" placeholder="{{lang('website', 'modal.caption.text_placeholder')}}" class="form-control"></textarea>
                         </div>
                         <div class="form-group">

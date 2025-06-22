@@ -4,12 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\SubscriptionPlan;
 use App\Models\UserSubscription;
+use App\Models\User;
+use App\Notifications\SubscriptionSuccess;
 use App\Services\PaymentService;
 use App\Services\SubscriptionService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Str;
 
 class SubscriptionController extends Controller
 {
@@ -109,7 +110,6 @@ class SubscriptionController extends Controller
                     $callbackData['transaction_id'] ?? $request->input('orderId')
                 );
 
-                // Additional payment success logic if needed
             } else {
                 $subscription->update(['status' => 'failed']);
             }

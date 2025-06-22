@@ -325,9 +325,10 @@
                     <div class="col-md-7">
                         <h2><strong>{{lang('website', 'home.demo.title')}}</strong></h2>
                         <p>{{lang('website', 'home.demo.subtitle')}}</p>
-                        <span class="l-number"><span class="number">1</span><span><strong>{{lang('website', 'home.demo.step1')}}</strong></span></span>
+                        <span class="l-number"><span class="number">1</span><span><strong>{{lang('website', 'home.demo.step1')}} <a href="{{ route('events.welcome', $publicEvent->code) }}" target="_blank" class="e-link-primary">Link</a> </strong></span></span>
                         <span class="l-number"><span class="number">2</span><span><strong>{{lang('website', 'home.demo.step2')}}</strong></span></span>
                         <div class="qr-code d-flex align-items-center flex-column gap-3 pt-5">
+                            <a href="{{ route('events.welcome', $publicEvent->code) }}" target="_blank" class="e-link-primary">Link</a>
                             <img src="{{ $publicEvent->qr_code }}">
                             <span>{{lang('website', 'home.demo.qr_label')}}</span>
                         </div>
