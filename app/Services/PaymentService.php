@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Log;
 
 class PaymentService
 {
-    protected string $baseUrl = 'https://ibascommerce.pbc.group';
+    protected string $baseUrl = 'https://ecommerce.ibas.world';
     protected string $key;
     protected string $secret;
     protected ?string $token = null;
