@@ -8,18 +8,18 @@
                 <!-- Sidebar Tabs -->
                 <div class="sidebar">
                     <div class="tab active" onclick="switchTab('general')">
-                        <i class="fa-solid fa-briefcase"></i> General
+                        <i class="fa-solid fa-briefcase"></i> Cilësime
                     </div>
                     <div class="tab" onclick="switchTab('appearance')">
-                        <i class="fa-solid fa-book-journal-whills"></i> Appearance
+                        <i class="fa-solid fa-book-journal-whills"></i> Pamja
                     </div>
                 </div>
 
                 <!-- Content Area -->
                 <div class="tab-content" id="general">
                     <div class="form-group">
-                        <label for="name">Event Name</label>
-                        <p>It'll be used through the app and will be showed to your guests.</p>
+                        <label for="name">General-Cilësime</label>
+                        <p>Do të përdoret përmes aplikacionit dhe do t’i shfaqet të ftuarve tuaj.</p>
                         <div class="form-area">
                             <div class="form-group">
                                 <div class="input-wrapper">
@@ -30,8 +30,8 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="event_date">Event Date</label>
-                        <p>Set when your event is scheduled to start.</p>
+                        <label for="event_date">Data e Eventit</label>
+                        <p>Përcakto kur është planifikuar të fillojë eventi juaj.</p>
                         <div class="form-area">
                             <div class="form-group">
                                 <div class="input-wrapper">
@@ -43,12 +43,12 @@
                     <form action="{{ route('user.settings-code', $selectedEvent->id) }}" method="POST">
                         @csrf
                         <div class="form-group">
-                            <div for="event_link" class="event-link">Event Custom Link
+                            <div for="event_link" class="event-link">Link i personalizuar i eventit
                                 @if($userActiveSubscription->payment_method === 'free')
                                     <p><i class="fa-solid fa-star"></i> Pro <a href="javascript:">Upgrade</a></p>
                                 @endif
                             </div>
-                            <p>Choose a unique link ending to easily share your event with guests.</p>
+                            <p>Zgjidh një përfundim unik të linkut për ta ndarë lehtësisht eventin me të ftuarit.</p>
                             <div class="form-area custom-url-main">
                                 <div class="input-wrapper setting-event-custom">
                                     <input type="text" value="{{ url('events/') }}/" readonly class="event-url"/>
@@ -58,7 +58,7 @@
                                            {{ $userActiveSubscription->payment_method === 'free' ? 'readonly' : '' }}
                                            required
                                     >
-                                    <button class="opn-btn">Save</button>
+                                    <button class="opn-btn">Ruaj</button>
                                 </div>
                             </div>
 
@@ -72,15 +72,15 @@
                         <div class="row">
                             <div class="col-md-8">
                                 <div class="setting-info">
-                                    <h3>Event Logo</h3>
-                                    <p>Brand your event with a logo that will be publically shown throughout the event. For best results, use square photos (1:1).</p>
+                                    <h3>Logo e Eventit</h3>
+                                    <p>Brand-ëso eventin tuaj me një logo që do të shfaqet publikisht gjatë gjithë eventit. Për rezultate më të mira, përdorni foto katrore (1:1).</p>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="upload-box">
                                     <canvas id="canv1"></canvas>
                                     <input type="file" name="logo" multiple="false" accept="image/*" id="finput" onchange="upload()">
-                                    <h3>Upload</h3>
+                                    <h3>Ngarko</h3>
                                 </div>
                             </div>
 
@@ -92,8 +92,8 @@
                         <div class="row">
                             <div class="col-md-8">
                                 <div class="setting-info">
-                                    <h3>Display Language</h3>
-                                    <p>Localize the experience according your audience lanaguage.</p>
+                                    <h3>Gjuha e Shfaqjes</h3>
+                                    <p>Lokalizo përvojën sipas gjuhës së audiencës tuaj.</p>
                                 </div>
                             </div>
                             <div class="col-md-4">
@@ -113,8 +113,8 @@
                         <div class="row">
                             <div class="col-md-8">
                                 <div class="setting-info">
-                                    <h3>Welcome Screen</h3>
-                                    <p>Set up an introductory screen for guests' first visit, with a form to collect their info.</p>
+                                    <h3>Ekrani i Mirëseardhjes</h3>
+                                    <p>Vendos një ekran hyrës për vizitën e parë të të ftuarve, me një formular për të mbledhur informacionin e tyre.</p>
                                 </div>
                             </div>
                             <div class="col-md-4">
@@ -122,7 +122,7 @@
                                     <div class="form-group">
                                         <div class="input-wrapper text-end">
                                             <button type="button" class="login-btn add-welcome" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                                Add Welcome Screen
+                                                Shto ekranin e mirëseardhjës
                                             </button>
                                         </div>
                                     </div>
@@ -146,8 +146,8 @@
 
                     <div class="modal-header">
                         <div class="modal-head">
-                            <h5 class="modal-title" id="exampleModalLabel">Welcome Screen Settings</h5>
-                            <p>Set up a welcome screen that appears once for first-time guests.</p>
+                            <h5 class="modal-title" id="exampleModalLabel">Cilësimet e Ekranit të Mirëseardhjes</h5>
+                            <p>Vendos një ekran mirëseardhjeje që shfaqet një herë për të ftuarit që vijnë për herë të parë.</p>
                         </div>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
@@ -158,10 +158,10 @@
                                 <div class="col-md-8">
                                     <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
                                         <li class="nav-item" role="presentation">
-                                            <button class="nav-link active" id="pills-appearance-tab" data-bs-toggle="pill" data-bs-target="#pills-appearance" type="button" role="tab" aria-controls="pills-appearance" aria-selected="true">Appearance</button>
+                                            <button class="nav-link active" id="pills-appearance-tab" data-bs-toggle="pill" data-bs-target="#pills-appearance" type="button" role="tab" aria-controls="pills-appearance" aria-selected="true">Pamja</button>
                                         </li>
                                         <li class="nav-item" role="presentation">
-                                            <button class="nav-link" id="pills-guest-tab" data-bs-toggle="pill" data-bs-target="#pills-guest" type="button" role="tab" aria-controls="pills-guest" aria-selected="false">Guest Form</button>
+                                            <button class="nav-link" id="pills-guest-tab" data-bs-toggle="pill" data-bs-target="#pills-guest" type="button" role="tab" aria-controls="pills-guest" aria-selected="false">Formulari i të Ftuarit</button>
                                         </li>
                                     </ul>
 
@@ -173,7 +173,7 @@
                                                     <div class="col-md-12">
                                                         <div class="form-group">
                                                             <label for="title">Title</label>
-                                                            <p>Enter the main title for your welcome screen.</p>
+                                                            <p>Shkruaj titullin kryesor për ekranin tënd të mirëseardhjes.</p>
                                                             <div class="form-area">
                                                                 <div class="form-group">
                                                                     <div class="input-wrapper">
@@ -185,8 +185,8 @@
                                                     </div>
                                                     <div class="col-md-12">
                                                         <div class="form-group">
-                                                            <label for="description">Description</label>
-                                                            <p>Add a introduction text below the main title.</p>
+                                                            <label for="description">Përshkrimi</label>
+                                                            <p>Shto një tekst hyrës nën titullin kryesor.</p>
                                                             <div class="form-area">
                                                                 <div class="form-group">
                                                                     <div class="input-wrapper">
@@ -198,12 +198,12 @@
                                                     </div>
                                                     <div class="col-md-5">
                                                         <div class="form-group">
-                                                            <label for="button_text">Button</label>
-                                                            <p>Set the text of the submission button.</p>
+                                                            <label for="button_text">Butoni</label>
+                                                            <p>Vendos tekstin e butonit të dërgimit.</p>
                                                             <div class="form-area">
                                                                 <div class="form-group">
                                                                     <div class="input-wrapper">
-                                                                        <input type="text" name="button_text" id="button_text" value="{{ old('button_text', $selectedEvent->button_text ?? 'Continue') }}" required>
+                                                                        <input type="text" name="button_text" id="button_text" value="{{ old('button_text', $selectedEvent->button_text ?? 'Vazhdo') }}" required>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -213,11 +213,11 @@
                                                         <div class="row">
                                                             <div class="col-md-6">
                                                                 <div class="form-group">
-                                                                    <label for="is_animated">Background</label>
-                                                                    <p>Set a background for the welcome screen.</p>
+                                                                    <label for="is_animated">Sfondi</label>
+                                                                    <p>Vendos një sfond për ekranin e mirëseardhjes.</p>
                                                                     <li class="animation-checkbox">
                                                                         <input class="styled-checkbox" id="is_animated" name="is_animated" type="checkbox" value="1" {{ old('is_animated', $selectedEvent->is_animated) ? 'checked' : '' }}>
-                                                                        <label for="is_animated">Animated</label>
+                                                                        <label for="is_animated">animuar</label>
                                                                     </li>
                                                                 </div>
                                                             </div>
@@ -241,13 +241,13 @@
                                         <!-- Guest Form Tab -->
                                         <div class="tab-pane fade" id="pills-guest" role="tabpanel" aria-labelledby="pills-guest-tab">
                                             <div class="guest-tab-detail">
-                                                <p>Create a form to collect guest information before they proceed to your album. Add new fields as needed, or rearrange existing ones by dragging.</p>
+                                                <p>Krijo një formular për të mbledhur informacionin e të ftuarve para se të vazhdojnë te albumi juaj. Shto fusha të reja sipas nevojës, ose riorganizo ato ekzistuese duke i tërhequr me miun.</p>
 
                                                 <div class="form-group">
                                                     <div class="form-area">
                                                         <div class="form-group">
                                                             <div class="input-wrapper">
-                                                                <input type="text" value="" placeholder="Name" >
+                                                                <input type="text" value="" placeholder="Emri" >
                                                             </div>
                                                         </div>
                                                     </div>
@@ -338,7 +338,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="submit-wrap">
-                                                    <button type="button" class="login-btn" id="preview-button">{{ $selectedEvent->button_text ?? 'Continue' }}</button>
+                                                    <button type="button" class="login-btn" id="preview-button">{{ $selectedEvent->button_text ?? 'Vazhdo' }}</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -349,8 +349,8 @@
                     </div>
 
                     <div class="modal-footer welcome-modal-ft">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn login-btn">Save</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Mbylle</button>
+                        <button type="submit" class="btn login-btn">Ruaj</button>
                     </div>
                 </form>
             </div>

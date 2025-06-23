@@ -33,7 +33,7 @@
                     <i class="fa-solid fa-arrow-right-arrow-left"></i>
                 </button>
                 <div class="form-group">
-                    <label for="email">Current Event</label>
+                    <label for="email">Eventet Aktuale</label>
                     <form method="POST" action="{{ route('user.switch-event') }}">
                         @csrf
                         <select id="eventSelector" name="event_id" class="my-select selectpicker" data-container="body">
@@ -42,7 +42,7 @@
                                     {{ $event->name }}
                                 </option>
                             @endforeach
-                            <option value="create_new">Create New Event</option>
+                            <option value="create_new">Krijo ngjarje të re</option>
                         </select>
                     </form>
                 </div>
@@ -56,7 +56,7 @@
                         <li>
                             <a class="nav-link" href="{{ route('user.home') }}">
                                 <div class="sb-nav-link-icon"><i class="fa-solid fa-house-chimney"></i></div>
-                                Home
+                                Ballina
                             </a>
                         </li>
                         <li>
@@ -68,13 +68,13 @@
                         <li>
                             <a class="nav-link" href="{{ route('user.settings') }}">
                                 <div class="sb-nav-link-icon"><i class="fa-solid fa-sliders"></i></div>
-                                Event Setting
+                                Cilësimet e Eventit
                             </a>
                         </li>
                         <li>
                             <a class="nav-link" href="{{ route('user.events') }}">
-                                <div class="sb-nav-link-icon"><img src="{{ asset('user/assets/img/red-carpet.png') }}" alt=""></div>
-                                View Events
+                                <div class="sb-nav-link-icon img-icon"><img src="{{ asset('user/assets/img/red-carpet.png') }}" alt=""></div>
+                                Shiko Eventet
                             </a>
                         </li>
                     </ul>

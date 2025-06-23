@@ -6,12 +6,11 @@
         <div class="main-content">
             <div class="create-event-head">
                 <div class="view-event-text">
-                    <h2>My Events</h2>
-                    <p>Here you can find all you events or create new ones
-                        Create new event</p>
+                    <h2>Eventet e Mia</h2>
+                    <p>Këtu mund të gjeni të gjitha eventet tuaja ose të krijoni të reja</p>
                 </div>
                 <button type="button" class="login-btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                    <i class="fa-solid fa-circle-plus"></i> Create Event
+                    <i class="fa-solid fa-circle-plus"></i> Krijo event të ri
                 </button>
             </div>
             <div class="row">
@@ -24,15 +23,15 @@
                         <span class="plan-badge text-capitalize">{{ $event->type }}</span>
                         <div class="event-card-list">
                             <i class="fa-solid fa-image"></i>
-                            <h5><span>0</span> Upload</h5>
+                            <h5><span>0</span> Ngarkime</h5>
                         </div>
                         <div class="event-card-list">
                             <i class="fa-solid fa-calendar-days"></i>
-                            <h5><span>Created on</span> {{ $event->created_at->format('d M Y') }}</h5>
+                            <h5><span>Krijuar më</span> {{ $event->created_at->format('d M Y') }}</h5>
                         </div>
                         @if($selectedEvent && $selectedEvent->id == $event->id)
                             <div class="event-card-btn">
-                                Current Event
+                                Krijo Event
                             </div>
                         @else
                             <form id="switch-form-{{ $event->id }}" method="POST" action="{{ route('user.switch-event') }}">
@@ -41,7 +40,7 @@
                             </form>
 
                             <div onclick="document.getElementById('switch-form-{{ $event->id }}').submit()" class="event-card-btn cursor-pointer">
-                                Switch Event
+                                Ndrysho Event
                             </div>
                         @endif
                     </div>

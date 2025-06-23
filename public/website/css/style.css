@@ -1651,10 +1651,7 @@ screen and (max-height: 300px) {
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
-  .preview-editor textarea {
-    font-size: 0.95rem;
-    padding: 10px;
-  }
+  
 
   .preview-editor textarea::placeholder {
     font-size: 0.95rem;
@@ -1775,10 +1772,7 @@ screen and (max-height: 300px) {
 }
 
 @media (max-width: 480px) {
-  .preview-editor textarea {
-    font-size: 0.9rem;
-    padding: 8px;
-  }
+  
 
   .preview-editor textarea::placeholder {
     font-size: 0.9rem;
