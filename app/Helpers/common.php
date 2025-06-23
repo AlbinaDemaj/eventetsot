@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Support\Arr;
 
 if (!function_exists('formatCurrency')) {
@@ -46,11 +47,31 @@ if (!function_exists('checkUploadLimit')) {
         $maxUploads = $subscription->plan->limits['max_uploads'] ?? 0;
 
         // Unlimited
-        if ($maxUploads === null) return true;
+        if ($subscription->plan->limits['max_uploads'] === null) return true;
 
         $usedUploads = $user->uploads()->count();
 
         return ($usedUploads + $attemptedUploads) <= $maxUploads;
+    }
+}
+
+if (!function_exists('canUserUpload')) {
+    function canUserUpload(User $user, $eventDate = null): bool
+    {
+        if (!$eventDate) {
+            return false;
+        }
+
+        $subscription = $user->activeSubscription;
+        if (!$subscription) {
+            return false;
+        }
+
+        $activeDaysLimit = $subscription->plan->limits['active_days'] ?? 3;
+
+        $daysBeforeEvent = now()->diffInDays($eventDate, false);
+
+        return $daysBeforeEvent <= $activeDaysLimit && $daysBeforeEvent >= 0;
     }
 }
 
