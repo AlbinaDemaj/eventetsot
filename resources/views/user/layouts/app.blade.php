@@ -113,7 +113,7 @@
                     <i class="fas fa-bars"></i>
                 </button> -->
                 <div class="header-text">
-                    <h2>Welcome {{ auth()->user()->name }}
+                    <h2>Përshëndetje {{ auth()->user()->name }}
                         @if($userActiveSubscription->payment_method === 'free')
                             <span>Free Plan</span>
                         @endif

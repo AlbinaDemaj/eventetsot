@@ -234,7 +234,7 @@
                           data-bs-target="#addCaption"
                           data-item-index="${index}">
                         <img src="${hasCaption ? imagePaths.check2 : imagePaths.caption}">
-                        ${hasCaption ? 'Caption Added' : 'Add Caption'}
+                        ${hasCaption ? 'Caption Added' : 'Shto mbishkrim'}
                     </span>
                 </div>
             `;

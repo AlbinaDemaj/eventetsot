@@ -544,7 +544,7 @@ class TranslationSeeder extends Seeder
             ],
             'modal.caption.title' => [
                 'en' => 'Add Caption',
-                'al' => 'Shto Përshkrim'
+                'al' => 'Shto mbishkrim'
             ],
             'modal.caption.text_placeholder' => [
                 'en' => 'Write a caption for this photo here',
