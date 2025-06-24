@@ -527,12 +527,12 @@
 
           $('.mfp-container').append(iconContainer);
         },
-        change: function () {
-          $('.mfp-icon-container').remove();
-        },
-        close: function () {
-          $('.mfp-icon-container').remove();
-        }
+        // change: function () {
+        //   $('.mfp-icon-container').remove();
+        // },
+        // close: function () {
+        //   $('.mfp-icon-container').remove();
+        // }
       }
     });
   }
