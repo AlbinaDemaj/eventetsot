@@ -19,9 +19,6 @@ class SubscriptionService
         string $paymentReference = null,
 
     ): UserSubscription {
-        // Cancel any existing active subscription
-        $this->cancelActiveSubscriptions($user);
-
         $now = Carbon::now();
 
         return UserSubscription::create([
@@ -40,19 +37,24 @@ class SubscriptionService
     public function activateSubscription(UserSubscription $subscription, string $paymentReference)
     {
         $user = User::findOrFail($subscription->user_id);
-        $user->notify(new SubscriptionSuccess);
+        $this->cancelActiveSubscriptions($user, $subscription);
 
-        return $subscription->update([
+        $subscription->update([
             'is_active' => true,
             'status' => 'active',
             'payment_reference' => $paymentReference
         ]);
+
+        $user->notify(new SubscriptionSuccess);
+
+        return $subscription;
     }
 
-    public function cancelActiveSubscriptions(User $user): void
+    public function cancelActiveSubscriptions(User $user, UserSubscription $subscription): void
     {
         $user->subscriptions()
             ->where('status', 'active')
+            ->where('id', '!=', $subscription->id)
             ->update([
                 'status' => 'cancelled',
                 'is_active' => false,

@@ -34,7 +34,7 @@
     <div class="container">
         <nav class="navbar navbar-expand-lg">
             <div class="container-fluid">
-                
+
                 <a class="navbar-brand" href="{{ route('index') }}"><img src="{{ asset('website/img/logo.svg') }}"></a>
                 <button class="navbar-toggler shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -78,7 +78,7 @@
                     <ul class="general">
                         <li><a href="{{ route('index') }}">{{lang('website', 'header.home')}}</a></li>
                         <li><a href="{{ route('pricing') }}">{{lang('website', 'header.pricing')}}</a></li>
-                        <li><a href="{{ route('contact') }}">{{lang('website', 'contactAnkesa')}}</a></li>
+                        <li><a href="{{ route('contact') }}">{{lang('website', 'footer.contact')}}</a></li>
                     </ul>
                 </div>
             </div>
@@ -87,7 +87,7 @@
                     <strong>{{lang('website', 'footer.client_center')}}</strong>
                     <ul>
                         <li><a href="#faq">{{lang('website', 'footer.faq')}}</a></li>
-                        <li><a href="{{ route('contactAnkesa') }}">{{lang('website', 'footer.complaints')}}</a></li>
+                        <li><a href="{{ route('contact') }}">{{lang('website', 'footer.complaints')}}</a></li>
                         <li><a href="{{ route('about') }}">{{lang('website', 'footer.about')}}</a></li>
                     </ul>
                 </div>

@@ -25,7 +25,11 @@
                                 <i class="fa-solid fa-calendar-days"></i>
                                 <h5><span>Created on</span> {{ $user->created_at->format('d M Y') }}</h5>
                             </div>
-                            @if($user->activeSubscription()->first()->payment_method === 'free')
+                            @if(!$user->activeSubscription)
+                                <div class="event-card-btn">
+                                    No Subscription
+                                </div>
+                            @elseif($user->activeSubscription()->first()->payment_method === 'free')
                                 <div class="event-card-btn">
                                     Free Subscription
                                 </div>
