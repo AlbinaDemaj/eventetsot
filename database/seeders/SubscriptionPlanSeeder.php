@@ -26,6 +26,7 @@ class SubscriptionPlanSeeder extends Seeder
             'limits' => [
                 'max_uploads' => 20,
                 'storage_days' => 7,
+                'active_days' => 3,
                 'active_hours' => 3,
             ]
         ]);

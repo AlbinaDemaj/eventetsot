@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Event;
+use App\Models\User;
 use App\Services\ImageGeneratorService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -32,16 +33,23 @@ class MediaController extends Controller
             ], 422);
         }
 
-//        if (!$request->user()->canUpload()) {
-//            return response()->json([
-//                'success' => false,
-//                'message' => 'Upload limit reached for your subscription'
-//            ]);
-//        }
-
-
         $event = Event::where('code', $request->code)->firstOrFail();
         $uploadedItems = [];
+        $user = User::where('id', $event->user_id)->firstOrFail();
+
+        if (!$user->isLinkActive($event->event_date) && !$event->is_public) {
+            return response()->json([
+                'success' => false,
+                'message' => 'You cannot upload right now. Please wait to activate the event upload.'
+            ]);
+        }
+
+        if (!$user->canUpload() && !$event->is_public) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Upload limit reached for your subscription'
+            ]);
+        }
 
         foreach ($request->items as $item) {
             if ($item['type'] === 'file') {
