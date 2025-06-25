@@ -113,7 +113,7 @@
                     </ul></p>
                 </div>
                 <div class="col-md-6 d-md-none">
-                    <video class="appDemo mw-100" autoplay="" loop="" muted="" playsinline="" poster="{{ asset('website/img/sidevidimg-1.png') }}" src="{{ asset('website/img/sidevid-2.webm') }}"></video>
+                    <video class="appDemo mw-100" autoplay="" loop="" muted="" playsinline="" poster="{{ asset('website/img/sidevidimg-1.png') }}" src="{{ asset('website/img/sidevid-2.mp4') }}"></video>
                 </div>
             </div>
             <div class="row works-how align-items-center">
