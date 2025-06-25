@@ -19,7 +19,7 @@
     <div class="collage-box">
         <div class="img-collage">
             <div class="child-wrap img-gallery-magnific">
-                @foreach($event->media()->get() as $media)
+                @foreach($event->media()->latest()->get() as $media)
                     @if($media->file_type === 'video/mp4')
                         <div class="post-img magnific-img">
                             <video controls>
