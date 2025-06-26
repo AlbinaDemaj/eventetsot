@@ -5,6 +5,8 @@ use App\Http\Controllers\MediaController;
 use App\Http\Controllers\SubscriptionController;
 use App\Http\Controllers\TemplateMediaController;
 use App\Http\Controllers\WebsiteController;
+use App\Models\Event;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -28,6 +30,22 @@ Route::get('/events/welcome/{code}', [EventController::class, 'welcome'])->name(
 Route::get('/events/{code}', [EventController::class, 'show'])->name('events.show');
 Route::get('/upload/{code}', [EventController::class, 'upload'])->name('events.upload');
 Route::post('/media', [MediaController::class, 'store'])->name('media.store');
+
+Route::get('/fix-qrcodes', function() {
+    $events = Event::all();
+
+    foreach ($events as $event) {
+        $url = url('/events/' . $event->code);
+        $qrCode = base64_encode(
+            QrCode::format('png')->size(200)->generate($url)
+        );
+
+        $event->qr_code = 'data:image/png;base64,' . $qrCode;
+        $event->save();
+    }
+
+    return "QR codes regenerated for " . count($events) . " events";
+});
 
 Route::get('set-locale/{locale}', function ($locale) {
     if (in_array($locale, ['en', 'sq'])) {
