@@ -54,7 +54,13 @@ class AppServiceProvider extends ServiceProvider
                 !session()->has('selected_event_id') &&
                 !request()->routeIs('user.onboarding.*')
             ) {
-                session(['selected_event_id' => $user->events()->latest()->first()->id]);
+                $latestEvent = $user->events()->latest()->first();
+
+                if (!$latestEvent) {
+                    $latestEvent = $user->events()->where('is_public', true)->latest()->first();
+                }
+
+                session(['selected_event_id' => $latestEvent?->id]);
                 $selectedEvent = $user->events()->find(session('selected_event_id'));
             }
 
