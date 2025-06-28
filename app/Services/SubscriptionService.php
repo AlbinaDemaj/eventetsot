@@ -62,6 +62,17 @@ class SubscriptionService
             ]);
     }
 
+    public function cancelAllActiveSubscriptions(User $user): void
+    {
+        $user->subscriptions()
+            ->where('status', 'active')
+            ->update([
+                'status' => 'cancelled',
+                'is_active' => false,
+                'canceled_at' => now()
+            ]);
+    }
+
     public function renewExpiredSubscriptions(): void
     {
         UserSubscription::with(['user', 'plan'])
