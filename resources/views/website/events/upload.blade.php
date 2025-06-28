@@ -3,7 +3,7 @@
 @section('content')
     <section class="upload-area p-4 master-head">
         <div class="container">
-            <a href="" class="breadcrumb-back text-decoration-none text-body">
+            <a href="{{ route('events.show', request()->route('code')) }}" class="breadcrumb-back text-decoration-none text-body">
                 <img src="{{ asset('website/img/back.svg') }}">
                 <strong>{{lang('website', 'upload.back_to_album')}}</strong>
             </a>
