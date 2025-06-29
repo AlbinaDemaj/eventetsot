@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\SubscriptionPlan;
 use App\Models\User;
+use App\Models\UserSubscription;
 use App\Services\SubscriptionService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -84,16 +85,20 @@ class UserController extends Controller
 
         $currentPaidStatus = $user->activeSubscription && $user->activeSubscription->payment_method !== 'free';
 
-        if ($request->is_paid != $currentPaidStatus) {
-            $plan = $request->is_paid
+        $isPaidRequested = filter_var($request->is_paid, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
+
+        if (!is_null($isPaidRequested) && $isPaidRequested !== $currentPaidStatus) {
+            $plan = $isPaidRequested
                 ? SubscriptionPlan::where('price', '>', 0)->first()
                 : SubscriptionPlan::where('price', 0)->first();
+
+            $this->subscriptionService->cancelAllActiveSubscriptions($user);
 
             $this->subscriptionService->createSubscription(
                 user: $user,
                 plan: $plan,
                 autoRenew: false,
-                paymentMethod: $request->is_paid ? 'ibas' : 'free',
+                paymentMethod: $isPaidRequested ? 'ibas' : 'free',
                 status: 'active'
             );
         }

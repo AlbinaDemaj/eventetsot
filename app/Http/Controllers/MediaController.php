@@ -37,12 +37,12 @@ class MediaController extends Controller
         $uploadedItems = [];
         $user = User::where('id', $event->user_id)->firstOrFail();
 
-        if (!$user->isLinkActive($event->event_date) && !$event->is_public) {
-            return response()->json([
-                'success' => false,
-                'message' => 'You cannot upload right now. Please wait to activate the event upload.'
-            ]);
-        }
+//        if (!$user->isLinkActive($event->event_date) && !$event->is_public) {
+//            return response()->json([
+//                'success' => false,
+//                'message' => 'You cannot upload right now. Please wait to activate the event upload.'
+//            ]);
+//        }
 
         if (!$user->canUpload() && !$event->is_public) {
             return response()->json([

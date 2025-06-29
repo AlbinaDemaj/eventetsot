@@ -97,10 +97,11 @@
                 <div class="payment-alert">
                     <div class="alert alert-warning" role="alert">
                         <p><i class="fa-solid fa-info-circle"></i>
-                            You're currently using the limited free plan. Upgrade your event to unlock all the features we are offering!</p>
+                            Jeni duke përdorur planin falas me funksione të kufizuara. Përmirësoni eventin tuaj për të zhbllokuar të gjitha funksionet që ofrojmë!
+                        </p>
 
                         <div class="progress-btn">
-                            <button type="submit" class="login-btn" data-bs-toggle="modal" data-bs-target="#pricingModal" data-bs-whatever="@mdo">Upgrade Plan</button>
+                            <button type="submit" class="login-btn" data-bs-toggle="modal" data-bs-target="#pricingModal" data-bs-whatever="@mdo">Përmirëso Tani</button>
                         </div>
                         <button type="button" class="close-alert" aria-label="Close">&times;</button>
                     </div>
