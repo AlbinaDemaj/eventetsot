@@ -716,7 +716,8 @@ footer {
   color: #d48d01;
   border-bottom: 1px solid #d48d01;
 }
-.img-collage .child-wrap .post-img img{
+.img-collage .child-wrap .post-img img,
+.img-collage .child-wrap .post-img video{
   width: 100%;
   height: 100%;
 }
