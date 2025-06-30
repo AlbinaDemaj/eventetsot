@@ -44,9 +44,9 @@
                 <p>Double tap</p>
             </div>
         </div>
-      <div class="cross-button" data-bs-dismiss="offcanvas"><img src="../website/img/cross-1.svg" /></div>
+        <div class="cross-button" data-bs-dismiss="offcanvas"><img src="../website/img/cross-1.svg" /></div>
     </div>
-  </div>
+</div>
 <script type="text/javascript" src="{{ asset('website/js/bootstrap.bundle.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('website/js//jquery-1.11.0.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('website/js/jquery-migrate-1.2.1.min.js') }}"></script>
@@ -501,21 +501,21 @@
 </script>
 <script>
     $(document).ready(function () {
-  const $gallery = $('.img-gallery-magnific');
+        const $gallery = $('.img-gallery-magnific');
 
-  if ($gallery.length) {
-    $gallery.magnificPopup({
-      delegate: 'a.image-popup-vertical-fit',
-      type: 'image',
-      gallery: {
-        enabled: true
-      },
-      callbacks: {
-        open: function () {
-          const current = $.magnificPopup.instance.currItem.el;
-          const imageSrc = current.attr('href');
+        if ($gallery.length) {
+            $gallery.magnificPopup({
+                delegate: 'a.image-popup-vertical-fit',
+                type: 'image',
+                gallery: {
+                    enabled: true
+                },
+                callbacks: {
+                    open: function () {
+                        const current = $.magnificPopup.instance.currItem.el;
+                        const imageSrc = current.attr('href');
 
-          const iconContainer = `
+                        const iconContainer = `
             <div class="mfp-icon-container">
               <a href="${imageSrc}" download class="mfp-custom-icon mfp-download-icon">
                 <img src="../website/img/download.png" />
@@ -525,18 +525,65 @@
               </div>
             </div>`;
 
-          $('.mfp-container').append(iconContainer);
-        },
-        // change: function () {
-        //   $('.mfp-icon-container').remove();
-        // },
-        // close: function () {
-        //   $('.mfp-icon-container').remove();
-        // }
-      }
+                        $('.mfp-container').append(iconContainer);
+                    },
+                    // change: function () {
+                    //   $('.mfp-icon-container').remove();
+                    // },
+                    // close: function () {
+                    //   $('.mfp-icon-container').remove();
+                    // }
+                }
+            });
+        }
     });
-  }
-});
+
+    document.addEventListener('DOMContentLoaded', function() {
+        // Enhanced lazy loading
+        const lazyImages = [].slice.call(document.querySelectorAll('img.lazy-load'));
+        const observer = new IntersectionObserver(function(entries, observer) {
+            entries.forEach(function(entry) {
+                if (entry.isIntersecting) {
+                    const img = entry.target;
+                    img.src = img.dataset.src;
+                    img.classList.add('loaded');
+                    observer.unobserve(img);
+                }
+            });
+        }, {
+            rootMargin: '100px 0px',
+            threshold: 0.01
+        });
+
+        lazyImages.forEach(function(img) {
+            observer.observe(img);
+        });
+
+        // Smooth scroll behavior for gallery
+        const gallery = document.getElementById('media-gallery');
+        let isScrolling;
+
+        gallery.addEventListener('scroll', function() {
+            window.clearTimeout(isScrolling);
+            isScrolling = setTimeout(function() {
+                // Load images when scrolling stops
+                lazyImages.forEach(img => {
+                    if (isInViewport(img)) {
+                        img.src = img.dataset.src;
+                        img.classList.add('loaded');
+                    }
+                });
+            }, 100);
+        });
+
+        function isInViewport(element) {
+            const rect = element.getBoundingClientRect();
+            return (
+                rect.top <= window.innerHeight &&
+                rect.bottom >= 0
+            );
+        }
+    });
 
 </script>
 </body>

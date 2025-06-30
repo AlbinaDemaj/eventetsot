@@ -18,24 +18,30 @@
 
     <div class="collage-box">
         <div class="img-collage">
-            <div class="child-wrap img-gallery-magnific">
+            <div class="child-wrap img-gallery-magnific" id="media-gallery">
                 @foreach($event->media()->latest()->get() as $media)
                     @if($media->file_type === 'video/mp4')
                         <div class="post-img magnific-img">
-                            <video controls>
+                            <video controls preload="metadata" poster="{{ asset('website/img/video-placeholder.jpg') }}">
                                 <source src="{{ asset('storage/' . $media->file_path) }}" type="{{ $media->file_type }}">
                                 {{lang('website', 'event.video_unsupported')}}
                             </video>
                             @if($media->caption_name || $media->caption_text)
-                                <img src="{{ asset('website/img/comment.png') }}" class="cmnt-img" />
+                                <img src="{{ asset('website/img/comment.png') }}" class="cmnt-img" loading="lazy" />
                             @endif
                         </div>
                     @else
                         <div class="post-img magnific-img">
                             <a href="{{ asset('storage/' . $media->file_path) }}" class="image-popup-vertical-fit">
-                                <img src="{{ asset('storage/' . $media->file_path) }}">
+                                <img
+                                    src="{{ asset('storage/' . $media->file_path) }}"
+                                    loading="lazy"
+                                    data-src="{{ asset('storage/' . $media->file_path) }}"
+                                    class="lazy-load"
+                                    alt="{{ $media->caption_name ?? 'Event image' }}"
+                                >
                                 @if($media->caption_name || $media->caption_text)
-                                    <img src="{{ asset('website/img/comment.png') }}" class="cmnt-img" />
+                                    <img src="{{ asset('website/img/comment.png') }}" class="cmnt-img" loading="lazy" />
                                 @endif
                             </a>
                         </div>
