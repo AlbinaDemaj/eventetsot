@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Event;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use ZipStream\ZipStream;
 
 class EventController extends Controller
 {
@@ -101,5 +102,48 @@ class EventController extends Controller
             'success' => 'Welcome screen updated successfully!',
             'event' => $event
         ]);
+    }
+
+    public function downloadMedia($id)
+    {
+        // Define the directory path based on your URL structure
+        $directory = "media/{$id}";
+
+        // Get all files from the public storage disk
+        $files = Storage::disk('public')->files($directory);
+
+        if (empty($files)) {
+            return back()->with('error', 'No files found for download');
+        }
+
+        // Set the zip file name
+        $zipFileName = "media-{$id}-download.zip";
+
+        // Create the zip stream response
+        return response()->streamDownload(
+            function () use ($files, $id) {
+                $zip = new ZipStream(
+                    outputName: 'media.zip',
+                    sendHttpHeaders: false // Important for Laravel response
+                );
+
+                foreach ($files as $file) {
+                    // Get the relative path without the directory for cleaner zip structure
+                    $relativePath = str_replace("media/{$id}/", '', $file);
+
+                    $zip->addFileFromPath(
+                        $relativePath,
+                        Storage::disk('public')->path($file)
+                    );
+                }
+
+                $zip->finish();
+            },
+            $zipFileName,
+            [
+                'Content-Type' => 'application/zip',
+                'Content-Disposition' => "attachment; filename={$zipFileName}",
+            ]
+        );
     }
 }

@@ -9,9 +9,22 @@
                     <h2>Fotografitë dhe videot tuaja</h2>
                     <p>Këtu mund të gjeni të gjitha fotot dhe videot e ngjarjes tuaj. Ju gjithashtu mund të ngarkoni fotot tuaja dhe ato do të
                         shfaqen në Murin tuaj fotografik dhe <a href="#" >Album dixhital.</a></p>
-                    <button type="button" onclick="window.open('{{ url('events/'.$selectedEvent->code) }}', '_blank');" class="login-btn">
-                        Ngarko foto
-                    </button>
+
+                    <div class="row">
+                        <div class="col-xl-6 col-lg-12">
+                            <button type="button" onclick="window.open('{{ url('events/'.$selectedEvent->code) }}', '_blank');" class="login-btn" style="width: 100%">
+                                Ngarko foto
+                            </button>
+                        </div>
+
+                        @if($userActiveSubscription->payment_method !== 'free')
+                            <div class="col-xl-6 col-lg-12">
+                                <button type="button"  onclick="window.location.href='{{ route('user.media.download', ['id' => $selectedEvent->id]) }}'" class="login-btn" style="width: 100%">
+                                    Shkarko të gjitha fotot/videot (zip)
+                                </button>
+                            </div>
+                        @endif
+                    </div>
                 </div>
 
             </div>
