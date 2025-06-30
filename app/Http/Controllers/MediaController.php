@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Event;
+use App\Models\Media;
 use App\Models\User;
 use App\Services\ImageGeneratorService;
 use Illuminate\Http\Request;
@@ -111,6 +112,18 @@ class MediaController extends Controller
             'success' => true,
             'message' => 'Content uploaded successfully!',
             'count' => count($uploadedItems)
+        ]);
+    }
+
+    public function mediaComment(Request $request) {
+        $relativePath = str_replace(asset('storage'), '', $request->image);
+        $relativePath = ltrim($relativePath, '/');
+
+        $media = Media::where('file_path', $relativePath)->firstOrFail();
+
+        return response()->json([
+            'success' => true,
+            'data' => $media
         ]);
     }
 }

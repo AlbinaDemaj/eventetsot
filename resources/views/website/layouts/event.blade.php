@@ -37,11 +37,11 @@
         <div class="sheet-content">
             <div class="caption-action">
                 <h2>Caption</h2>
-                <p>Double tap</p>
+                <p id="caption_text"></p>
             </div>
             <div class="caption-action">
                 <h2>Name</h2>
-                <p>Double tap</p>
+                <p id="caption_name"></p>
             </div>
         </div>
         <div class="cross-button" data-bs-dismiss="offcanvas"><img src="../website/img/cross-1.svg" /></div>
@@ -500,54 +500,82 @@
     });
 </script>
 <script>
-    $(document).ready(function () {
+    // Media Comment Handler
+    function handleCommentClick(image) {
+        $.ajax({
+            url: '/media-comment',
+            type: 'POST',
+            data: {
+                image: image,
+                _token: '{{ csrf_token() }}'
+            },
+            success: function(response) {
+                $('#caption_text').text(response.data.caption_text || 'N/A');
+                $('#caption_name').text(response.data.caption_name || 'N/A');
+            },
+            error: function(xhr, status, error) {
+                console.error('Error loading comments:', error);
+                $('#caption_text').text('N/A');
+                $('#caption_name').text('N/A');
+            }
+        });
+    }
+
+    // Gallery Initialization
+    function initializeGallery() {
         const $gallery = $('.img-gallery-magnific');
 
-        if ($gallery.length) {
-            $gallery.magnificPopup({
-                delegate: 'a.image-popup-vertical-fit',
-                type: 'image',
-                gallery: {
-                    enabled: true
+        if (!$gallery.length) return;
+
+        $gallery.magnificPopup({
+            delegate: 'a.image-popup-vertical-fit',
+            type: 'image',
+            gallery: { enabled: true },
+            callbacks: {
+                open: function() {
+                    const current = $.magnificPopup.instance.currItem.el;
+                    const imageSrc = current.attr('href');
+
+                    const iconContainer = `
+                        <div class="mfp-icon-container">
+                            <a href="${imageSrc}" download class="mfp-custom-icon mfp-download-icon">
+                                <img src="../website/img/download.png" alt="Download" />
+                            </a>
+                            <div class="mfp-custom-icon mfp-comment-icon"
+                                 onclick="handleCommentClick('${imageSrc}')"
+                                 data-bs-toggle="offcanvas"
+                                 data-bs-target="#actionSheetCanvas">
+                                <img src="../website/img/comment.png" alt="Comment" />
+                            </div>
+                        </div>`;
+
+                    $('.mfp-container').append(iconContainer);
                 },
-                callbacks: {
-                    open: function () {
-                        const current = $.magnificPopup.instance.currItem.el;
-                        const imageSrc = current.attr('href');
+                // Uncomment if needed
+                // change: function() {
+                //     $('.mfp-icon-container').remove();
+                // },
+                // close: function() {
+                //     $('.mfp-icon-container').remove();
+                // }
+            }
+        });
+    }
 
-                        const iconContainer = `
-            <div class="mfp-icon-container">
-              <a href="${imageSrc}" download class="mfp-custom-icon mfp-download-icon">
-                <img src="../website/img/download.png" />
-              </a>
-              <div class="mfp-custom-icon mfp-comment-icon" data-bs-toggle="offcanvas" data-bs-target="#actionSheetCanvas">
-                <img src="../website/img/comment.png" />
-              </div>
-            </div>`;
+    // Lazy Loading with Intersection Observer
+    function setupLazyLoading() {
+        const lazyImages = Array.from(document.querySelectorAll('img.lazy-load'));
 
-                        $('.mfp-container').append(iconContainer);
-                    },
-                    // change: function () {
-                    //   $('.mfp-icon-container').remove();
-                    // },
-                    // close: function () {
-                    //   $('.mfp-icon-container').remove();
-                    // }
-                }
-            });
+        if (!('IntersectionObserver' in window)) {
+            loadAllImagesImmediately(lazyImages);
+            return;
         }
-    });
 
-    document.addEventListener('DOMContentLoaded', function() {
-        // Enhanced lazy loading
-        const lazyImages = [].slice.call(document.querySelectorAll('img.lazy-load'));
-        const observer = new IntersectionObserver(function(entries, observer) {
-            entries.forEach(function(entry) {
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    const img = entry.target;
-                    img.src = img.dataset.src;
-                    img.classList.add('loaded');
-                    observer.unobserve(img);
+                    loadImage(entry.target);
+                    observer.unobserve(entry.target);
                 }
             });
         }, {
@@ -555,34 +583,58 @@
             threshold: 0.01
         });
 
-        lazyImages.forEach(function(img) {
-            observer.observe(img);
+        lazyImages.forEach(img => observer.observe(img));
+    }
+
+    function loadImage(img) {
+        img.src = img.dataset.src;
+        img.classList.add('loaded');
+    }
+
+    function loadAllImagesImmediately(images) {
+        images.forEach(img => {
+            img.src = img.dataset.src;
+            img.classList.add('loaded');
         });
+    }
 
-        // Smooth scroll behavior for gallery
+    // Smooth Scroll Behavior for Gallery
+    function setupGalleryScroll() {
         const gallery = document.getElementById('media-gallery');
-        let isScrolling;
+        if (!gallery) return;
 
-        gallery.addEventListener('scroll', function() {
-            window.clearTimeout(isScrolling);
-            isScrolling = setTimeout(function() {
-                // Load images when scrolling stops
-                lazyImages.forEach(img => {
-                    if (isInViewport(img)) {
-                        img.src = img.dataset.src;
-                        img.classList.add('loaded');
-                    }
-                });
+        let scrollTimer;
+
+        gallery.addEventListener('scroll', () => {
+            clearTimeout(scrollTimer);
+            scrollTimer = setTimeout(() => {
+                checkVisibleImages();
             }, 100);
         });
 
+        function checkVisibleImages() {
+            document.querySelectorAll('img.lazy-load:not(.loaded)').forEach(img => {
+                if (isInViewport(img)) {
+                    loadImage(img);
+                }
+            });
+        }
+
         function isInViewport(element) {
             const rect = element.getBoundingClientRect();
-            return (
-                rect.top <= window.innerHeight &&
-                rect.bottom >= 0
-            );
+            return (rect.top <= window.innerHeight && rect.bottom >= 0);
         }
+    }
+
+    // Document Ready Handler
+    $(document).ready(function() {
+        initializeGallery();
+    });
+
+    // DOM Content Loaded Handler
+    document.addEventListener('DOMContentLoaded', function() {
+        setupLazyLoading();
+        setupGalleryScroll();
     });
 
 </script>

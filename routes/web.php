@@ -31,6 +31,8 @@ Route::get('/events/{code}', [EventController::class, 'show'])->name('events.sho
 Route::get('/upload/{code}', [EventController::class, 'upload'])->name('events.upload');
 Route::post('/media', [MediaController::class, 'store'])->name('media.store');
 
+Route::post('/media-comment', [MediaController::class, 'mediaComment']);
+
 Route::get('/fix-qrcodes', function() {
     $events = Event::all();
 
