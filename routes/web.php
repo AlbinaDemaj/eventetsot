@@ -26,8 +26,8 @@ Route::get('/contact', [WebsiteController::class, 'contact'])->name('contact');
 Route::get('/contactAnkesa', [WebsiteController::class, 'contactAnkesa'])->name('contactAnkesa');
 Route::get('/about', [WebsiteController::class, 'about'])->name('about');
 
-Route::get('/events/welcome/{code}', [EventController::class, 'welcome'])->name('events.welcome');
-Route::get('/events/{code}', [EventController::class, 'show'])->name('events.show');
+Route::get('/events/welcome/{code}', [EventController::class, 'show'])->name('events.show');
+Route::get('/events/{code}', [EventController::class, 'welcome'])->name('events.welcome');
 Route::get('/upload/{code}', [EventController::class, 'upload'])->name('events.upload');
 Route::post('/media', [MediaController::class, 'store'])->name('media.store');
 
