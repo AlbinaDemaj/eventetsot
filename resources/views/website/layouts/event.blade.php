@@ -539,13 +539,13 @@
                     const iconContainer = `
                         <div class="mfp-icon-container">
                             <a href="${imageSrc}" download class="mfp-custom-icon mfp-download-icon">
-                                <img src="../website/img/download.png" alt="Download" />
+                                <img src="{{ asset('website/img/download.png') }}" alt="Download" />
                             </a>
                             <div class="mfp-custom-icon mfp-comment-icon"
                                  onclick="handleCommentClick('${imageSrc}')"
                                  data-bs-toggle="offcanvas"
                                  data-bs-target="#actionSheetCanvas">
-                                <img src="../website/img/comment.png" alt="Comment" />
+                                <img src="{{ asset('website/img/comment.png') }}" alt="Comment" />
                             </div>
                         </div>`;
 
