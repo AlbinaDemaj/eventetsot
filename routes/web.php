@@ -34,7 +34,7 @@ Route::post('/media', [MediaController::class, 'store'])->name('media.store');
 Route::post('/media-comment', [MediaController::class, 'mediaComment']);
 
 Route::get('/fix-qrcodes', function() {
-    $events = Event::all();
+    $events = Event::where('code', 'NgomFest')->get();
 
     foreach ($events as $event) {
         $url = url('/events/' . $event->code);
