@@ -56,7 +56,7 @@ class SettingController extends Controller
 
         $event->code = $request->code;
 
-        $url = url('/' . $event->code);
+        $url = url('/events/' . $event->code);
         $qrCode = base64_encode(
             QrCode::format('png')->size(200)->generate($url)
         );
