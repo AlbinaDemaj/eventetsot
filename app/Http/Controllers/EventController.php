@@ -17,7 +17,7 @@ class EventController extends Controller
     public function show(Request $request)
     {
         $event = Event::where('code', $request->code)->first();
-        $media = $event->media()->latest()->paginate(16);
+        $media = $event->media()->latest()->paginate(8);
 
         return view('website.events.show', ['event' => $event, 'media' => $media]);
     }
@@ -27,7 +27,7 @@ class EventController extends Controller
         $event = Event::findOrFail($id);
 
         $page = $request->get('page', 1);
-        $media = $event->media()->latest()->paginate(16, ['*'], 'page', $page);
+        $media = $event->media()->latest()->paginate(8, ['*'], 'page', $page);
 
         if ($request->ajax()) {
             return response()->json([
