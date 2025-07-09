@@ -103,6 +103,7 @@ class OptimizeMigratedMedia extends Command
 
     protected function processMediaItem(Media $media): array
     {
+        $s3Client = Storage::disk('s3')->getClient();
         $s3Path = ltrim(parse_url($media->file_path, PHP_URL_PATH), '/');
         $tempDir = storage_path('app/temp-optimize/');
 
@@ -123,7 +124,7 @@ class OptimizeMigratedMedia extends Command
 
         try {
             // 1. Verify S3 connection and file existence
-            $result['s3_available'] = Storage::disk('s3')->getDriver()->getAdapter()->getClient()->doesObjectExist(
+            $result['s3_available'] = $s3Client->doesObjectExist(
                 config('filesystems.disks.s3.bucket'),
                 $s3Path
             );
@@ -276,5 +277,37 @@ class OptimizeMigratedMedia extends Command
         $pow = floor(($bytes ? log($bytes) : 0) / log(1024));
         $pow = min($pow, count($units) - 1);
         return round($bytes / (1024 ** $pow), $precision) . ' ' . $units[$pow];
+    }
+
+    protected function getMimeTypeWithDebug(string $filePath): ?string
+    {
+        $methods = [
+            'mime_content_type' => function() use ($filePath) {
+                return function_exists('mime_content_type') ? mime_content_type($filePath) : false;
+            },
+            'finfo' => function() use ($filePath) {
+                return class_exists('finfo') ? (new \finfo(FILEINFO_MIME_TYPE))->file($filePath) : false;
+            },
+            'extension' => function() use ($filePath) {
+                $extension = strtolower(pathinfo($filePath, PATHINFO_EXTENSION));
+                $types = [
+                    'jpg' => 'image/jpeg',
+                    'jpeg' => 'image/jpeg',
+                    'png' => 'image/png',
+                    'gif' => 'image/gif',
+                    'webp' => 'image/webp'
+                ];
+                return $types[$extension] ?? null;
+            }
+        ];
+
+        foreach ($methods as $method => $callback) {
+            if ($result = $callback()) {
+                Log::debug("MIME detection succeeded via {$method}: {$result}");
+                return $result;
+            }
+        }
+
+        return null;
     }
 }
