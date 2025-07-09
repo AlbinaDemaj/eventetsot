@@ -56,8 +56,6 @@ return [
             'url' => env('AWS_URL'),
             'endpoint' => env('AWS_ENDPOINT'),
             'use_path_style_endpoint' => env('AWS_USE_PATH_STYLE_ENDPOINT', false),
-            'throw' => false,
-            'report' => false,
         ],
 
     ],
@@ -75,6 +73,12 @@ return [
 
     'links' => [
         public_path('storage') => storage_path('app/public'),
+    ],
+
+
+    'mimes' => [
+        'heic' => ['image/heic', 'image/heif'],
+        'heif' => ['image/heic', 'image/heif'],
     ],
 
 ];

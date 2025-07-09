@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use Intervention\Image\Drivers\Gd\Encoders\PngEncoder;
 use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver;
 
@@ -79,7 +80,7 @@ class ImageGeneratorService
             $font->lineHeight($this->lineHeightMultiplier);
         });
 
-        return $image;
+        return  $image->encode(new PngEncoder());
     }
 
     /**

@@ -20,23 +20,27 @@
         <div class="img-collage">
             <div class="child-wrap img-gallery-magnific" id="media-gallery">
                 @foreach($event->media()->latest()->get() as $media)
-                    @if($media->file_type === 'video/mp4')
-                        <div class="post-img magnific-img">
-                            <video controls preload="metadata" poster="{{ asset('website/img/video-placeholder.jpg') }}">
-                                <source src="{{ asset('storage/' . $media->file_path) }}" type="{{ $media->file_type }}">
-                                {{lang('website', 'event.video_unsupported')}}
-                            </video>
+                    @if($media->file_type === 'video/mp4' || $media->file_type === 'video/quicktime' || str_contains($media->file_type, 'video/'))
+                        <div class="post-img magnific-img video-container">
+                            <div class="video-thumbnail-wrapper" onclick="openVideoModal('{{ $media->file_path }}', '{{ $media->file_type }}')">
+                                <div class="play-button">
+                                    <svg viewBox="0 0 24 24" width="48" height="48">
+                                        <path fill="currentColor" d="M8,5.14V19.14L19,12.14L8,5.14Z"/>
+                                    </svg>
+                                </div>
+                            </div>
+
                             @if($media->caption_name || $media->caption_text)
                                 <img src="{{ asset('website/img/comment.png') }}" class="cmnt-img" loading="lazy" />
                             @endif
                         </div>
                     @else
                         <div class="post-img magnific-img">
-                            <a href="{{ asset('storage/' . $media->file_path) }}" class="image-popup-vertical-fit">
+                            <a href="{{ $media->file_path }}" class="image-popup-vertical-fit">
                                 <img
-                                    src="{{ asset('storage/' . $media->file_path) }}"
+                                    src="{{ $media->file_path }}"
                                     loading="lazy"
-                                    data-src="{{ asset('storage/' . $media->file_path) }}"
+                                    data-src="{{ $media->file_path }}"
                                     class="lazy-load"
                                     alt="{{ $media->caption_name ?? 'Event image' }}"
                                 >
@@ -48,6 +52,16 @@
                     @endif
                 @endforeach
             </div>
+        </div>
+    </div>
+
+    <!-- Video Modal -->
+    <div id="videoModal" class="video-modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeVideoModal()">&times;</span>
+            <video id="modalVideo" controls autoplay>
+                Your browser does not support the video tag.
+            </video>
         </div>
     </div>
 @endsection

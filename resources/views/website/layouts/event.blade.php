@@ -44,7 +44,7 @@
                 <p id="caption_name"></p>
             </div>
         </div>
-        <div class="cross-button" data-bs-dismiss="offcanvas"><img src="../website/img/cross-1.svg" /></div>
+        <div class="cross-button" data-bs-dismiss="offcanvas"><img src="{{ asset('website/img/cross-1.svg') }}" /></div>
     </div>
 </div>
 <script type="text/javascript" src="{{ asset('website/js/bootstrap.bundle.min.js') }}"></script>
@@ -426,62 +426,70 @@
             showReviewStep();
         }
 
-        function handleFinalUpload() {
+        async function handleFinalUpload() {
             if (uploadItems.length === 0) {
                 alert('Please add at least one file or text post to upload.');
                 return;
             }
 
             const originalBtnText = finalUploadBtn.textContent;
-
             finalUploadBtn.textContent = 'Uploading...';
             finalUploadBtn.disabled = true;
 
-            const formData = new FormData();
+            try {
+                const formData = new FormData();
 
-            // Add all items to formData with their type and captions
-            uploadItems.forEach((item, index) => {
-                if (item.type === 'file') {
-                    formData.append(`items[${index}][type]`, 'file');
-                    formData.append(`items[${index}][file]`, item.file);
-                    formData.append(`items[${index}][caption][text]`, item.caption.text || '');
-                    formData.append(`items[${index}][caption][name]`, item.caption.name || '');
-                } else if (item.type === 'text') {
-                    formData.append(`items[${index}][type]`, 'text');
-                    formData.append(`items[${index}][textContent]`, item.textContent);
-                    formData.append(`items[${index}][backgroundImage]`, item.backgroundImage);
-                    formData.append(`items[${index}][fontColor]`, item.fontColor);
-                    formData.append(`items[${index}][caption][text]`, item.caption.text || '');
-                    formData.append(`items[${index}][caption][name]`, item.caption.name || '');
+                uploadItems.forEach((item, index) => {
+                    if (item.type === 'file') {
+                        formData.append(`items[${index}][type]`, 'file');
+                        formData.append(`items[${index}][file]`, item.file);
+                        formData.append(`items[${index}][caption][text]`, item.caption.text || '');
+                        formData.append(`items[${index}][caption][name]`, item.caption.name || '');
+                    } else if (item.type === 'text') {
+                        formData.append(`items[${index}][type]`, 'text');
+                        formData.append(`items[${index}][textContent]`, item.textContent);
+                        formData.append(`items[${index}][backgroundImage]`, item.backgroundImage);
+                        formData.append(`items[${index}][fontColor]`, item.fontColor);
+                        formData.append(`items[${index}][caption][text]`, item.caption.text || '');
+                        formData.append(`items[${index}][caption][name]`, item.caption.name || '');
+                    }
+                });
+
+                formData.append('code', '{{ request()->route('code') }}');
+
+                const response = await fetch('{{ route("media.store") }}', {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                        'Accept': 'application/json'
+                    }
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(data.message || 'Upload failed');
                 }
-            });
 
-            formData.append('code', '{{request()->route('code')}}');
-
-            fetch('{{ route("media.store") }}', {
-                method: 'POST',
-                body: formData,
-                headers: {
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                    'Accept': 'application/json'
-                }
-            })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        window.location.href = '{{ route('events.show', request()->route('code')) }}';
+                if (data.success) {
+                    window.location.href = '{{ route('events.show', request()->route('code')) }}';
+                } else {
+                    // Display validation errors if available
+                    if (data.errors) {
+                        const errorMessages = Object.values(data.errors).flat();
+                        alert(errorMessages.join('\n'));
                     } else {
                         alert(data.message || 'Upload failed');
-                        finalUploadBtn.textContent = originalBtnText;
-                        finalUploadBtn.disabled = false;
                     }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert('An error occurred during upload');
-                    finalUploadBtn.textContent = originalBtnText;
-                    finalUploadBtn.disabled = false;
-                });
+                }
+            } catch (error) {
+                console.error('Upload error:', error);
+                alert(error.message || 'An error occurred during upload');
+            } finally {
+                finalUploadBtn.textContent = originalBtnText;
+                finalUploadBtn.disabled = false;
+            }
         }
 
         // =============================================
@@ -636,6 +644,51 @@
         setupLazyLoading();
         setupGalleryScroll();
     });
+
+    function openVideoModal(videoSrc, videoType) {
+        const modal = document.getElementById('videoModal');
+        const video = document.getElementById('modalVideo');
+
+        // Set video source
+        video.innerHTML = `<source src="${videoSrc}" type="${videoType}">`;
+
+        // Show modal
+        modal.style.display = "block";
+
+        // Play video
+        video.load();
+        video.play().catch(e => console.log("Autoplay prevented:", e));
+
+        // Close modal when clicking outside content
+        modal.onclick = function(e) {
+            if (e.target === modal) {
+                closeVideoModal();
+            }
+        };
+
+        // Close with Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === "Escape") {
+                closeVideoModal();
+            }
+        });
+    }
+
+    function closeVideoModal() {
+        const modal = document.getElementById('videoModal');
+        const video = document.getElementById('modalVideo');
+
+        // Pause and reset video
+        video.pause();
+        video.currentTime = 0;
+
+        // Hide modal
+        modal.style.display = "none";
+
+        // Remove event listeners
+        modal.onclick = null;
+        document.removeEventListener('keydown', closeVideoModal);
+    }
 
 </script>
 </body>

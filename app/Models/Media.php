@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Media extends Model
 {
-    protected $fillable = ['event_id', 'file_path', 'mime_type', 'is_guest'];
+    protected $fillable = ['event_id', 'file_path', 'mime_type', 'is_guest', 'is_cloud'];
 
     public function event()
     {
