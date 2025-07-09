@@ -158,7 +158,7 @@ class ImageOptimizationService
         $this->optimizeAndConvertToWebP(
             $inputPath,
             $tempPath,
-            quality: 65,
+            quality: 50,
             maxWidth: 1200,
             maxHeight: 1200
         );
@@ -238,7 +238,7 @@ class ImageOptimizationService
     protected function optimizeAndConvertToWebP(
         string $inputPath,
         string $outputPath,
-        int $quality = 65,
+        int $quality = 50,
         int $maxWidth = 1920,
         int $maxHeight = 1080
     ): void {

@@ -149,9 +149,11 @@
             trash: "{{ asset('website/img/trash.svg') }}"
         };
 
+        @if(request()->route('') === 'events.upload')
         // =============================================
         // Event Listeners
         // =============================================
+
         dropzone.addEventListener('click', () => fileInput.click());
         dropzone.addEventListener('dragover', handleDragOver);
         dropzone.addEventListener('dragleave', handleDragLeave);
@@ -163,6 +165,7 @@
         document.addEventListener('click', handleDocumentClick);
         thumbnails.forEach(thumbnail => thumbnail.addEventListener('click', handleThumbnailClick));
         addTextPostBtn.addEventListener('click', handleTextPostAdd);
+        @endif
 
         // =============================================
         // Core Functions
