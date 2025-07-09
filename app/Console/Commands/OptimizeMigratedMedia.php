@@ -31,6 +31,31 @@ class OptimizeMigratedMedia extends Command
 
     public function handle()
     {
+        $this->info("Checking S3 Configuration...");
+        $this->table(['Config', 'Value'], [
+            ['Bucket', config('filesystems.disks.s3.bucket')],
+            ['Region', config('filesystems.disks.s3.region')],
+            ['Endpoint', config('filesystems.disks.s3.endpoint')],
+            ['URL', config('filesystems.disks.s3.url')],
+            ['Visibility', config('filesystems.disks.s3.visibility')],
+        ]);
+
+        // Test connection
+        try {
+            Storage::disk('s3')->put('test-connection.txt', 'test');
+            $this->info("S3 Connection: Working");
+            Storage::disk('s3')->delete('test-connection.txt');
+        } catch (Exception $e) {
+            $this->error("S3 Connection Failed: " . $e->getMessage());
+        }
+
+        // Add this debug check
+        $tempDir = storage_path('app/temp-optimize/');
+        $this->info("Temp Directory: {$tempDir}");
+        $this->info("Writable: " . (is_writable($tempDir) ? 'Yes' : 'No'));
+        $this->info("Free Space: " . round(disk_free_space($tempDir) / 1024 / 1024) . "MB");
+
+
         $query = Media::where('is_cloud', true)
             ->where('file_type', 'like', 'image/%')
             ->orderBy('event_id');
@@ -81,22 +106,62 @@ class OptimizeMigratedMedia extends Command
         $s3Path = ltrim(parse_url($media->file_path, PHP_URL_PATH), '/');
         $tempDir = storage_path('app/temp-optimize/');
 
-        if (!File::exists($tempDir)) {
-            File::makeDirectory($tempDir);
-        }
+        // Initialize result with failure state
+        $result = [
+            'id' => $media->id,
+            'event_id' => $media->event_id,
+            'status' => 'failed',
+            'error' => 'Unknown error',
+            's3_available' => false,
+            'temp_created' => false,
+            'download_success' => false,
+            'mime_detected' => false
+        ];
 
         $tempFile = $tempDir . basename($s3Path);
         $originalSize = Storage::disk('s3')->size($s3Path);
 
         try {
-            // Download from S3
-            Storage::disk('s3')->get($s3Path, $tempFile);
+            // 1. Verify S3 connection and file existence
+            $result['s3_available'] = Storage::disk('s3')->getDriver()->getAdapter()->getClient()->doesObjectExist(
+                config('filesystems.disks.s3.bucket'),
+                $s3Path
+            );
 
-            // Process optimization
+            if (!$result['s3_available']) {
+                throw new Exception("S3 object not found: {$s3Path}");
+            }
+
+            // 2. Create temp directory with verification
+            if (!File::exists($tempDir)) {
+                File::makeDirectory($tempDir, 0755, true);
+            }
+            $result['temp_created'] = is_writable($tempDir);
+
+            $tempFile = $tempDir . basename($s3Path);
+
+            // 3. Download with S3 client directly for better debugging
+            $s3Client = Storage::disk('s3')->getDriver()->getAdapter()->getClient();
+            $result['download_success'] = $s3Client->getObject([
+                'Bucket' => config('filesystems.disks.s3.bucket'),
+                'Key'    => $s3Path,
+                'SaveAs' => $tempFile
+            ]);
+
+            if (!file_exists($tempFile) || filesize($tempFile) === 0) {
+                throw new Exception("Downloaded empty or invalid file");
+            }
+
+            // 4. MIME type detection with multiple fallbacks
+            $result['mime_detected'] = $this->getMimeTypeWithDebug($tempFile);
+            if (!$result['mime_detected']) {
+                throw new Exception("MIME type detection failed");
+            }
+
             $file = new \Illuminate\Http\UploadedFile(
                 $tempFile,
                 basename($s3Path),
-                mime_content_type($tempFile),
+                $result['mime_detected'],
                 null,
                 true
             );
