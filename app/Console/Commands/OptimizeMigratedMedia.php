@@ -142,7 +142,6 @@ class OptimizeMigratedMedia extends Command
             $tempFile = $tempDir . basename($s3Path);
 
             // 3. Download with S3 client directly for better debugging
-            $s3Client = Storage::disk('s3')->getDriver()->getAdapter()->getClient();
             $result['download_success'] = $s3Client->getObject([
                 'Bucket' => config('filesystems.disks.s3.bucket'),
                 'Key'    => $s3Path,
