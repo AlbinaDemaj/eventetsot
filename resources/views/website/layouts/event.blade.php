@@ -149,7 +149,7 @@
             trash: "{{ asset('website/img/trash.svg') }}"
         };
 
-        @if(request()->route('') === 'events.upload')
+        @if(request()->routeIs('events.upload'))
         // =============================================
         // Event Listeners
         // =============================================

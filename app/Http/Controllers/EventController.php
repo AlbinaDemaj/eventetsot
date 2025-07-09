@@ -16,8 +16,29 @@ class EventController extends Controller
 
     public function show(Request $request)
     {
-        $event = Event::with('media')->where('code', $request->code)->first();
-        return view('website.events.show', ['event' => $event]);
+        $event = Event::where('code', $request->code)->first();
+        $media = $event->media()->latest()->paginate(16);
+
+        return view('website.events.show', ['event' => $event, 'media' => $media]);
+    }
+
+    public function loadMoreMedia(Request $request, $id)
+    {
+        $event = Event::findOrFail($id);
+
+        $page = $request->get('page', 1);
+        $media = $event->media()->latest()->paginate(16, ['*'], 'page', $page);
+
+        if ($request->ajax()) {
+            return response()->json([
+                'html' => view('website.events.media-items', compact('media'))->render(),
+                'hasMore' => $media->hasMorePages(),
+                'currentPage' => $media->currentPage(),
+                'lastPage' => $media->lastPage()
+            ]);
+        }
+
+        return redirect()->back();
     }
 
     public function upload()

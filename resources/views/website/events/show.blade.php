@@ -18,39 +18,20 @@
 
     <div class="collage-box">
         <div class="img-collage">
+            {{-- Your main view file --}}
             <div class="child-wrap img-gallery-magnific" id="media-gallery">
-                @foreach($event->media()->latest()->get() as $media)
-                    @if($media->file_type === 'video/mp4' || $media->file_type === 'video/quicktime' || str_contains($media->file_type, 'video/'))
-                        <div class="post-img magnific-img video-container">
-                            <div class="video-thumbnail-wrapper" onclick="openVideoModal('{{ $media->file_path }}', '{{ $media->file_type }}')">
-                                <div class="play-button">
-                                    <svg viewBox="0 0 24 24" width="48" height="48">
-                                        <path fill="currentColor" d="M8,5.14V19.14L19,12.14L8,5.14Z"/>
-                                    </svg>
-                                </div>
-                            </div>
+                @include('website.events.media-items', ['media' => $media])
+            </div>
 
-                            @if($media->caption_name || $media->caption_text)
-                                <img src="{{ asset('website/img/comment.png') }}" class="cmnt-img" loading="lazy" />
-                            @endif
-                        </div>
-                    @else
-                        <div class="post-img magnific-img">
-                            <a href="{{ $media->file_path }}" class="image-popup-vertical-fit">
-                                <img
-                                    src="{{ $media->file_path }}"
-                                    loading="lazy"
-                                    data-src="{{ $media->file_path }}"
-                                    class="lazy-load"
-                                    alt="{{ $media->caption_name ?? 'Event image' }}"
-                                >
-                                @if($media->caption_name || $media->caption_text)
-                                    <img src="{{ asset('website/img/comment.png') }}" class="cmnt-img" loading="lazy" />
-                                @endif
-                            </a>
-                        </div>
-                    @endif
-                @endforeach
+            {{-- Loading indicator --}}
+            <div id="loading-indicator" class="loading-indicator" style="display: none;">
+                <div class="spinner"></div>
+                <p>Loading more images...</p>
+            </div>
+
+            {{-- No more content indicator --}}
+            <div id="no-more-content" class="no-more-content" style="display: none;">
+                <p>No more images to load</p>
             </div>
         </div>
     </div>
@@ -64,4 +45,108 @@
             </video>
         </div>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            let currentPage = {{ $media->currentPage() }};
+            let lastPage = {{ $media->lastPage() }};
+            let loading = false;
+            let eventId = {{ $event->id }};
+
+            const mediaGallery = document.getElementById('media-gallery');
+            const loadingIndicator = document.getElementById('loading-indicator');
+            const noMoreContent = document.getElementById('no-more-content');
+
+            // Intersection Observer for infinite scroll
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting && !loading && currentPage < lastPage) {
+                        loadMoreMedia();
+                    }
+                });
+            }, {
+                rootMargin: '100px' // Start loading 100px before reaching the bottom
+            });
+
+            // Create a sentinel element to observe
+            const sentinel = document.createElement('div');
+            sentinel.id = 'scroll-sentinel';
+            sentinel.style.height = '1px';
+            mediaGallery.parentNode.insertBefore(sentinel, mediaGallery.nextSibling);
+            observer.observe(sentinel);
+
+            function loadMoreMedia() {
+                if (loading || currentPage >= lastPage) return;
+
+                loading = true;
+                loadingIndicator.style.display = 'block';
+
+                fetch(`/events/${eventId}/load-more-media?page=${currentPage + 1}`, {
+                    method: 'GET',
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                    }
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.html) {
+                            mediaGallery.insertAdjacentHTML('beforeend', data.html);
+                            currentPage = data.currentPage;
+                            lastPage = data.lastPage;
+
+                            // Initialize any new magnific popup or lazy loading
+                            initializeNewMediaElements();
+
+                            if (!data.hasMore) {
+                                noMoreContent.style.display = 'block';
+                                observer.disconnect();
+                            }
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error loading more media:', error);
+                    })
+                    .finally(() => {
+                        loading = false;
+                        loadingIndicator.style.display = 'none';
+                    });
+            }
+
+            function initializeNewMediaElements() {
+                // Re-initialize magnific popup for new elements
+                if (typeof $.magnificPopup !== 'undefined') {
+                    $('.image-popup-vertical-fit').magnificPopup({
+                        type: 'image',
+                        closeOnContentClick: true,
+                        mainClass: 'mfp-img-mobile',
+                        image: {
+                            verticalFit: true
+                        }
+                    });
+                }
+
+                // Re-initialize lazy loading for new images
+                const newLazyImages = document.querySelectorAll('.lazy-load:not(.loaded)');
+                newLazyImages.forEach(img => {
+                    const observer = new IntersectionObserver((entries) => {
+                        entries.forEach(entry => {
+                            if (entry.isIntersecting) {
+                                const img = entry.target;
+                                img.src = img.dataset.src;
+                                img.classList.add('loaded');
+                                observer.unobserve(img);
+                            }
+                        });
+                    });
+                    observer.observe(img);
+                });
+            }
+
+            // Show no more content message if we're already on the last page
+            if (currentPage >= lastPage) {
+                noMoreContent.style.display = 'block';
+            }
+        });
+    </script>
 @endsection
