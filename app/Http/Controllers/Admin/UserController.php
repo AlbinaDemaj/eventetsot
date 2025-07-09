@@ -8,7 +8,10 @@ use App\Models\User;
 use App\Models\UserSubscription;
 use App\Services\SubscriptionService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -122,11 +125,57 @@ class UserController extends Controller
 
     public function destroy(User $user)
     {
+        DB::beginTransaction();
+
         try {
-            $user->delete();
-            return response()->json(['success' => true]);
+            // 1. Get all unique event IDs that belong to this user
+            $eventIds = $user->events()->pluck('id');
+
+            // 2. Delete entire media directories for each event
+            foreach ($eventIds as $eventId) {
+                $directory = "media/{$eventId}/";
+
+                // Check if directory exists in S3
+                if (Storage::disk('s3')->exists($directory)) {
+                    // Delete all files in the directory
+                    Storage::disk('s3')->deleteDirectory($directory);
+                    Log::info("Deleted S3 directory: {$directory}");
+                }
+            }
+
+            // 3. Delete all media records from database
+            $user->media()->forceDelete();
+
+            // 4. Delete all events (this will cascade if relationships are setup correctly)
+            $user->events()->forceDelete();
+
+            // 5. Delete user subscriptions
+            $user->subscriptions()->forceDelete();
+
+            // 7. Finally delete the user
+            $user->forceDelete();
+
+            DB::commit();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'User and all associated data (including event media directories) deleted permanently',
+                'deleted_directories' => $eventIds->map(fn($id) => "media/{$id}/")->toArray()
+            ]);
+
         } catch (\Exception $e) {
-            return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
+            DB::rollBack();
+
+            Log::error('User deletion failed: ' . $e->getMessage(), [
+                'user_id' => $user->id,
+                'exception' => $e->getTraceAsString()
+            ]);
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to delete user and associated data',
+                'error' => config('app.debug') ? $e->getMessage() : 'Server error'
+            ], 500);
         }
     }
 }

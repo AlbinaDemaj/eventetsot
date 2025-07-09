@@ -43,6 +43,12 @@ class MediaController extends Controller
             ], 422);
         }
 
+        ini_set('memory_limit', '-1');
+        ini_set('max_execution_time', '0');
+        ini_set('upload_max_filesize', '-1');
+        ini_set('post_max_size', '-1');
+        ini_set('max_file_uploads', '1000');
+
         $event = Event::where('code', $request->code)->firstOrFail();
         $uploadedItems = [];
         $user = User::where('id', $event->user_id)->firstOrFail();
