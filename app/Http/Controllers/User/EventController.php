@@ -106,35 +106,41 @@ class EventController extends Controller
 
     public function downloadMedia($id)
     {
-        // Define the directory path based on your URL structure
-        $directory = "media/{$id}";
+        $directory = "media/{$id}/";
+        $zipFileName = "media-{$id}-directory.zip";
 
-        // Get all files from the public storage disk
-        $files = Storage::disk('public')->files($directory);
-
-        if (empty($files)) {
-            return back()->with('error', 'No files found for download');
+        // Check if directory exists
+        if (!Storage::disk('s3')->exists($directory)) {
+            return back()->with('error', 'Directory not found');
         }
 
-        // Set the zip file name
-        $zipFileName = "media-{$id}-download.zip";
+        // Get all files (including subdirectories)
+        $files = Storage::disk('s3')->allFiles($directory);
 
-        // Create the zip stream response
+        if (empty($files)) {
+            return back()->with('error', 'No files found in directory');
+        }
+
         return response()->streamDownload(
-            function () use ($files, $id) {
+            function () use ($files, $directory) {
                 $zip = new ZipStream(
-                    outputName: 'media.zip',
-                    sendHttpHeaders: false // Important for Laravel response
+                    outputName: 'media-directory.zip',
+                    sendHttpHeaders: false,
+                    enableZip64: true
                 );
 
                 foreach ($files as $file) {
-                    // Get the relative path without the directory for cleaner zip structure
-                    $relativePath = str_replace("media/{$id}/", '', $file);
+                    // Remove the parent directory path for cleaner zip structure
+                    $relativePath = str_replace($directory, '', $file);
 
-                    $zip->addFileFromPath(
-                        $relativePath,
-                        Storage::disk('public')->path($file)
-                    );
+                    // Stream directly from S3 to save memory
+                    $stream = Storage::disk('s3')->readStream($file);
+                    $zip->addFileFromStream($relativePath, $stream);
+
+                    // Close the stream to prevent memory leaks
+                    if (is_resource($stream)) {
+                        fclose($stream);
+                    }
                 }
 
                 $zip->finish();

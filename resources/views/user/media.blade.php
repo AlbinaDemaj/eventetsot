@@ -73,7 +73,7 @@
                         <div class="col-md-3">
                             <div class="uploaded-img">
                                 <a href="{{ route('user.media.destroy', $med->id) }}" class="remove-img"><img src="assets/img/trash.svg"></a>
-                                <div class="img-box" data-bs-toggle="modal" data-bs-target="#lightboxModal"><img src="{{ asset('storage/' . $med->file_path) }}"></div>
+                                <div class="img-box" data-bs-toggle="modal" data-bs-target="#lightboxModal"><img src="{{ $med->file_path }}"></div>
 
                                 <!-- Show this button when caption is added -->
                                 <!-- <span class="btn btn-outline-success disabled d-flex align-items-center justify-content-center gap-4" data-bs-toggle="modal" data-bs-target="#addCaption"><img src="img/check-2.svg"> Caption Added</span> -->
