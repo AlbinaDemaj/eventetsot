@@ -19,11 +19,6 @@
                     </div>
 
                     <div class="form-area">
-                        <div>
-                            <p>CSRF: {{ csrf_token() }}</p>
-                            <p>Session: {{ session()->getId() }}</p>
-                            <p>Cookies: {{ json_encode(request()->cookies->all()) }}</p>
-                        </div>
                         <form method="POST" action="{{ route('admin.login') }}">
                             @csrf
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
