@@ -1,3 +1,25 @@
+:root {
+    --primary: #7B61FF;
+    --primary-hover: #6A4DFF;
+    --primary-light: #A78BFA;
+
+    --soft-blue: #6EC3F4;
+    --soft-pink: #F8A5C2;
+
+    --bg-main: #FFFFFF;
+    --bg-soft: #F9FAFB;
+
+    --text-heading: #111827;
+    --text-body: #6B7280;
+    --text-white: #FFFFFF;
+
+    --border-light: #E5E7EB;
+
+    --hero-gradient: linear-gradient(135deg, #7B61FF, #6EC3F4, #F8A5C2);
+
+    --shadow-soft: 0 10px 30px rgba(17, 24, 39, 0.08);
+    --transition: all 0.3s ease;
+}
 * {
     margin: 0;
     padding: 0;
@@ -62,14 +84,19 @@ header .nav-link {
 }
 
 .master-head {
-    background-image: url(../img/photo.png);
-    background-size: cover;
-    background-position: center;
-    padding: 10rem 3rem;
-    min-height: 100vh;
+    min-height: 90vh;
+    display: flex;
+    align-items: center;
     position: relative;
+    background: var(--hero-gradient);
     overflow: hidden;
+}
 
+.master-head::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(255,255,255,0.75);
 }
 
 .master-head:after {

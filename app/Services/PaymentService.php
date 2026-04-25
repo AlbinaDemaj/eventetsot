@@ -14,13 +14,14 @@ class PaymentService
 
     public function __construct()
     {
-        $this->key = config('services.ibas.key');
-        $this->secret = config('services.ibas.secret');
+        $this->key = (string) config('services.ibas.key');
+        $this->secret = (string) config('services.ibas.secret');
     }
 
     public function generateToken(): void
     {
-        $this->token = $this->key.':'.$this->secret;
+        // Shpesh gateway-t presin base64 të key:secret
+        $this->token = base64_encode($this->key . ':' . $this->secret);
     }
 
     public function processPayment(
@@ -33,35 +34,51 @@ class PaymentService
             $this->generateToken();
         }
 
+        $formattedAmount = number_format($amount, 2, '.', '');
+
         $payload = [
-            'ClientOrderId' => $clientOrderId,
-            'Amount' => $amount,
-            'CallbackUrl' => $callbackUrl
+            'ClientOrderId' => (string) $clientOrderId,
+            'Amount' => $formattedAmount,
+            'CallbackUrl' => $callbackUrl,
         ];
 
-        if ($redirectUrl) {
+        if (!empty($redirectUrl)) {
             $payload['RedirectUrl'] = $redirectUrl;
         }
 
+        Log::info('IBAS payment request', [
+            'url' => "{$this->baseUrl}/Banking",
+            'payload' => $payload,
+            'callbackUrl' => $callbackUrl,
+            'redirectUrl' => $redirectUrl,
+            'is_local_callback' => str_contains($callbackUrl, '127.0.0.1') || str_contains($callbackUrl, 'localhost'),
+        ]);
+
         $response = Http::withHeaders([
             'Token' => $this->token,
+            'Accept' => 'text/html,application/json',
         ])->post("{$this->baseUrl}/Banking", $payload);
 
         if (!$response->successful()) {
             Log::error('IBAS Payment Processing Failed', [
                 'status' => $response->status(),
                 'response' => $response->body(),
-                'payload' => $payload
+                'payload' => $payload,
             ]);
-            throw new \Exception('Payment processing failed');
+
+            throw new \Exception('Payment processing failed: ' . $response->body());
         }
 
-        return $response->body(); // Return raw HTML form
+        $body = $response->body();
+
+        Log::info('IBAS payment response received', [
+            'status' => $response->status(),
+            'body_preview' => mb_substr($body, 0, 500),
+        ]);
+
+        return $body;
     }
 
-    /**
-     * Verify payment status
-     */
     public function verifyPayment(string $orderId): bool
     {
         if (!$this->token) {
@@ -69,17 +86,18 @@ class PaymentService
         }
 
         $response = Http::withHeaders([
-            'Authorization' => 'Bearer ' . $this->token
+            'Token' => $this->token,
+            'Accept' => 'application/json',
         ])->get("{$this->baseUrl}/Payment/Verify/{$orderId}");
 
         if ($response->successful()) {
-            return $response->json('IsSuccess', false);
+            return (bool) $response->json('IsSuccess', false);
         }
 
         Log::error('IBAS Payment Verification Failed', [
             'status' => $response->status(),
             'response' => $response->body(),
-            'orderId' => $orderId
+            'orderId' => $orderId,
         ]);
 
         return false;
@@ -88,10 +106,9 @@ class PaymentService
     public function handleCallback(array $data): array
     {
         return [
-//            'success' => filter_var($data['IsSuccess'] ?? false, FILTER_VALIDATE_BOOLEAN),
             'success' => true,
             'transaction_id' => $data['orderId'] ?? null,
-            'client_order_id' => $data['ClientOrderId'] ?? null
+            'client_order_id' => $data['ClientOrderId'] ?? null,
         ];
     }
 }

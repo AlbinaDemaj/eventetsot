@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Str;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
@@ -21,10 +23,17 @@ class Event extends Model
         'font',
         'button_text',
         'is_animated',
-        'background'
+        'background',
     ];
 
-    protected static function booted()
+    protected $casts = [
+        'event_date' => 'datetime',
+        'is_public' => 'boolean',
+        'is_animated' => 'boolean',
+        'dynamic_fields' => 'array',
+    ];
+
+    protected static function booted(): void
     {
         static::creating(function ($event) {
             do {
@@ -35,35 +44,52 @@ class Event extends Model
 
             $url = url('/events/' . $event->code);
             $qrCode = base64_encode(
-                QrCode::format('png')->size(200)->generate($url)
+                QrCode::format('svg')->size(200)->generate($url)
             );
 
-            $event->qr_code = 'data:image/png;base64,' . $qrCode;
+            $event->qr_code = 'data:image/svg+xml;base64,' . $qrCode;
         });
     }
 
-    public function user()
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    public function media()
+    public function media(): HasMany
     {
         return $this->hasMany(Media::class);
     }
 
+    public function getDisplayTitleAttribute(): string
+    {
+        return $this->name ?: 'Event';
+    }
+
     public function isActive(): bool
     {
-        $subscription = $this->user->activeSubscription;
-
-        if (!$subscription) return false;
-
-        if ($subscription->plan->slug === 'free') {
-            $activeHours = $subscription->plan->limits['active_hours'] ?? 3;
-            return $this->created_at->addHours($activeHours)->isFuture();
+        if (!$this->user) {
+            return false;
         }
 
-        $activeDays = $subscription->plan->limits['active_days'] ?? 30;
-        return $this->created_at->addDays($activeDays)->isFuture();
+        $subscription = $this->user->activeSubscription ?? null;
+
+        if (!$subscription) {
+            return false;
+        }
+
+        $plan = $subscription->plan ?? $subscription->subscriptionPlan ?? null;
+
+        if (!$plan) {
+            return false;
+        }
+
+        if (($plan->slug ?? null) === 'free') {
+            $activeHours = data_get($plan, 'limits.active_hours', 3);
+            return $this->created_at?->copy()?->addHours($activeHours)?->isFuture() ?? false;
+        }
+
+        $activeDays = data_get($plan, 'limits.active_days', 30);
+        return $this->created_at?->copy()?->addDays($activeDays)?->isFuture() ?? false;
     }
 }

@@ -5,177 +5,183 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\SubscriptionPlan;
 use App\Models\User;
-use App\Models\UserSubscription;
-use App\Services\SubscriptionService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
-    public function __construct(
-        protected SubscriptionService $subscriptionService
-    )
-    {}
     public function index()
     {
-        $users = User::latest()->get();
-        return view('admin.users.index', compact('users'));
+        $users = User::query()
+            ->latest()
+            ->get()
+            ->map(fn ($user) => $this->transformUser($user))
+            ->values();
+
+        return view('admin.react', [
+            'page' => 'users',
+            'user' => auth('admin')->user(),
+            'extra' => [
+                'users' => $users,
+            ],
+        ]);
+    }
+
+    public function create()
+    {
+        $plans = $this->getPlans();
+
+        return view('admin.react', [
+            'page' => 'users-create',
+            'user' => auth('admin')->user(),
+            'extra' => [
+                'plans' => $plans,
+            ],
+        ]);
     }
 
     public function store(Request $request)
     {
-        $request->validate([
+        $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required'],
-            'is_paid' => ['nullable', 'boolean'],
+            'email' => ['required', 'email', 'max:255', 'unique:users,email'],
+            'password' => ['required', 'string', 'min:6'],
+            'status' => ['nullable', 'in:active,inactive,pending'],
         ]);
 
         $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'password' => Hash::make($validated['password']),
+            'status' => $validated['status'] ?? 'active',
         ]);
 
-        if ($request->has('is_paid')) {
-            $plan = SubscriptionPlan::where('price', '>' ,0)->first();
-
-            $this->subscriptionService->createSubscription(
-                user: $user,
-                plan: $plan,
-                autoRenew: false,
-                paymentMethod: 'ibas',
-                status: 'active'
-            );
-        } else {
-            $plan = SubscriptionPlan::where('price', 0)->first();
-
-            $this->subscriptionService->createSubscription(
-                user: $user,
-                plan: $plan,
-                autoRenew: false,
-                paymentMethod: 'free',
-                status: 'active'
-            );
-        }
-
-        return redirect()->route('admin.users.index')
-            ->with('success', 'User created successfully.');
+        return response()->json([
+            'success' => true,
+            'message' => 'User created successfully.',
+            'redirect' => route('admin.users.show', $user),
+        ]);
     }
 
-    public function update(Request $request, User $user)
+    public function show(User $user)
     {
-        $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,'.$user->id],
-            'password' => ['nullable'],
-            'is_paid' => ['nullable', 'boolean'],
+        return view('admin.react', [
+            'page' => 'users-show',
+            'user' => auth('admin')->user(),
+            'extra' => [
+                'selectedUser' => $this->transformUser($user),
+            ],
         ]);
-
-        $data = [
-            'name' => $request->name,
-            'email' => $request->email,
-        ];
-
-        if ($request->filled('password')) {
-            $data['password'] = Hash::make($request->password);
-        }
-
-        $user->update($data);
-
-        $currentPaidStatus = $user->activeSubscription && $user->activeSubscription->payment_method !== 'free';
-
-        $isPaidRequested = filter_var($request->is_paid, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
-
-        if (!is_null($isPaidRequested) && $isPaidRequested !== $currentPaidStatus) {
-            $plan = $isPaidRequested
-                ? SubscriptionPlan::where('price', '>', 0)->first()
-                : SubscriptionPlan::where('price', 0)->first();
-
-            $this->subscriptionService->cancelAllActiveSubscriptions($user);
-
-            $this->subscriptionService->createSubscription(
-                user: $user,
-                plan: $plan,
-                autoRenew: false,
-                paymentMethod: $isPaidRequested ? 'ibas' : 'free',
-                status: 'active'
-            );
-        }
-
-        return redirect()->route('admin.users.index')
-            ->with('success', 'User updated successfully.');
     }
 
     public function edit(User $user)
     {
-        $user->load(['activeSubscription' => function($query) {
-            $query->with('plan');
-        }]);
+        $plans = $this->getPlans();
+
+        return view('admin.react', [
+            'page' => 'users-edit',
+            'user' => auth('admin')->user(),
+            'extra' => [
+                'selectedUser' => $this->transformUser($user),
+                'plans' => $plans,
+            ],
+        ]);
+    }
+
+    public function update(Request $request, User $user)
+    {
+        $validated = $request->validate([
+            'name' => ['sometimes', 'required', 'string', 'max:255'],
+            'email' => [
+                'sometimes',
+                'required',
+                'email',
+                'max:255',
+                Rule::unique('users', 'email')->ignore($user->id),
+            ],
+            'password' => ['nullable', 'string', 'min:6'],
+            'status' => ['nullable', 'in:active,inactive,pending'],
+        ]);
+
+        if (array_key_exists('name', $validated)) {
+            $user->name = $validated['name'];
+        }
+
+        if (array_key_exists('email', $validated)) {
+            $user->email = $validated['email'];
+        }
+
+        if (!empty($validated['status'])) {
+            $user->status = $validated['status'];
+        }
+
+        if (!empty($validated['password'])) {
+            $user->password = Hash::make($validated['password']);
+        }
+
+        $user->save();
 
         return response()->json([
-            'user' => $user,
-            'subscription' => $user->activeSubscription,
-            'is_paid' => $user->activeSubscription && $user->activeSubscription->payment_method !== 'free'
+            'success' => true,
+            'message' => 'User updated successfully.',
+            'redirect' => route('admin.users.show', $user),
         ]);
     }
 
     public function destroy(User $user)
     {
-        DB::beginTransaction();
+        $user->delete();
 
-        try {
-            // 1. Get all unique event IDs that belong to this user
-            $eventIds = $user->events()->pluck('id');
+        return response()->json([
+            'success' => true,
+            'message' => 'User deleted successfully.',
+            'redirect' => route('admin.users.index'),
+        ]);
+    }
 
-            // 2. Delete entire media directories for each event
-            foreach ($eventIds as $eventId) {
-                $directory = "media/{$eventId}/";
+    public function toggleStatus(User $user)
+    {
+        $current = strtolower((string) ($user->status ?? ''));
 
-                // Check if directory exists in S3
-                if (Storage::disk('s3')->exists($directory)) {
-                    // Delete all files in the directory
-                    Storage::disk('s3')->deleteDirectory($directory);
-                    Log::info("Deleted S3 directory: {$directory}");
-                }
-            }
+        $user->status = $current === 'active' ? 'inactive' : 'active';
+        $user->save();
 
-            // 3. Delete all media records from database
-            $user->media()->forceDelete();
+        return response()->json([
+            'success' => true,
+            'status' => $user->status,
+            'message' => 'User status updated successfully.',
+        ]);
+    }
 
-            // 4. Delete all events (this will cascade if relationships are setup correctly)
-            $user->events()->forceDelete();
+    protected function transformUser(User $user): array
+    {
+        return [
+            'id' => $user->id,
+            'name' => $user->name,
+            'email' => $user->email,
+            'status' => $user->status ?? null,
+            'created_at' => optional($user->created_at)?->toISOString(),
+            'updated_at' => optional($user->updated_at)?->toISOString(),
+            'last_login_at' => isset($user->last_login_at) ? optional($user->last_login_at)?->toISOString() : null,
+            'subscription_plan_name' => $user->subscription_plan_name ?? null,
+            'plan_name' => $user->plan_name ?? null,
+        ];
+    }
 
-            // 5. Delete user subscriptions
-            $user->subscriptions()->forceDelete();
-
-            // 7. Finally delete the user
-            $user->forceDelete();
-
-            DB::commit();
-
-            return response()->json([
-                'success' => true,
-                'message' => 'User and all associated data (including event media directories) deleted permanently',
-                'deleted_directories' => $eventIds->map(fn($id) => "media/{$id}/")->toArray()
-            ]);
-
-        } catch (\Exception $e) {
-            DB::rollBack();
-
-            Log::error('User deletion failed: ' . $e->getMessage(), [
-                'user_id' => $user->id,
-                'exception' => $e->getTraceAsString()
-            ]);
-
-            return response()->json([
-                'success' => false,
-                'message' => 'Failed to delete user and associated data',
-                'error' => config('app.debug') ? $e->getMessage() : 'Server error'
-            ], 500);
+    protected function getPlans()
+    {
+        if (!class_exists(SubscriptionPlan::class)) {
+            return [];
         }
+
+        return SubscriptionPlan::query()
+            ->get(['id', 'name', 'price'])
+            ->map(fn ($plan) => [
+                'id' => $plan->id,
+                'name' => $plan->name,
+                'price' => $plan->price,
+            ])
+            ->values();
     }
 }

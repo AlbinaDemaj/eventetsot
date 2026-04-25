@@ -10,9 +10,9 @@ use SimpleSoftwareIO\QrCode\Facades\QrCode;
 class OnboardingController extends Controller
 {
     public function index()
-    {
-        return view('user.onboarding.index');
-    }
+{
+    return redirect()->route('user.onboarding.event-name');
+}
 
     public function eventName()
     {

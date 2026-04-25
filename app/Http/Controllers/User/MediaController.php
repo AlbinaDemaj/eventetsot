@@ -10,14 +10,36 @@ use Illuminate\Support\Facades\Storage;
 class MediaController extends Controller
 {
     public function index()
-    {
-        return view('user.media', ['media' => Media::where('event_id', session('selected_event_id'))->latest()->get()]);
-    }
+{
+    $selectedEvent = auth()->user()->events()->find(session('selected_event_id'))
+        ?? auth()->user()->events()->latest()->first();
 
-    public function destroy(Request $request)
+    $events = auth()->user()->events()->latest()->get();
+
+    $media = $selectedEvent
+        ? Media::where('event_id', $selectedEvent->id)->latest()->get()
+        : collect();
+
+    $userActiveSubscription = auth()->user()->activeSubscription ?? null;
+
+    return view('user.panel', [
+        'page' => 'media',
+        'selectedEvent' => $selectedEvent,
+        'events' => $events,
+        'media' => $media,
+        'userActiveSubscription' => $userActiveSubscription,
+        'extra' => [],
+    ]);
+}
+
+    public function destroy($id)
     {
-        $media = Media::find($request->id);
-        Storage::disk('public')->delete($media->file_path);
+        $media = Media::findOrFail($id);
+
+        if ($media->file_path) {
+            Storage::disk('public')->delete($media->file_path);
+        }
+
         $media->delete();
 
         return back()->with('success', 'Media deleted successfully!');

@@ -23,7 +23,11 @@ class HomeController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index()
-    {
-        return view('user.home', ['event' => auth()->user()->events()->latest()->first()]);
-    }
+{
+    return view('user.panel', [
+        'page' => 'home',
+        'selectedEvent' => auth()->user()->events()->latest()->first(),
+        'extra' => [],
+    ]);
+}
 }

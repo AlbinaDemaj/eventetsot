@@ -12,7 +12,17 @@ class EventController extends Controller
 {
     public function index()
     {
-        return view('user.events');
+        $events = auth()->user()->events()->latest()->get();
+        $selectedEventId = session('selected_event_id');
+
+        $selectedEvent = $events->firstWhere('id', $selectedEventId) ?? $events->first();
+
+        return view('user.panel', [
+            'page' => 'events',
+            'events' => $events,
+            'selectedEvent' => $selectedEvent,
+            'extra' => [],
+        ]);
     }
 
     public function switchEvent(Request $request)
@@ -35,13 +45,13 @@ class EventController extends Controller
             'name' => 'required|string',
         ]);
 
-        $event = Event::create([
+        Event::create([
             'user_id' => auth()->id(),
             'name' => $request->name,
             'event_date' => $request->event_date,
         ]);
 
-        return redirect()->back();
+        return redirect()->route('user.events');
     }
 
     public function update(Request $request, Event $event)
@@ -64,30 +74,25 @@ class EventController extends Controller
 
         $validated = $request->validate($rules);
 
-        // Handle file upload for background
         if ($request->hasFile('background')) {
             if ($event->background) {
                 Storage::delete('public/' . $event->background);
             }
 
             $path = $request->file('background')->store('backgrounds', 'public');
-
             $validated['background'] = $path;
         }
 
-        // Clean up dynamic fields (remove empty or invalid entries)
         if (isset($validated['dynamic_fields'])) {
-            $validated['dynamic_fields'] = array_filter($validated['dynamic_fields'], function($field) {
+            $validated['dynamic_fields'] = array_filter($validated['dynamic_fields'], function ($field) {
                 return !empty($field['label']) && in_array($field['type'], ['text', 'email', 'tel', 'number']);
             });
 
-            // Reset array keys to ensure proper JSON encoding
             $validated['dynamic_fields'] = array_values($validated['dynamic_fields']);
         } else {
             $validated['dynamic_fields'] = null;
         }
 
-        // Update the event
         $event->update([
             'name' => $validated['title'],
             'description' => $validated['description'] ?? null,
@@ -109,12 +114,10 @@ class EventController extends Controller
         $directory = "media/{$id}/";
         $zipFileName = "media-{$id}-directory.zip";
 
-        // Check if directory exists
         if (!Storage::disk('s3')->exists($directory)) {
             return back()->with('error', 'Directory not found');
         }
 
-        // Get all files (including subdirectories)
         $files = Storage::disk('s3')->allFiles($directory);
 
         if (empty($files)) {
@@ -130,14 +133,10 @@ class EventController extends Controller
                 );
 
                 foreach ($files as $file) {
-                    // Remove the parent directory path for cleaner zip structure
                     $relativePath = str_replace($directory, '', $file);
-
-                    // Stream directly from S3 to save memory
                     $stream = Storage::disk('s3')->readStream($file);
                     $zip->addFileFromStream($relativePath, $stream);
 
-                    // Close the stream to prevent memory leaks
                     if (is_resource($stream)) {
                         fclose($stream);
                     }

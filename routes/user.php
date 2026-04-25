@@ -6,10 +6,17 @@ use App\Http\Controllers\User\MediaController;
 use App\Http\Controllers\User\OnboardingController;
 use App\Http\Controllers\User\SettingController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
 
+// Public auth routes
+Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register');
+Route::post('/register', [AuthController::class, 'register']);
+
+Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [AuthController::class, 'login']);
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::middleware(['auth'])->prefix('user')->name('user.')->group(function () {
-
     Route::get('/home', [HomeController::class, 'index'])->name('home');
     Route::get('/media', [MediaController::class, 'index'])->name('media');
     Route::get('/media/{id}', [MediaController::class, 'destroy'])->name('media.destroy');
@@ -32,8 +39,4 @@ Route::middleware(['auth'])->prefix('user')->name('user.')->group(function () {
     Route::post('/events', [EventController::class, 'store']);
     Route::put('/events/{event}', [EventController::class, 'update'])->name('events.update');
     Route::post('/switch-event', [EventController::class, 'switchEvent'])->name('switch-event');
-
 });
-
-
-

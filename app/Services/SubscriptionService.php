@@ -25,7 +25,7 @@ class SubscriptionService
             'user_id' => $user->id,
             'subscription_plan_id' => $plan->id,
             'starts_at' => $now,
-            'ends_at' => $now->copy()->addDays($plan->billing_cycle_days),
+            'ends_at' => $now->copy()->addDays($plan->billing_cycle_days ?? 30),
             'is_active' => $status === 'active',
             'status' => $status,
             'auto_renew' => $autoRenew,
@@ -93,7 +93,7 @@ class SubscriptionService
             $now = Carbon::now();
             $subscription->update([
                 'starts_at' => $now,
-                'ends_at' => $now->copy()->addDays($subscription->plan->billing_cycle_days)
+                'ends_at' => $now->copy()->addDays($subscription->plan->billing_cycle_days ?? 30)
             ]);
         } else {
             $subscription->cancel();

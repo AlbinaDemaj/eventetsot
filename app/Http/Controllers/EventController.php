@@ -19,7 +19,10 @@ class EventController extends Controller
         $event = Event::where('code', $request->code)->first();
         $media = $event->media()->latest()->paginate(8);
 
-        return view('website.events.show', ['event' => $event, 'media' => $media]);
+        return view('website.events.show', [
+            'event' => $event,
+            'media' => $media
+        ]);
     }
 
     public function loadMoreMedia(Request $request, $id)
@@ -34,7 +37,7 @@ class EventController extends Controller
                 'html' => view('website.events.media-items', compact('media'))->render(),
                 'hasMore' => $media->hasMorePages(),
                 'currentPage' => $media->currentPage(),
-                'lastPage' => $media->lastPage()
+                'lastPage' => $media->lastPage(),
             ]);
         }
 
@@ -44,7 +47,9 @@ class EventController extends Controller
     public function upload()
     {
         $templates = Template::get();
-        return view('website.events.upload', ['templates' => $templates]);
-    }
 
+        return view('website.events.upload', [
+            'templates' => $templates
+        ]);
+    }
 }

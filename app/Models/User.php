@@ -6,67 +6,62 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class User extends Authenticatable
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable, SoftDeletes;
 
     protected $dates = ['deleted_at'];
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var list<string>
-     */
     protected $fillable = [
         'name',
         'email',
         'password',
+        'last_login_at',
+        'last_login_ip',
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var list<string>
-     */
     protected $hidden = [
         'password',
         'remember_token',
     ];
 
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
     protected function casts(): array
     {
         return [
             'email_verified_at' => 'datetime',
+            'last_login_at' => 'datetime',
             'password' => 'hashed',
         ];
     }
 
-    public function events()
+    public function events(): HasMany
     {
         return $this->hasMany(Event::class);
     }
 
-    public function media()
+    public function media(): HasMany
     {
         return $this->hasMany(Media::class);
     }
 
-    public function subscriptions()
+    public function uploads(): HasMany
+    {
+        return $this->hasMany(Media::class);
+    }
+
+    public function subscriptions(): HasMany
     {
         return $this->hasMany(UserSubscription::class);
     }
 
-    public function activeSubscription()
+    public function activeSubscription(): HasOne
     {
         return $this->hasOne(UserSubscription::class)
-            ->active();
+            ->active()
+            ->latestOfMany();
     }
 
     public function canUpload(int $count = 1): bool
@@ -77,10 +72,5 @@ class User extends Authenticatable
     public function isLinkActive($eventData): bool
     {
         return canUserUpload($this, $eventData);
-    }
-
-    public function uploads()
-    {
-        return $this->hasMany(Media::class);
     }
 }
