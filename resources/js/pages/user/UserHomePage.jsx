@@ -8,9 +8,9 @@ export default function UserHomePage({ selectedEvent }) {
 
         try {
             await navigator.clipboard.writeText(eventUrl);
-            alert("Linku u kopjua!");
+            alert("Linku u kopjua me sukses!");
         } catch (error) {
-            alert("Kopjimi dështoi.");
+            alert("Linku nuk u kopjua. Provo përsëri.");
         }
     };
 
@@ -24,209 +24,148 @@ export default function UserHomePage({ selectedEvent }) {
 
         const link = document.createElement("a");
         link.href = selectedEvent.qr_code;
-        link.download = "qr-code.png";
+        link.download = "kodi-qr-eventit.png";
         link.click();
     };
 
     return (
         <div className="space-y-8">
-            <section className="relative overflow-hidden rounded-[36px] border border-white/70 bg-[linear-gradient(135deg,#ffffff_0%,#f8f6ff_45%,#fdfbff_100%)] p-8 shadow-[0_20px_60px_rgba(123,97,255,0.10)] lg:p-10">
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(123,97,255,0.16),transparent_28%),radial-gradient(circle_at_bottom_right,rgba(110,195,244,0.14),transparent_24%)]" />
-                <div className="relative">
-                    <div className="inline-flex items-center gap-2 rounded-full border border-[#E9E2FF] bg-white/80 px-4 py-2 text-sm font-semibold text-[#7B61FF] backdrop-blur">
-                        <span className="h-2.5 w-2.5 rounded-full bg-[#7B61FF]" />
-                        Digital Album Experience
-                    </div>
+            <section className="relative overflow-hidden rounded-[34px] border border-white bg-white p-6 shadow-[0_24px_70px_rgba(15,23,42,0.08)] lg:p-8">
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_10%_10%,rgba(123,97,255,0.18),transparent_28%),radial-gradient(circle_at_90%_0%,rgba(110,195,244,0.18),transparent_26%),linear-gradient(135deg,#ffffff_0%,#faf8ff_52%,#f8fbff_100%)]" />
 
-                    <div className="mt-6 grid gap-8 lg:grid-cols-[1.2fr_0.8fr] lg:items-end">
-                        <div>
-                            <h1 className="max-w-3xl text-3xl font-black tracking-[-0.04em] text-slate-900 sm:text-4xl lg:text-5xl">
-                                Menaxho albumin e eventit tuaj në një mënyrë moderne dhe elegante
-                            </h1>
-
-                            <p className="mt-5 max-w-2xl text-sm leading-8 text-slate-600 sm:text-[15px]">
-                                Ndani linkun, përdorni QR code dhe krijoni një eksperiencë të pastër
-                                për mysafirët tuaj. Çdo event bëhet më i lehtë për t’u shpërndarë,
-                                më profesional për t’u prezantuar dhe më i bukur për t’u menaxhuar.
-                            </p>
-
-                            <div className="mt-6 flex flex-wrap gap-3">
-                                <div className="rounded-2xl border border-[#EEE8FF] bg-white px-4 py-3 shadow-sm">
-                                    <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-slate-400">
-                                        Status
-                                    </p>
-                                    <p className="mt-1 text-sm font-semibold text-slate-900">
-                                        {selectedEvent ? "Aktiv" : "Pa event"}
-                                    </p>
-                                </div>
-
-                                <div className="rounded-2xl border border-[#EEE8FF] bg-white px-4 py-3 shadow-sm">
-                                    <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-slate-400">
-                                        Sharing
-                                    </p>
-                                    <p className="mt-1 text-sm font-semibold text-slate-900">
-                                        Link + QR Code
-                                    </p>
-                                </div>
-
-                                <div className="rounded-2xl border border-[#EEE8FF] bg-white px-4 py-3 shadow-sm">
-                                    <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-slate-400">
-                                        Experience
-                                    </p>
-                                    <p className="mt-1 text-sm font-semibold text-slate-900">
-                                        Premium & Simple
-                                    </p>
-                                </div>
-                            </div>
+                <div className="relative grid gap-8 xl:grid-cols-[1.35fr_0.65fr] xl:items-center">
+                    <div>
+                        <div className="inline-flex items-center gap-2 rounded-full border border-[#E8E1FF] bg-white/80 px-4 py-2 text-xs font-bold uppercase tracking-[0.16em] text-[#7B61FF] shadow-sm backdrop-blur">
+                            <span className="h-2 w-2 rounded-full bg-[#7B61FF]" />
+                            Album digjital
                         </div>
 
-                        <div className="rounded-[28px] border border-white/80 bg-white/80 p-5 backdrop-blur shadow-[0_12px_30px_rgba(15,23,42,0.06)]">
-                            <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#7B61FF]">
-                                Quick overview
-                            </p>
-                            <div className="mt-4 space-y-3">
-                                <div className="flex items-center justify-between rounded-2xl bg-[#FAF8FF] px-4 py-3">
-                                    <span className="text-sm text-slate-500">Event aktiv</span>
-                                    <span className="text-sm font-bold text-slate-900">
-                                        {selectedEvent?.name || "Asnjë"}
-                                    </span>
-                                </div>
-                                <div className="flex items-center justify-between rounded-2xl bg-[#FAF8FF] px-4 py-3">
-                                    <span className="text-sm text-slate-500">Data</span>
-                                    <span className="text-sm font-bold text-slate-900">
-                                        {selectedEvent?.event_date || "Pa datë"}
-                                    </span>
-                                </div>
-                                <div className="flex items-center justify-between rounded-2xl bg-[#FAF8FF] px-4 py-3">
-                                    <span className="text-sm text-slate-500">Kodi</span>
-                                    <span className="text-sm font-bold text-slate-900">
-                                        {selectedEvent?.code || "---"}
-                                    </span>
-                                </div>
-                            </div>
+                        <h1 className="mt-6 max-w-4xl text-3xl font-black leading-tight tracking-[-0.045em] text-slate-950 sm:text-4xl lg:text-5xl">
+                            Menaxho eventin dhe shpërndaje albumin në mënyrë elegante.
+                        </h1>
+
+                        <p className="mt-5 max-w-2xl text-sm leading-8 text-slate-600 sm:text-[15px]">
+                            Kopjo linkun publik, hap albumin dhe shkarko kodin QR për mysafirët.
+                            Çdo gjë është e organizuar, e thjeshtë dhe gati për t’u përdorur në event.
+                        </p>
+
+                        <div className="mt-7 grid gap-3 sm:grid-cols-3">
+                            <StatCard title="Statusi" value={selectedEvent ? "Aktiv" : "Pa event"} />
+                            <StatCard title="Qasja" value="Link publik" />
+                            <StatCard title="Kodi QR" value="Gati për print" />
+                        </div>
+                    </div>
+
+                    <div className="rounded-[30px] border border-white/80 bg-white/85 p-5 shadow-[0_18px_45px_rgba(15,23,42,0.07)] backdrop-blur">
+                        <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#7B61FF]">
+                            Përmbledhje
+                        </p>
+
+                        <div className="mt-5 space-y-3">
+                            <InfoRow label="Eventi" value={selectedEvent?.name || "Nuk ka event"} />
+                            <InfoRow label="Data" value={selectedEvent?.event_date || "Pa datë"} />
+                            <InfoRow label="Kodi" value={selectedEvent?.code || "---"} />
                         </div>
                     </div>
                 </div>
             </section>
 
             {!selectedEvent ? (
-                <section className="rounded-[32px] border border-[#ECE8F8] bg-white p-8 text-center shadow-[0_16px_40px_rgba(15,23,42,0.05)] lg:p-12">
-                    <div className="mx-auto flex h-24 w-24 items-center justify-center rounded-[28px] bg-[linear-gradient(135deg,#F4F1FF,#FDF7FB)] text-5xl shadow-inner">
-                        ✨
+                <section className="relative overflow-hidden rounded-[34px] border border-[#EEE8FF] bg-white p-8 text-center shadow-[0_20px_55px_rgba(15,23,42,0.06)] lg:p-12">
+                    <div className="absolute inset-x-0 top-0 h-32 bg-[linear-gradient(180deg,#F4F0FF,transparent)]" />
+
+                    <div className="relative mx-auto flex h-24 w-24 items-center justify-center rounded-[30px] border border-[#EEE8FF] bg-[linear-gradient(135deg,#ffffff,#F6F2FF)] shadow-inner">
+                        <span className="text-4xl font-black text-[#7B61FF]">+</span>
                     </div>
 
-                    <h2 className="mt-6 text-3xl font-black tracking-[-0.03em] text-slate-900">
+                    <h2 className="relative mt-6 text-3xl font-black tracking-[-0.035em] text-slate-950">
                         Nuk keni ende event aktiv
                     </h2>
 
-                    <p className="mx-auto mt-4 max-w-xl text-sm leading-7 text-slate-500">
-                        Krijoni eventin tuaj të parë për të gjeneruar linkun dhe QR kodin që
-                        mysafirët tuaj do ta përdorin për të ngarkuar foto dhe video.
+                    <p className="relative mx-auto mt-4 max-w-xl text-sm leading-7 text-slate-500">
+                        Krijoni eventin tuaj të parë për të gjeneruar linkun publik dhe kodin QR
+                        që mysafirët do ta përdorin për të ngarkuar foto dhe video.
                     </p>
 
                     <a
                         href="/user/onboarding"
-                        className="mt-7 inline-flex items-center gap-2 rounded-2xl bg-[linear-gradient(135deg,#7B61FF,#8F7DFF)] px-6 py-3.5 text-sm font-semibold text-white shadow-[0_16px_38px_rgba(123,97,255,0.25)] transition hover:scale-[1.02]"
+                        className="relative mt-7 inline-flex items-center justify-center rounded-2xl bg-[linear-gradient(135deg,#7B61FF,#6EC3F4)] px-7 py-3.5 text-sm font-bold text-white shadow-[0_18px_40px_rgba(123,97,255,0.28)] transition hover:-translate-y-0.5"
                     >
-                        Krijo event
-                        <span>→</span>
+                        Krijo eventin tani
                     </a>
                 </section>
             ) : (
-                <section className="grid gap-6 xl:grid-cols-[1.2fr_0.8fr]">
+                <section className="grid gap-6 xl:grid-cols-[1.15fr_0.85fr]">
                     <div className="space-y-6">
-                        <div className="rounded-[30px] border border-white/70 bg-white p-6 shadow-[0_16px_40px_rgba(15,23,42,0.05)] lg:p-7">
+                        <div className="rounded-[32px] border border-white/70 bg-white p-6 shadow-[0_18px_45px_rgba(15,23,42,0.06)] lg:p-7">
                             <div className="flex flex-wrap items-start justify-between gap-4">
                                 <div>
-                                    <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#7B61FF]">
-                                        Active event
+                                    <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#7B61FF]">
+                                        Eventi aktiv
                                     </p>
 
-                                    <h2 className="mt-3 text-3xl font-black tracking-[-0.04em] text-slate-900">
+                                    <h2 className="mt-3 text-3xl font-black tracking-[-0.04em] text-slate-950">
                                         {selectedEvent.name}
                                     </h2>
 
-                                    <p className="mt-3 text-sm text-slate-500">
-                                        {selectedEvent.event_date || "Pa datë"}
+                                    <p className="mt-3 text-sm font-medium text-slate-500">
+                                        {selectedEvent.event_date || "Pa datë të vendosur"}
                                     </p>
                                 </div>
 
-                                <div className="inline-flex items-center gap-2 rounded-full border border-[#E7E1FF] bg-[#F7F4FF] px-4 py-2 text-sm font-semibold text-[#7B61FF]">
-                                    <span className="h-2.5 w-2.5 rounded-full bg-[#7B61FF]" />
-                                    Ready to share
+                                <div className="rounded-full border border-emerald-100 bg-emerald-50 px-4 py-2 text-sm font-bold text-emerald-700">
+                                    Gati për shpërndarje
                                 </div>
                             </div>
 
                             <div className="mt-6 grid gap-4 sm:grid-cols-3">
-                                <div className="rounded-2xl bg-[#FCFBFF] p-4 ring-1 ring-[#F1EDFF]">
-                                    <p className="text-xs font-semibold uppercase tracking-[0.16em] text-slate-400">
-                                        Event code
-                                    </p>
-                                    <p className="mt-2 truncate text-sm font-bold text-slate-900">
-                                        {selectedEvent.code}
-                                    </p>
-                                </div>
-
-                                <div className="rounded-2xl bg-[#FCFBFF] p-4 ring-1 ring-[#F1EDFF]">
-                                    <p className="text-xs font-semibold uppercase tracking-[0.16em] text-slate-400">
-                                        Album access
-                                    </p>
-                                    <p className="mt-2 text-sm font-bold text-slate-900">
-                                        Link publik
-                                    </p>
-                                </div>
-
-                                <div className="rounded-2xl bg-[#FCFBFF] p-4 ring-1 ring-[#F1EDFF]">
-                                    <p className="text-xs font-semibold uppercase tracking-[0.16em] text-slate-400">
-                                        QR sharing
-                                    </p>
-                                    <p className="mt-2 text-sm font-bold text-slate-900">
-                                        Gati për print
-                                    </p>
-                                </div>
+                                <MiniCard label="Kodi i eventit" value={selectedEvent.code} />
+                                <MiniCard label="Qasja" value="Album publik" />
+                                <MiniCard label="Përdorimi" value="Link + QR" />
                             </div>
                         </div>
 
-                        <div className="rounded-[30px] border border-white/70 bg-white p-6 shadow-[0_16px_40px_rgba(15,23,42,0.05)] lg:p-7">
-                            <div className="flex items-center justify-between gap-4">
+                        <div className="rounded-[32px] border border-white/70 bg-white p-6 shadow-[0_18px_45px_rgba(15,23,42,0.06)] lg:p-7">
+                            <div className="flex flex-wrap items-center justify-between gap-4">
                                 <div>
-                                    <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#7B61FF]">
-                                        Event link
+                                    <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#7B61FF]">
+                                        Linku i eventit
                                     </p>
-                                    <h3 className="mt-2 text-2xl font-black tracking-[-0.03em] text-slate-900">
-                                        Shpërndaje me një klik
+
+                                    <h3 className="mt-2 text-2xl font-black tracking-[-0.035em] text-slate-950">
+                                        Shpërndaje albumin me një klik
                                     </h3>
                                 </div>
 
-                                <div className="hidden rounded-full bg-[#F8F6FF] px-4 py-2 text-xs font-semibold text-slate-500 sm:block">
-                                    Fast sharing
-                                </div>
+                                <span className="rounded-full bg-[#F7F4FF] px-4 py-2 text-xs font-bold text-[#7B61FF]">
+                                    Link publik
+                                </span>
                             </div>
 
                             <p className="mt-3 max-w-2xl text-sm leading-7 text-slate-500">
-                                Përdor këtë link për ta ndarë albumin me mysafirët. Ata mund të
-                                hyjnë direkt dhe të ngarkojnë kujtimet e eventit tuaj.
+                                Dërgoja këtë link mysafirëve që të hapin albumin dhe të ngarkojnë
+                                kujtimet e tyre nga eventi.
                             </p>
 
                             <div className="mt-5 rounded-[24px] border border-[#EEE8FF] bg-[#FAFBFF] p-3">
                                 <input
                                     value={eventUrl}
                                     readOnly
-                                    className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-700 outline-none"
+                                    className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-slate-700 outline-none transition focus:border-[#7B61FF]"
                                 />
                             </div>
 
-                            <div className="mt-4 flex flex-col gap-3 sm:flex-row">
+                            <div className="mt-4 grid gap-3 sm:grid-cols-2">
                                 <button
                                     onClick={copyURL}
-                                    className="inline-flex flex-1 items-center justify-center rounded-2xl bg-[linear-gradient(135deg,#7B61FF,#8F7DFF)] px-5 py-3.5 text-sm font-semibold text-white shadow-[0_14px_34px_rgba(123,97,255,0.20)] transition hover:scale-[1.01]"
+                                    className="rounded-2xl bg-[linear-gradient(135deg,#7B61FF,#8F7DFF)] px-5 py-3.5 text-sm font-bold text-white shadow-[0_16px_36px_rgba(123,97,255,0.24)] transition hover:-translate-y-0.5"
                                 >
                                     Kopjo linkun
                                 </button>
 
                                 <button
                                     onClick={openURL}
-                                    className="inline-flex flex-1 items-center justify-center rounded-2xl border border-slate-200 bg-white px-5 py-3.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
+                                    className="rounded-2xl border border-slate-200 bg-white px-5 py-3.5 text-sm font-bold text-slate-700 transition hover:border-[#D8D0FF] hover:bg-[#FAF8FF]"
                                 >
                                     Hape eventin
                                 </button>
@@ -234,50 +173,91 @@ export default function UserHomePage({ selectedEvent }) {
                         </div>
                     </div>
 
-                    <div className="rounded-[30px] border border-white/70 bg-white p-6 shadow-[0_16px_40px_rgba(15,23,42,0.05)] lg:p-7">
+                    <div className="rounded-[32px] border border-white/70 bg-white p-6 shadow-[0_18px_45px_rgba(15,23,42,0.06)] lg:p-7">
                         <div className="text-center">
-                            <span className="inline-flex rounded-full border border-[#E8E0FF] bg-[#F7F4FF] px-4 py-2 text-sm font-semibold text-[#7B61FF]">
-                                QR Access
+                            <span className="inline-flex rounded-full border border-[#E8E0FF] bg-[#F7F4FF] px-4 py-2 text-xs font-bold uppercase tracking-[0.14em] text-[#7B61FF]">
+                                Kodi QR
                             </span>
 
-                            <h3 className="mt-4 text-2xl font-black tracking-[-0.03em] text-slate-900">
+                            <h3 className="mt-4 text-2xl font-black tracking-[-0.035em] text-slate-950">
                                 Kodi QR i eventit
                             </h3>
 
                             <p className="mt-3 text-sm leading-7 text-slate-500">
-                                Ideale për printim, tavolina, hyrje ose ekran. Mysafirët mund ta
-                                skanojnë dhe të hyjnë menjëherë në album.
+                                Vendose në tavolina, hyrje, ftesa ose poster që mysafirët ta
+                                skanojnë menjëherë.
                             </p>
                         </div>
 
-                        <div className="mt-6 rounded-[28px] border border-[#EEE8FF] bg-[linear-gradient(180deg,#FCFBFF_0%,#F9F7FF_100%)] p-5 shadow-inner">
-                            <div className="rounded-[22px] bg-white p-4">
-                                <img
-                                    src={selectedEvent.qr_code}
-                                    alt="QR Code"
-                                    className="mx-auto w-full max-w-[240px]"
-                                />
+                        <div className="mt-6 rounded-[30px] border border-[#EEE8FF] bg-[linear-gradient(180deg,#FCFBFF_0%,#F7F4FF_100%)] p-5 shadow-inner">
+                            <div className="rounded-[24px] bg-white p-5 shadow-sm">
+                                {selectedEvent.qr_code ? (
+                                    <img
+                                        src={selectedEvent.qr_code}
+                                        alt="Kodi QR i eventit"
+                                        className="mx-auto w-full max-w-[240px]"
+                                    />
+                                ) : (
+                                    <div className="flex h-[240px] items-center justify-center rounded-2xl bg-slate-50 text-sm font-semibold text-slate-400">
+                                        Kodi QR nuk është gjeneruar
+                                    </div>
+                                )}
                             </div>
                         </div>
 
-                        <div className="mt-5 space-y-3">
+                        <div className="mt-5 grid gap-3">
                             <button
                                 onClick={downloadQR}
-                                className="w-full rounded-2xl bg-[linear-gradient(135deg,#7B61FF,#8F7DFF,#6EC3F4)] px-5 py-3.5 text-sm font-semibold text-white shadow-[0_16px_36px_rgba(123,97,255,0.22)] transition hover:scale-[1.01]"
+                                className="rounded-2xl bg-[linear-gradient(135deg,#7B61FF,#8F7DFF,#6EC3F4)] px-5 py-3.5 text-sm font-bold text-white shadow-[0_16px_36px_rgba(123,97,255,0.25)] transition hover:-translate-y-0.5"
                             >
-                                Shkarko QR
+                                Shkarko kodin QR
                             </button>
 
                             <button
                                 onClick={openURL}
-                                className="w-full rounded-2xl border border-slate-200 bg-white px-5 py-3.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
+                                className="rounded-2xl border border-slate-200 bg-white px-5 py-3.5 text-sm font-bold text-slate-700 transition hover:border-[#D8D0FF] hover:bg-[#FAF8FF]"
                             >
-                                Hape albumin
+                                Hape albumin publik
                             </button>
                         </div>
                     </div>
                 </section>
             )}
+        </div>
+    );
+}
+
+function StatCard({ title, value }) {
+    return (
+        <div className="rounded-3xl border border-white/80 bg-white/80 p-4 shadow-[0_12px_30px_rgba(15,23,42,0.05)] backdrop-blur">
+            <p className="text-xs font-bold uppercase tracking-[0.16em] text-slate-400">
+                {title}
+            </p>
+            <p className="mt-2 text-base font-black text-slate-950">
+                {value}
+            </p>
+        </div>
+    );
+}
+
+function InfoRow({ label, value }) {
+    return (
+        <div className="flex items-center justify-between gap-4 rounded-2xl border border-[#F0ECFF] bg-[#FAF8FF] px-4 py-3">
+            <span className="text-sm font-semibold text-slate-500">{label}</span>
+            <span className="truncate text-sm font-black text-slate-950">{value}</span>
+        </div>
+    );
+}
+
+function MiniCard({ label, value }) {
+    return (
+        <div className="rounded-3xl border border-[#F0ECFF] bg-[#FCFBFF] p-4">
+            <p className="text-xs font-bold uppercase tracking-[0.16em] text-slate-400">
+                {label}
+            </p>
+            <p className="mt-2 truncate text-sm font-black text-slate-950">
+                {value}
+            </p>
         </div>
     );
 }

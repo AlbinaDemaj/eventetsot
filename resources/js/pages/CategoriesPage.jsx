@@ -90,57 +90,109 @@ export default function CategoriesPage() {
                 <div className="absolute right-0 top-0 h-72 w-72 rounded-full bg-[#6EC3F4]/12 blur-3xl" />
 
                 <div className="relative mx-auto max-w-7xl px-6 py-20 lg:px-8 lg:py-24">
-                    <div className="grid items-center gap-12 lg:grid-cols-[1.15fr_0.85fr]">
-                        <div className="max-w-3xl">
-                            <span className="inline-flex items-center gap-2 rounded-full border border-[#E7DEFF] bg-white/80 px-4 py-2 text-sm font-semibold text-[#7B61FF] shadow-sm backdrop-blur">
-                                <span className="h-2.5 w-2.5 rounded-full bg-[#7B61FF]" />
-                                Kategori të kuruara me stil
-                            </span>
+                    <div className="grid items-center gap-16 lg:grid-cols-[1fr_0.95fr]">
+    {/* LEFT */}
+    <div className="max-w-3xl">
+        <div className="inline-flex items-center gap-2 rounded-full border border-[#E7DEFF] bg-white/85 px-5 py-2 shadow-lg backdrop-blur-xl">
+            <span className="h-2.5 w-2.5 rounded-full bg-[#7B61FF]" />
+            <span className="text-xs font-black uppercase tracking-[0.22em] text-[#7B61FF]">
+                Kategori të kuruara
+            </span>
+        </div>
 
-                            <h1 className="mt-6 text-4xl font-black tracking-[-0.05em] text-slate-900 sm:text-5xl lg:text-6xl">
-                                Zgjidh kategorinë ideale për
-                                <span className="block bg-[linear-gradient(135deg,#7B61FF,#8F7DFF,#6EC3F4)] bg-clip-text text-transparent">
-                                    eventin tënd të ardhshëm
-                                </span>
-                            </h1>
+        <h1 className="mt-8 text-5xl font-black leading-[0.95] tracking-[-0.06em] text-slate-900 sm:text-6xl lg:text-7xl">
+            Zgjidh
+            <br />
+            atmosferën
+            <span className="block bg-[linear-gradient(135deg,#7B61FF,#6EC3F4,#F8A5C2)] bg-clip-text text-transparent">
+                e eventit tënd
+            </span>
+        </h1>
 
-                            <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-600">
-                                Çdo event ka karakterin e vet. Eksploro kategori
-                                të ndryshme dhe gjej stilin, atmosferën dhe
-                                frymëzimin e duhur për një prezantim modern,
-                                elegant dhe premium.
-                            </p>
+        <p className="mt-7 max-w-2xl text-lg leading-8 text-slate-600">
+            Çdo kategori sjell ndjesi tjetër: romantike, festive,
+            familjare ose profesionale. Zgjidh stilin që i përshtatet
+            eventit dhe krijo një prezantim elegant nga fillimi.
+        </p>
 
-                            <div className="mt-8 flex flex-wrap gap-3">
-                                <span className="rounded-full bg-[#F4F0FF] px-4 py-2 text-sm font-medium text-[#7B61FF]">
-                                    Dasma elegante
-                                </span>
-                                <span className="rounded-full bg-[#EEF8FF] px-4 py-2 text-sm font-medium text-[#3176A8]">
-                                    Evente moderne
-                                </span>
-                                <span className="rounded-full bg-[#FFF2F7] px-4 py-2 text-sm font-medium text-[#C15C8A]">
-                                    Përvoja premium
-                                </span>
-                            </div>
-                        </div>
-
-                        <div className="grid gap-4 sm:grid-cols-3 lg:grid-cols-1">
-                            {stats.map((stat) => (
-                                <div
-                                    key={stat.label}
-                                    className="rounded-[28px] border border-white/60 bg-white/80 p-6 shadow-[0_20px_60px_rgba(15,23,42,0.06)] backdrop-blur"
-                                >
-                                    <div className="text-3xl font-black tracking-[-0.04em] text-slate-900">
-                                        <CountUp end={stat.value} />
-                                        {stat.suffix}
-                                    </div>
-                                    <p className="mt-2 text-sm leading-6 text-slate-500">
-                                        {stat.label}
-                                    </p>
-                                </div>
-                            ))}
-                        </div>
+        <div className="mt-9 grid max-w-xl grid-cols-2 gap-3 sm:grid-cols-3">
+            {["Dasma", "Ditëlindje", "Fejesa", "Biznes", "Baby Shower", "Familjare"].map(
+                (item) => (
+                    <div
+                        key={item}
+                        className="rounded-2xl border border-[#EEEAF8] bg-white/85 px-4 py-3 text-center shadow-[0_14px_35px_rgba(15,23,42,0.05)] backdrop-blur-xl"
+                    >
+                        <p className="text-sm font-black text-slate-700">
+                            {item}
+                        </p>
                     </div>
+                )
+            )}
+        </div>
+    </div>
+
+    {/* RIGHT - UNIQUE CATEGORY ORBIT */}
+    <div className="relative hidden min-h-[520px] lg:block">
+        <div className="absolute inset-0 rounded-full bg-[radial-gradient(circle,rgba(123,97,255,0.13),transparent_62%)]" />
+
+        <div className="absolute left-1/2 top-1/2 h-72 w-72 -translate-x-1/2 -translate-y-1/2 rounded-full border border-[#E8E1FF] bg-white/70 shadow-[0_30px_90px_rgba(123,97,255,0.13)] backdrop-blur-2xl" />
+
+        <div className="absolute left-1/2 top-1/2 flex h-48 w-48 -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center rounded-full bg-[linear-gradient(135deg,#7B61FF,#6EC3F4)] text-center text-white shadow-[0_25px_70px_rgba(123,97,255,0.28)]">
+            <p className="text-5xl font-black">6</p>
+            <p className="mt-2 text-sm font-black uppercase tracking-[0.18em]">
+                Kategori
+            </p>
+            <p className="mt-2 max-w-[130px] text-xs leading-5 text-white/80">
+                për çdo lloj eventi
+            </p>
+        </div>
+
+        {[
+            {
+                title: "Dasma",
+                className: "left-6 top-10",
+                color: "bg-[#7B61FF]",
+            },
+            {
+                title: "Ditëlindje",
+                className: "right-6 top-16",
+                color: "bg-[#6EC3F4]",
+            },
+            {
+                title: "Fejesa",
+                className: "left-0 bottom-24",
+                color: "bg-[#F8A5C2]",
+            },
+            {
+                title: "Biznes",
+                className: "right-0 bottom-28",
+                color: "bg-[#111827]",
+            },
+            {
+                title: "Baby Shower",
+                className: "left-1/2 top-0 -translate-x-1/2",
+                color: "bg-[#FFB5D2]",
+            },
+            {
+                title: "Familjare",
+                className: "left-1/2 bottom-0 -translate-x-1/2",
+                color: "bg-[#A78BFA]",
+            },
+        ].map((item) => (
+            <div
+                key={item.title}
+                className={`absolute ${item.className} rounded-[26px] border border-white/80 bg-white/85 px-5 py-4 shadow-[0_20px_55px_rgba(15,23,42,0.08)] backdrop-blur-xl`}
+            >
+                <div className="flex items-center gap-3">
+                    <span className={`h-3 w-3 rounded-full ${item.color}`} />
+                    <p className="text-sm font-black text-slate-800">
+                        {item.title}
+                    </p>
+                </div>
+            </div>
+        ))}
+    </div>
+</div>
                 </div>
             </section>
 

@@ -21,6 +21,9 @@ class User extends Authenticatable
         'password',
         'last_login_at',
         'last_login_ip',
+        'is_premium',
+'premium_until',
+'premium_given_by',
     ];
 
     protected $hidden = [
@@ -28,14 +31,19 @@ class User extends Authenticatable
         'remember_token',
     ];
 
-    protected function casts(): array
-    {
-        return [
-            'email_verified_at' => 'datetime',
-            'last_login_at' => 'datetime',
-            'password' => 'hashed',
-        ];
-    }
+   protected $casts = [
+    'email_verified_at' => 'datetime',
+    'password' => 'hashed',
+    'is_premium' => 'boolean',
+    'premium_until' => 'datetime',
+];
+
+public function hasActivePremium(): bool
+{
+    return $this->is_premium === true
+        && $this->premium_until
+        && $this->premium_until->isFuture();
+}
 
     public function events(): HasMany
     {

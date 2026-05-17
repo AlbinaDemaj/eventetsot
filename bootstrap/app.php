@@ -14,6 +14,10 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->append(\App\Http\Middleware\SetLocale::class);
         $middleware->append(\App\Http\Middleware\RedirectIfNotAdmin::class);
+
+        $middleware->validateCsrfTokens(except: [
+            'events/*/guest-media',
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

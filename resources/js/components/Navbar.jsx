@@ -17,15 +17,12 @@ export default function Navbar() {
       <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 lg:px-8">
         <a href="/" className="group flex items-center">
           <div className="leading-tight">
-            <h1 className="text-[1.35rem] font-extrabold tracking-tight text-[#111827]">
-              Eventet
-              <span className="ml-1 bg-[linear-gradient(135deg,#7B61FF,#6EC3F4,#F8A5C2)] bg-clip-text text-transparent">
-                Sot
-              </span>
-            </h1>
-            <p className="text-xs font-medium text-[#6B7280]">
-              Zbulo momentet më të veçanta
-            </p>
+          <h1 className="logo-yellowtail text-[3rem] leading-none">
+  <span className="bg-[linear-gradient(135deg,#111827,#7B61FF,#6EC3F4,#F8A5C2)] bg-clip-text text-transparent">
+    eventetsot.
+  </span>
+</h1>
+            
           </div>
         </a>
 

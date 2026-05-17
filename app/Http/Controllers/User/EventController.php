@@ -45,10 +45,21 @@ class EventController extends Controller
             'name' => 'required|string',
         ]);
 
+        $user = auth()->user();
+
+        $isPremium =
+            (bool) ($user->is_paid ?? false) ||
+            (bool) ($user->is_premium ?? false) ||
+            (bool) optional($user->subscription ?? null)->is_active ||
+            (optional(optional($user->subscription ?? null)->plan ?? null)->slug === 'premium');
+
         Event::create([
             'user_id' => auth()->id(),
             'name' => $request->name,
             'event_date' => $request->event_date,
+            'expires_at' => $isPremium
+                ? now()->addMonths(6)
+                : now()->addDays(7),
         ]);
 
         return redirect()->route('user.events');

@@ -29,172 +29,162 @@ export default function UserHomeContent({ event }) {
     };
 
     return (
-        <div className="space-y-8">
-            <div className="relative overflow-hidden rounded-[32px] border border-white/70 bg-[linear-gradient(135deg,rgba(255,255,255,0.92),rgba(248,247,255,0.96))] p-6 p-md-8 shadow-[0_20px_60px_rgba(15,23,42,0.08)] backdrop-blur-xl">
-                <div className="absolute -right-10 -top-10 h-32 w-32 rounded-full bg-[#7B61FF]/10 blur-3xl" />
-                <div className="absolute -bottom-10 left-10 h-28 w-28 rounded-full bg-[#6EC3F4]/10 blur-3xl" />
+        <div className="space-y-7">
+            <section className="relative overflow-hidden rounded-[38px] border border-[#ECE7FF] bg-[linear-gradient(135deg,#FFFFFF_0%,#F8F5FF_52%,#F2FAFF_100%)] p-6 shadow-[0_28px_80px_rgba(15,23,42,0.07)] sm:p-8">
+                <div className="absolute -left-20 -top-20 h-72 w-72 rounded-full bg-[#7B61FF]/12 blur-3xl" />
+                <div className="absolute -right-20 top-0 h-72 w-72 rounded-full bg-[#6EC3F4]/14 blur-3xl" />
+                <div className="absolute inset-0 opacity-[0.04] [background-image:linear-gradient(to_right,#7B61FF_1px,transparent_1px),linear-gradient(to_bottom,#7B61FF_1px,transparent_1px)] [background-size:36px_36px]" />
 
                 <div className="relative">
-                    <span className="inline-flex rounded-full border border-[#E7E1FF] bg-[#F7F4FF] px-4 py-2 text-sm font-semibold text-[#7B61FF]">
+                    <span className="inline-flex items-center gap-2 rounded-full border border-[#DDD4FF] bg-white/80 px-4 py-2 text-xs font-black uppercase tracking-[0.18em] text-[#7B61FF] shadow-[0_8px_20px_rgba(123,97,255,0.08)] backdrop-blur">
+                        <span className="h-2.5 w-2.5 rounded-full bg-[#7B61FF]" />
                         Digital Album
                     </span>
 
-                    <h2 className="mt-4 text-3xl font-black tracking-[-0.03em] text-[#0F172A] md:text-4xl">
+                    <h2 className="mt-5 text-[34px] font-black leading-[1.02] tracking-[-0.06em] text-slate-950 sm:text-5xl">
                         Albumi juaj digjital
                     </h2>
 
-                    <p className="mt-4 max-w-3xl text-[15px] leading-8 text-slate-600">
-                        Ndani eventin tuaj me një link ose QR Code në një mënyrë të
-                        pastër, moderne dhe elegante. Të ftuarit mund të ngarkojnë foto
-                        dhe video direkt në albumin tuaj.
+                    <p className="mt-5 max-w-3xl text-[15px] leading-8 text-slate-500 sm:text-[16px]">
+                        Ndani eventin tuaj me një link unik ose QR Code. Të ftuarit mund
+                        të ngarkojnë foto dhe video direkt në album në mënyrë të thjeshtë,
+                        elegante dhe profesionale.
                     </p>
                 </div>
-            </div>
+            </section>
 
             {!event ? (
-                <div className="rounded-[32px] border border-[#ECE8F8] bg-white p-10 text-center shadow-[0_18px_50px_rgba(15,23,42,0.06)]">
-                    <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-[24px] bg-[linear-gradient(135deg,#F4F1FF,#FDF7FB)] text-4xl shadow-inner">
+                <section className="rounded-[34px] border border-[#ECE8F8] bg-white p-8 text-center shadow-[0_22px_60px_rgba(15,23,42,0.06)] sm:p-10">
+                    <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-[26px] bg-[linear-gradient(135deg,#F4F1FF,#FDF7FB)] text-4xl shadow-inner">
                         📅
                     </div>
 
-                    <h4 className="mt-5 text-2xl font-black tracking-[-0.02em] text-slate-900">
+                    <h4 className="mt-5 text-2xl font-black tracking-[-0.02em] text-slate-950">
                         Nuk keni ende event
                     </h4>
 
-                    <p className="mt-3 text-slate-500">
-                        Filloni duke krijuar një event të ri dhe gjeneroni menjëherë
-                        linkun dhe kodin QR.
+                    <p className="mx-auto mt-3 max-w-xl text-sm leading-7 text-slate-500">
+                        Filloni duke krijuar një event të ri dhe sistemi do të gjenerojë
+                        menjëherë linkun publik dhe QR Code.
                     </p>
 
                     <a
                         href="/user/onboarding"
-                        className="mt-6 inline-flex items-center gap-2 rounded-2xl bg-[linear-gradient(135deg,#7B61FF,#8F7DFF)] px-5 py-3 text-sm font-semibold text-white shadow-[0_14px_36px_rgba(123,97,255,0.20)] transition hover:scale-[1.02]"
+                        className="mt-6 inline-flex items-center gap-2 rounded-2xl bg-[linear-gradient(135deg,#7B61FF,#8F7DFF,#6EC3F4)] px-6 py-3.5 text-sm font-black text-white shadow-[0_16px_38px_rgba(123,97,255,0.22)] transition hover:scale-[1.02]"
                     >
                         Krijo event
                         <span>→</span>
                     </a>
-                </div>
+                </section>
             ) : (
-                <div className="row g-4">
-                    <div className="col-lg-7">
-                        <div className="mb-4 rounded-[30px] border border-white/70 bg-white p-5 p-md-6 shadow-[0_18px_50px_rgba(15,23,42,0.06)]">
-                            <div className="d-flex flex-wrap align-items-start justify-content-between gap-3">
+                <section className="grid gap-6 xl:grid-cols-[1.08fr_0.92fr]">
+                    <div className="space-y-6">
+                        <div className="relative overflow-hidden rounded-[32px] border border-[#ECE7FF] bg-white p-6 shadow-[0_20px_55px_rgba(15,23,42,0.06)]">
+                            <div className="absolute -right-12 -top-12 h-32 w-32 rounded-full bg-[#7B61FF]/10 blur-3xl" />
+
+                            <div className="relative flex flex-wrap items-start justify-between gap-4">
                                 <div>
-                                    <p className="mb-2 text-uppercase text-[12px] font-semibold tracking-[0.18em] text-[#7B61FF]">
-                                        Active event
+                                    <p className="text-[11px] font-black uppercase tracking-[0.18em] text-[#7B61FF]">
+                                        Event aktiv
                                     </p>
 
-                                    <h4 className="mb-2 text-3xl font-black tracking-[-0.03em] text-slate-900">
+                                    <h3 className="mt-3 text-3xl font-black tracking-[-0.04em] text-slate-950">
                                         {event.name}
-                                    </h4>
+                                    </h3>
 
-                                    <p className="mb-0 text-slate-500">
+                                    <p className="mt-3 text-sm font-semibold text-slate-500">
                                         {event.event_date || "Pa datë"}
                                     </p>
                                 </div>
 
-                                <div className="rounded-full bg-[linear-gradient(135deg,#F4F1FF,#FDF7FB)] px-4 py-2 text-sm font-semibold text-[#7B61FF]">
-                                    Ready to share
+                                <div className="rounded-full border border-emerald-100 bg-emerald-50 px-4 py-2 text-xs font-black uppercase tracking-[0.14em] text-emerald-700">
+                                    Gati për ndarje
                                 </div>
                             </div>
                         </div>
 
-                        <div className="rounded-[30px] border border-white/70 bg-white p-5 p-md-6 shadow-[0_18px_50px_rgba(15,23,42,0.06)]">
-                            <div className="mb-4">
-                                <p className="mb-2 text-uppercase text-[12px] font-semibold tracking-[0.18em] text-[#7B61FF]">
-                                    Event link
-                                </p>
+                        <div className="rounded-[32px] border border-[#ECE7FF] bg-white p-6 shadow-[0_20px_55px_rgba(15,23,42,0.06)]">
+                            <div className="flex flex-wrap items-center justify-between gap-3">
+                                <div>
+                                    <p className="text-[11px] font-black uppercase tracking-[0.18em] text-[#7B61FF]">
+                                        Linku i eventit
+                                    </p>
 
-                                <h6 className="mb-0 text-xl font-bold text-slate-900">
-                                    Shpërndaje eventin me link
-                                </h6>
+                                    <h3 className="mt-2 text-2xl font-black tracking-[-0.03em] text-slate-950">
+                                        Shpërndaje me të ftuarit
+                                    </h3>
+                                </div>
+
+                                <div className="rounded-full border border-[#EEE8FF] bg-[#FCFBFF] px-4 py-2 text-xs font-black text-slate-500">
+                                    {event.code}
+                                </div>
                             </div>
 
-                            <div className="rounded-[24px] border border-[#EEF1F7] bg-[#FAFBFF] p-3">
-                                <div className="d-flex flex-column gap-3 flex-lg-row">
+                            <div className="mt-5 rounded-[28px] border border-[#EEF1F7] bg-[#FAFBFF] p-3">
+                                <div className="flex flex-col gap-3 lg:flex-row">
                                     <input
                                         value={eventUrl}
                                         readOnly
-                                        className="form-control border-0 bg-white shadow-none rounded-4 px-4 py-3"
+                                        className="min-w-0 flex-1 rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-slate-700 outline-none"
                                     />
 
                                     <button
                                         onClick={copyURL}
-                                        className="btn rounded-4 px-4 py-3 fw-semibold text-white border-0"
-                                        style={{
-                                            background:
-                                                "linear-gradient(135deg,#7B61FF,#8F7DFF)",
-                                            boxShadow:
-                                                "0 12px 30px rgba(123,97,255,0.20)",
-                                        }}
+                                        className="rounded-2xl bg-[linear-gradient(135deg,#7B61FF,#8F7DFF)] px-5 py-3 text-sm font-black text-white shadow-[0_12px_30px_rgba(123,97,255,0.18)] transition hover:scale-[1.02]"
                                     >
-                                        Copy
+                                        Kopjo
                                     </button>
 
                                     <button
                                         onClick={openURL}
-                                        className="btn rounded-4 px-4 py-3 fw-semibold border"
-                                        style={{
-                                            borderColor: "#E5E7EB",
-                                            background: "#fff",
-                                            color: "#334155",
-                                        }}
+                                        className="rounded-2xl border border-slate-200 bg-white px-5 py-3 text-sm font-black text-slate-700 transition hover:border-[#7B61FF] hover:text-[#7B61FF]"
                                     >
-                                        Open
+                                        Hape
                                     </button>
                                 </div>
                             </div>
 
-                            <div className="mt-4 rounded-[24px] border border-[#F3F0FF] bg-[linear-gradient(135deg,#FCFBFF,#F8F7FF)] p-4">
-                                <p className="mb-1 text-sm fw-semibold text-slate-800">
-                                    Code i eventit
+                            <div className="mt-5 rounded-[26px] border border-[#F3F0FF] bg-[#FCFBFF] p-4">
+                                <p className="text-sm font-black text-slate-800">
+                                    Kodi i eventit
                                 </p>
-                                <p className="mb-0 text-sm text-slate-500">
+
+                                <p className="mt-1 text-sm font-semibold text-slate-500">
                                     {event.code}
                                 </p>
                             </div>
                         </div>
                     </div>
 
-                    <div className="col-lg-5">
-                        <div className="h-100 rounded-[30px] border border-white/70 bg-[linear-gradient(180deg,#ffffff,#faf8ff)] p-5 p-md-6 text-center shadow-[0_18px_50px_rgba(15,23,42,0.06)]">
-                            <div className="mx-auto mb-4 inline-flex rounded-full bg-[#F7F4FF] px-4 py-2 text-sm font-semibold text-[#7B61FF]">
-                                QR Access
-                            </div>
-
-                            <h6 className="text-2xl font-black tracking-[-0.02em] text-slate-900">
-                                Kodi QR i eventit
-                            </h6>
-
-                            <p className="mt-3 text-sm leading-7 text-slate-500">
-                                Shkarko kodin QR dhe përdore për printim ose për
-                                shfaqje në ekran që të ftuarit të futen menjëherë.
-                            </p>
-
-                            <div className="mt-5 rounded-[28px] border border-[#EEE8FF] bg-white p-4 shadow-inner">
-                                <img
-                                    src={event.qr_code}
-                                    alt="QR Code"
-                                    className="mx-auto"
-                                    style={{ maxWidth: "210px", width: "100%" }}
-                                />
-                            </div>
-
-                            <button
-                                onClick={downloadQR}
-                                className="mt-5 w-100 rounded-4 border-0 px-4 py-3 fw-semibold text-white"
-                                style={{
-                                    background:
-                                        "linear-gradient(135deg,#7B61FF,#8F7DFF,#6EC3F4)",
-                                    boxShadow:
-                                        "0 14px 36px rgba(123,97,255,0.24)",
-                                }}
-                            >
-                                Shkarko QR
-                            </button>
+                    <div className="rounded-[32px] border border-[#ECE7FF] bg-[linear-gradient(180deg,#FFFFFF_0%,#FAF7FF_55%,#F3FAFF_100%)] p-6 text-center shadow-[0_20px_55px_rgba(15,23,42,0.06)]">
+                        <div className="inline-flex rounded-full border border-[#DDD4FF] bg-white/80 px-4 py-2 text-xs font-black uppercase tracking-[0.16em] text-[#7B61FF]">
+                            QR Access
                         </div>
+
+                        <h3 className="mt-4 text-2xl font-black tracking-[-0.03em] text-slate-950">
+                            Kodi QR i eventit
+                        </h3>
+
+                        <p className="mx-auto mt-3 max-w-md text-sm leading-7 text-slate-500">
+                            Shkarko QR Code dhe vendose në tavolina, ftesa ose ekran.
+                        </p>
+
+                        <div className="mt-6 rounded-[30px] border border-[#EEE8FF] bg-white/90 p-6 shadow-[inset_0_1px_0_rgba(255,255,255,0.7),0_18px_40px_rgba(15,23,42,0.05)]">
+                            <img
+                                src={event.qr_code}
+                                alt="QR Code"
+                                className="mx-auto w-full max-w-[230px]"
+                            />
+                        </div>
+
+                        <button
+                            onClick={downloadQR}
+                            className="mt-5 w-full rounded-2xl bg-[linear-gradient(135deg,#7B61FF,#8F7DFF,#6EC3F4)] px-5 py-3.5 text-sm font-black text-white shadow-[0_16px_38px_rgba(123,97,255,0.24)] transition hover:scale-[1.02]"
+                        >
+                            Shkarko QR
+                        </button>
                     </div>
-                </div>
+                </section>
             )}
         </div>
     );

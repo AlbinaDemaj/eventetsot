@@ -1,10 +1,13 @@
 import "./bootstrap";
 import "../css/app.css";
+
 import React from "react";
 import ReactDOM from "react-dom/client";
 
 import AdminLayout from "./layouts/AdminLayout";
+
 import AdminDashboardPage from "./pages/admin/AdminDashboardPage";
+
 import AdminUsersPage from "./pages/admin/AdminUsersPage";
 import AdminUserShowPage from "./pages/admin/AdminUserShowPage";
 import AdminUserFormPage from "./pages/admin/AdminUserFormPage";
@@ -12,50 +15,41 @@ import AdminUserFormPage from "./pages/admin/AdminUserFormPage";
 import AdminPlansPage from "./pages/admin/AdminPlansPage";
 import AdminPlanFormPage from "./pages/admin/AdminPlanFormPage";
 
+import AdminEventsPage from "./pages/admin/AdminEventsPage";
+import AdminSettingsPage from "./pages/admin/AdminSettingsPage";
+
 const el = document.getElementById("admin-panel-root");
 
-const safeParse = (value, fallback) => {
+const safeParse = (value, fallback = null) => {
     try {
         return value ? JSON.parse(value) : fallback;
     } catch (error) {
-        console.error("JSON parse error:", error);
+        console.error("Admin panel JSON parse error:", error);
         return fallback;
     }
 };
 
+const adminPages = {
+    dashboard: AdminDashboardPage,
+
+    users: AdminUsersPage,
+    "users-show": AdminUserShowPage,
+    "users-create": (props) => <AdminUserFormPage {...props} mode="create" />,
+    "users-edit": (props) => <AdminUserFormPage {...props} mode="edit" />,
+
+    plans: AdminPlansPage,
+    "plans-create": (props) => <AdminPlanFormPage {...props} mode="create" />,
+    "plans-edit": (props) => <AdminPlanFormPage {...props} mode="edit" />,
+
+    events: AdminEventsPage,
+
+    settings: AdminSettingsPage,
+};
+
 function AdminRouter({ page, user, extra }) {
-    switch (page) {
+    const PageComponent = adminPages[page] || AdminDashboardPage;
 
-        // ================= USERS =================
-        case "users":
-            return <AdminUsersPage user={user} extra={extra} />;
-
-        case "users-show":
-            return <AdminUserShowPage user={user} extra={extra} />;
-
-        case "users-edit":
-            return <AdminUserFormPage user={user} extra={extra} mode="edit" />;
-
-        case "users-create":
-            return <AdminUserFormPage user={user} extra={extra} mode="create" />;
-
-
-        // ================= PLANS =================
-        case "plans":
-            return <AdminPlansPage user={user} extra={extra} />;
-
-        case "plans-create":
-            return <AdminPlanFormPage user={user} extra={extra} mode="create" />;
-
-        case "plans-edit":
-            return <AdminPlanFormPage user={user} extra={extra} mode="edit" />;
-
-
-        // ================= DASHBOARD =================
-        case "dashboard":
-        default:
-            return <AdminDashboardPage user={user} extra={extra} />;
-    }
+    return <PageComponent user={user} extra={extra} />;
 }
 
 if (el) {
@@ -63,9 +57,7 @@ if (el) {
     const user = safeParse(el.dataset.user, null);
     const extra = safeParse(el.dataset.extra, {});
 
-    const root = ReactDOM.createRoot(el);
-
-    root.render(
+    ReactDOM.createRoot(el).render(
         <React.StrictMode>
             <AdminLayout user={user} page={page}>
                 <AdminRouter page={page} user={user} extra={extra} />

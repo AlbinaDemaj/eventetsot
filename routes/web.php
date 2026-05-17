@@ -54,8 +54,13 @@ Auth::routes();
 Route::get('/events/welcome/{code}', [EventController::class, 'show'])->name('events.show');
 Route::get('/events/{code}', [EventController::class, 'welcome'])->name('events.welcome');
 Route::get('/upload/{code}', [EventController::class, 'upload'])->name('events.upload');
+
+Route::post('/events/{code}/guest-media', [MediaController::class, 'storeGuest'])
+    ->name('events.guest-media.store');
+
 Route::post('/media', [MediaController::class, 'store'])->name('media.store');
-Route::get('/events/{id}/load-more-media', [EventController::class, 'loadMoreMedia'])->name('events.load-more-media');
+Route::get('/events/{id}/load-more-media', [EventController::class, 'loadMoreMedia'])
+    ->name('events.load-more-media');
 
 Route::post('/media-comment', [MediaController::class, 'mediaComment'])->name('media.comment');
 

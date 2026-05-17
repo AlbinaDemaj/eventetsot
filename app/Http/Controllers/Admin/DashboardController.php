@@ -260,4 +260,13 @@ class DashboardController extends Controller
             ],
         ]);
     }
+
+    public function settings()
+    {
+        return view('admin.react', [
+            'page' => 'settings',
+            'user' => auth('admin')->user(),
+            'extra' => [],
+        ]);
+    }
 }

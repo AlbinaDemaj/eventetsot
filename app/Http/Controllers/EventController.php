@@ -8,20 +8,52 @@ use Illuminate\Http\Request;
 
 class EventController extends Controller
 {
+    private function ensureEventIsActive(Event $event): void
+    {
+        if ($event->expires_at && $event->expires_at->isPast()) {
+            abort(403, 'Ky event ka skaduar.');
+        }
+    }
+
+    private function attachPremiumData(Event $event): Event
+    {
+        $event->is_premium = $event->user?->hasActivePremium() ?? false;
+        $event->premium_until = $event->user?->premium_until;
+
+        return $event;
+    }
+
     public function welcome(Request $request)
     {
-        $event = Event::with('media')->where('code', $request->code)->first();
-        return view('website.events.welcome', ['event' => $event]);
+        $event = Event::with([
+            'media',
+            'user.activeSubscription.plan',
+        ])
+            ->where('code', $request->code)
+            ->firstOrFail();
+
+        $this->ensureEventIsActive($event);
+        $this->attachPremiumData($event);
+
+        return view('website.events.react-welcome', [
+            'event' => $event,
+        ]);
     }
 
     public function show(Request $request)
     {
-        $event = Event::where('code', $request->code)->first();
-        $media = $event->media()->latest()->paginate(8);
+        $event = Event::with([
+            'media',
+            'user.activeSubscription.plan',
+        ])
+            ->where('code', $request->code)
+            ->firstOrFail();
 
-        return view('website.events.show', [
+        $this->ensureEventIsActive($event);
+        $this->attachPremiumData($event);
+
+        return view('website.events.react-show', [
             'event' => $event,
-            'media' => $media
         ]);
     }
 
@@ -29,27 +61,39 @@ class EventController extends Controller
     {
         $event = Event::findOrFail($id);
 
+        $this->ensureEventIsActive($event);
+
         $page = $request->get('page', 1);
-        $media = $event->media()->latest()->paginate(8, ['*'], 'page', $page);
 
-        if ($request->ajax()) {
-            return response()->json([
-                'html' => view('website.events.media-items', compact('media'))->render(),
-                'hasMore' => $media->hasMorePages(),
-                'currentPage' => $media->currentPage(),
-                'lastPage' => $media->lastPage(),
-            ]);
-        }
+        $media = $event->media()
+            ->latest()
+            ->paginate(8, ['*'], 'page', $page);
 
-        return redirect()->back();
+        return response()->json([
+            'media' => $media->items(),
+            'hasMore' => $media->hasMorePages(),
+            'currentPage' => $media->currentPage(),
+            'lastPage' => $media->lastPage(),
+        ]);
     }
 
-    public function upload()
+    public function upload(Request $request)
     {
+        $event = Event::with([
+            'media',
+            'user.activeSubscription.plan',
+        ])
+            ->where('code', $request->code)
+            ->firstOrFail();
+
+        $this->ensureEventIsActive($event);
+        $this->attachPremiumData($event);
+
         $templates = Template::get();
 
-        return view('website.events.upload', [
-            'templates' => $templates
+        return view('website.events.react-upload', [
+            'event' => $event,
+            'templates' => $templates,
         ]);
     }
 }

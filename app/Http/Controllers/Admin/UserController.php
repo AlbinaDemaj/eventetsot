@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\SubscriptionPlan;
 use App\Models\User;
+use App\Models\UserSubscription;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
@@ -151,6 +152,38 @@ class UserController extends Controller
             'success' => true,
             'status' => $user->status,
             'message' => 'User status updated successfully.',
+        ]);
+    }
+
+    public function grantPremium(User $user)
+    {
+        $premiumPlan = SubscriptionPlan::query()
+            ->where('price', '>', 0)
+            ->where('is_active', 1)
+            ->first();
+
+        if (!$premiumPlan) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Plani Plus/Premium nuk u gjet.',
+            ], 404);
+        }
+
+        UserSubscription::updateOrCreate(
+            [
+                'user_id' => $user->id,
+            ],
+            [
+                'subscription_plan_id' => $premiumPlan->id,
+                'status' => 'active',
+                'starts_at' => now(),
+                'ends_at' => now()->addDays($premiumPlan->billing_cycle_days ?? 180),
+            ]
+        );
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Plani Plus u aktivizua me sukses.',
         ]);
     }
 

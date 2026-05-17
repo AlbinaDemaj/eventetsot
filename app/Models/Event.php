@@ -13,6 +13,7 @@ class Event extends Model
     protected $fillable = [
         'name',
         'event_date',
+        'expires_at',
         'code',
         'qr_code',
         'user_id',
@@ -28,6 +29,7 @@ class Event extends Model
 
     protected $casts = [
         'event_date' => 'datetime',
+        'expires_at' => 'datetime',
         'is_public' => 'boolean',
         'is_animated' => 'boolean',
         'dynamic_fields' => 'array',
@@ -43,6 +45,7 @@ class Event extends Model
             $event->code = $code;
 
             $url = url('/events/' . $event->code);
+
             $qrCode = base64_encode(
                 QrCode::format('svg')->size(200)->generate($url)
             );
@@ -68,6 +71,11 @@ class Event extends Model
 
     public function isActive(): bool
     {
+        // Kontrollo nëse ka skaduar sipas expires_at
+        if ($this->expires_at && $this->expires_at->isPast()) {
+            return false;
+        }
+
         if (!$this->user) {
             return false;
         }

@@ -56,67 +56,163 @@ export default function EventsPage() {
         <div className="min-h-screen bg-[#FCFBFF] text-slate-900">
             <Navbar />
 
-            <section className="relative overflow-hidden border-b border-[#EEEAF8] bg-white">
-    {/* Background effects */}
+            <section className="relative overflow-hidden border-b border-[#EEEAF8] bg-[#FCFBFF]">
+    
+    {/* BACKGROUND */}
     <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(123,97,255,0.18),transparent_30%),radial-gradient(circle_at_bottom_right,rgba(110,195,244,0.16),transparent_28%),linear-gradient(to_bottom,#ffffff,#fcfbff)]" />
-    <div className="absolute -left-20 top-10 h-60 w-60 rounded-full bg-[#7B61FF]/20 blur-3xl" />
-    <div className="absolute right-0 top-0 h-72 w-72 rounded-full bg-[#6EC3F4]/20 blur-3xl" />
+
+    {/* GLOWS */}
+    <div className="absolute -left-24 top-10 h-72 w-72 rounded-full bg-[#7B61FF]/20 blur-3xl" />
+    <div className="absolute right-[-80px] top-[-40px] h-80 w-80 rounded-full bg-[#6EC3F4]/20 blur-3xl" />
+    <div className="absolute bottom-[-100px] left-[35%] h-72 w-72 rounded-full bg-[#F8A5C2]/10 blur-3xl" />
+
+ 
 
     <div className="relative mx-auto max-w-7xl px-6 py-24 lg:px-8 lg:py-32">
-        <div className="max-w-4xl">
+        
+        <div className="grid items-center gap-16 lg:grid-cols-[1fr_0.9fr]">
             
-            {/* Badge */}
-            <span className="inline-flex items-center gap-2 rounded-full border border-[#E7DEFF] bg-white/80 px-5 py-2 text-sm font-semibold text-[#7B61FF] shadow-sm backdrop-blur">
-                <span className="h-2.5 w-2.5 rounded-full bg-[#7B61FF]" />
-                Platformë për evente moderne
-            </span>
-
-            {/* Title */}
-            <h1 className="mt-7 text-5xl font-black leading-[1.05] tracking-[-0.05em] text-slate-900 sm:text-6xl lg:text-7xl">
-                Krijo dhe prezanto
-                <span className="block bg-[linear-gradient(135deg,#7B61FF,#8F7DFF,#6EC3F4)] bg-clip-text text-transparent">
-                    evente që duken magjike
-                </span>
-            </h1>
-
-            {/* Subtitle */}
-            <p className="mt-7 max-w-2xl text-lg leading-8 text-slate-600">
-                Nga dasmat elegante te eventet korporative, çdo moment mund të
-                shndërrohet në një përvojë vizuale që tërheq vëmendje dhe mbetet
-                gjatë në kujtesë.
-            </p>
-
-            {/* Highlights */}
-            <div className="mt-10 flex flex-wrap gap-4">
-                <div className="flex items-center gap-2 text-sm text-slate-600">
+            {/* LEFT SIDE */}
+            <div className="max-w-4xl">
+                
+                {/* BADGE */}
+                <div className="inline-flex items-center gap-2 rounded-full border border-[#E7DEFF] bg-white/80 px-5 py-2 shadow-lg backdrop-blur-xl">
                     <span className="h-2.5 w-2.5 rounded-full bg-[#7B61FF]" />
-                    Dizajn modern & premium
+
+                    <span className="text-xs font-black uppercase tracking-[0.22em] text-[#7B61FF]">
+                        Platformë për evente moderne
+                    </span>
                 </div>
 
-                <div className="flex items-center gap-2 text-sm text-slate-600">
-                    <span className="h-2.5 w-2.5 rounded-full bg-[#6EC3F4]" />
-                    Evente të kuruara me stil
+                {/* TITLE */}
+                <h1 className="mt-8 text-5xl font-black leading-[0.95] tracking-[-0.06em] text-slate-900 sm:text-6xl lg:text-7xl">
+                    Krijo evente që
+                    <br />
+                    duken
+                    <span className="block bg-[linear-gradient(135deg,#7B61FF,#8F7DFF,#6EC3F4)] bg-clip-text text-transparent">
+                        magjike & premium
+                    </span>
+                </h1>
+
+                {/* TEXT */}
+                <p className="mt-7 max-w-2xl text-lg leading-8 text-slate-600">
+                    Nga dasmat elegante te eventet korporative, çdo moment
+                    mund të prezantohet me stil modern, atmosferë luksoze dhe
+                    përvojë vizuale që mbetet gjatë në kujtesë.
+                </p>
+
+                {/* HIGHLIGHTS */}
+                <div className="mt-10 flex flex-wrap gap-4">
+                    {[
+                        "Dizajn premium",
+                        "Atmosferë elegante",
+                        "Evente moderne",
+                    ].map((item) => (
+                        <div
+                            key={item}
+                            className="rounded-2xl border border-white/70 bg-white/80 px-5 py-3 shadow-lg backdrop-blur-xl"
+                        >
+                            <p className="text-sm font-bold text-slate-700">
+                                {item}
+                            </p>
+                        </div>
+                    ))}
                 </div>
 
-                <div className="flex items-center gap-2 text-sm text-slate-600">
-                    <span className="h-2.5 w-2.5 rounded-full bg-[#8F7DFF]" />
-                    Përvoja që mbetet në mendje
+                {/* MINI CTA */}
+                <div className="mt-12 flex items-center gap-4">
+                    <div className="flex -space-x-3">
+                        {events.slice(0, 3).map((event) => (
+                            <img
+                                key={event.id}
+                                src={event.image}
+                                alt={event.title}
+                                className="h-12 w-12 rounded-full border-2 border-white object-cover shadow-lg"
+                            />
+                        ))}
+                    </div>
+
+                    <div>
+                        <p className="text-sm font-bold text-slate-700">
+                            +120 evente të kuruara
+                        </p>
+
+                        <p className="text-sm text-slate-500">
+                            Inspirim modern për çdo organizim
+                        </p>
+                    </div>
                 </div>
             </div>
 
-            {/* Decorative small CTA feel (pa butona) */}
-            <div className="mt-12 flex items-center gap-3">
-                <div className="h-10 w-10 rounded-full bg-[#7B61FF]/10 flex items-center justify-center">
-                    <div className="h-3 w-3 rounded-full bg-[#7B61FF]" />
+            {/* RIGHT SIDE */}
+<div className="relative hidden lg:block">
+    <div className="absolute -inset-10 rounded-[60px] bg-[radial-gradient(circle_at_top,rgba(123,97,255,0.22),transparent_45%),radial-gradient(circle_at_bottom_right,rgba(110,195,244,0.18),transparent_42%),radial-gradient(circle_at_center,rgba(248,165,194,0.10),transparent_45%)] blur-3xl" />
+
+    <div className="relative mx-auto w-full max-w-[520px]">
+        <div className="absolute -left-6 top-10 z-20 rounded-2xl border border-white/70 bg-white/85 px-4 py-3 shadow-[0_18px_45px_rgba(15,23,42,0.10)] backdrop-blur-xl">
+            <p className="text-xs font-black uppercase tracking-[0.18em] text-[#7B61FF]">
+                Premium
+            </p>
+            <p className="mt-1 text-sm font-bold text-slate-700">
+                Event memories
+            </p>
+        </div>
+
+        <div className="absolute -right-5 bottom-16 z-20 rounded-2xl border border-white/70 bg-white/85 px-4 py-3 shadow-[0_18px_45px_rgba(15,23,42,0.10)] backdrop-blur-xl">
+            <p className="text-xs font-black uppercase tracking-[0.18em] text-[#6EC3F4]">
+                Gallery
+            </p>
+            <p className="mt-1 text-sm font-bold text-slate-700">
+                Foto & video
+            </p>
+        </div>
+
+        <div className="relative overflow-hidden rounded-[44px] border border-white/70 bg-white/70 p-3 shadow-[0_35px_100px_rgba(123,97,255,0.18)] backdrop-blur-2xl">
+            <div className="relative overflow-hidden rounded-[34px]">
+                <img
+                    src={events[0].image}
+                    alt={events[0].title}
+                    className="h-[560px] w-full object-cover"
+                />
+
+                <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/15 to-transparent" />
+
+                <div className="absolute left-6 right-6 bottom-6 rounded-[28px] border border-white/20 bg-white/15 p-5 backdrop-blur-xl">
+                    <span className="inline-flex rounded-full bg-white/20 px-3 py-1 text-xs font-black uppercase tracking-[0.18em] text-white">
+                        Highlight Event
+                    </span>
+
+                    <h3 className="mt-3 text-3xl font-black text-white">
+                        {events[0].title}
+                    </h3>
+
+                    <p className="mt-2 text-sm leading-6 text-white/80">
+                        Një prezantim elegant për evente që duken të kuruara,
+                        moderne dhe të paharrueshme.
+                    </p>
                 </div>
-                <p className="text-sm font-medium text-slate-500">
-                    Shfleto eventet dhe gjej inspirimin tënd
-                </p>
+            </div>
+
+            <div className="mt-4 grid grid-cols-3 gap-3">
+                {events.slice(1, 4).map((event) => (
+                    <div
+                        key={event.id}
+                        className="group overflow-hidden rounded-2xl border border-white/70 bg-white p-1 shadow-sm"
+                    >
+                        <img
+                            src={event.image}
+                            alt={event.title}
+                            className="h-24 w-full rounded-xl object-cover transition duration-500 group-hover:scale-110"
+                        />
+                    </div>
+                ))}
             </div>
         </div>
     </div>
+</div>
+        </div>
+    </div>
 </section>
-
             <section className="mx-auto max-w-7xl px-6 py-16 lg:px-8">
                 <div className="mb-10 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
                     <div className="max-w-2xl">

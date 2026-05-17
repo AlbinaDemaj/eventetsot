@@ -42,16 +42,28 @@ if (!function_exists('checkUploadLimit')) {
     {
         $subscription = $user->activeSubscription;
 
-        if (!$subscription) return false;
+        if (!$subscription || !$subscription->plan) {
+            return false;
+        }
 
-        $maxUploads = $subscription->plan->limits['max_uploads'] ?? 0;
+        $plan = $subscription->plan;
+        $limits = is_array($plan->limits) ? $plan->limits : json_decode($plan->limits ?? '{}', true);
 
-        // Unlimited
-        if ($subscription->plan->limits['max_uploads'] === null) return true;
+        // Plus/Premium: nëse çmimi është më i madh se 0, lejo pa limit
+        if ((float) $plan->price > 0) {
+            return true;
+        }
+
+        $maxUploads = $limits['max_uploads'] ?? 5;
+
+        // Nëse max_uploads është null = pa limit
+        if ($maxUploads === null) {
+            return true;
+        }
 
         $usedUploads = $user->uploads()->count();
 
-        return ($usedUploads + $attemptedUploads) <= $maxUploads;
+        return ($usedUploads + $attemptedUploads) <= (int) $maxUploads;
     }
 }
 
