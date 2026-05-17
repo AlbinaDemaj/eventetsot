@@ -512,10 +512,7 @@ function DemoWizard({
     {/* BACKGROUND GLOWS */}
     <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(123,97,255,0.22),transparent_35%),radial-gradient(circle_at_bottom_right,rgba(248,165,194,0.18),transparent_30%),radial-gradient(circle_at_bottom_left,rgba(110,195,244,0.14),transparent_30%)]" />
 
-    {/* GRID */}
-    <div className="absolute inset-0 opacity-[0.03]">
-        <div className="h-full w-full bg-[linear-gradient(to_right,#ffffff_1px,transparent_1px),linear-gradient(to_bottom,#ffffff_1px,transparent_1px)] bg-[size:42px_42px]" />
-    </div>
+    
 
     <div className="relative w-full max-w-xl">
         
