@@ -1,4 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Yellowtail&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Parisienne&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Imperial+Script&display=swap');
+
 @import 'tailwindcss';
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
@@ -35,6 +38,15 @@
 
 .logo-yellowtail {
     font-family: "Yellowtail", cursive;
+    font-weight: 400;
+    font-style: normal;
+    letter-spacing: 0;
+    font-kerning: normal;
+    font-feature-settings: "kern", "liga", "clig", "calt";
+}
+
+.font-parisienne {
+    font-family: "Parisienne", cursive !important;
     font-weight: 400;
     font-style: normal;
     letter-spacing: 0;
