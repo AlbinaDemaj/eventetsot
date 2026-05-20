@@ -512,76 +512,73 @@ function HighlightStories({
 }
 
 function FooterPlus({ totalMemories, isPremium, canAddMore, onOpenUpload }) {
-   return (
-    <div className="relative z-10 mx-auto mt-10 max-w-3xl px-4">
-        <div
-            className="
-                relative overflow-hidden
-                rounded-[2.2rem]
-                border border-white/60
-                bg-[linear-gradient(135deg,rgba(255,255,255,0.95),rgba(248,245,255,0.92))]
-                px-5 py-4
-                shadow-[0_15px_50px_rgba(123,97,255,0.18)]
-                backdrop-blur-2xl
-            "
-        >
-            <div className="pointer-events-none absolute -right-8 -top-8 h-28 w-28 rounded-full bg-[#C4B5FD]/30 blur-3xl" />
-            <div className="pointer-events-none absolute -bottom-10 left-10 h-24 w-24 rounded-full bg-[#FBCFE8]/30 blur-3xl" />
-
-            <div className="relative flex items-center justify-between gap-4">
-                <div className="flex items-center gap-4">
-                    <div
-                        className="
-                            flex h-14 w-14 shrink-0 items-center justify-center
-                            rounded-2xl
-                            bg-[linear-gradient(135deg,#7B61FF,#6EC3F4,#F8A5C2)]
-                            shadow-lg shadow-[#7B61FF]/25
-                        "
-                    >
-                        <span className="text-xl text-white">✦</span>
-                    </div>
-
-                    <div>
-                        <p className="text-[10px] font-black uppercase tracking-[0.24em] text-[#7B61FF]">
-                            EventetSot
-                        </p>
-
-                        <h3 className="mt-1 text-sm font-black text-[#111827] sm:text-base">
-                            Ndaj kujtimet e eventit
-                        </h3>
-
-                        <p className="mt-0.5 text-xs font-medium text-[#6B7280]">
-                            Foto, video dhe mesazhe
-                        </p>
-                    </div>
-                </div>
-
-                <button
-                    type="button"
-                    onClick={onOpenUpload}
-                    disabled={!canAddMore}
+    return (
+        <div className="fixed bottom-4 left-0 right-0 z-40 px-4 sm:bottom-6">
+            <div className="mx-auto max-w-3xl">
+                <div
                     className="
-                        group relative
-                        flex h-16 w-16 shrink-0 items-center justify-center
-                        rounded-full
-                        bg-[linear-gradient(135deg,#7B61FF,#6EC3F4,#F8A5C2)]
-                        text-[2rem] font-black text-white
-                        shadow-[0_12px_35px_rgba(123,97,255,0.38)]
-                        transition duration-300
-                        hover:scale-105
-                        active:scale-95
-                        disabled:opacity-50
+                        relative overflow-hidden
+                        rounded-[2.2rem]
+                        border border-white/60
+                        bg-[linear-gradient(135deg,rgba(255,255,255,0.95),rgba(248,245,255,0.92))]
+                        px-5 py-4
+                        shadow-[0_15px_50px_rgba(123,97,255,0.18)]
+                        backdrop-blur-2xl
                     "
                 >
-                    <span className="absolute inset-0 rounded-full bg-white/20 opacity-0 blur-md transition group-hover:opacity-100" />
+                    <div className="pointer-events-none absolute -right-8 -top-8 h-28 w-28 rounded-full bg-[#C4B5FD]/30 blur-3xl" />
+                    <div className="pointer-events-none absolute -bottom-10 left-10 h-24 w-24 rounded-full bg-[#FBCFE8]/30 blur-3xl" />
 
-                    <span className="relative -mt-1">+</span>
-                </button>
+                    <div className="relative flex items-center justify-between gap-4">
+                        <button
+                            type="button"
+                            onClick={onOpenUpload}
+                            disabled={!canAddMore}
+                            className="min-w-0 flex-1 text-left disabled:cursor-not-allowed disabled:opacity-50"
+                        >
+                            <h3 className="truncate text-sm font-black text-[#111827] sm:text-base">
+                                Ndaj kujtimet e eventit
+                            </h3>
+
+                            <p className="mt-1 text-xs font-medium text-[#6B7280]">
+                                Foto, video dhe mesazhe
+                            </p>
+
+                            <div className="mt-2 flex flex-wrap gap-2">
+                                <span className="rounded-full bg-[#F5F3FF] px-3 py-1 text-[11px] font-black text-[#7B61FF]">
+                                    {totalMemories} kujtime
+                                </span>
+                            </div>
+                        </button>
+
+                        <button
+                            type="button"
+                            onClick={onOpenUpload}
+                            disabled={!canAddMore}
+                            className="
+                                group relative
+                                flex h-16 w-16 shrink-0 items-center justify-center
+                                rounded-full
+                                bg-[linear-gradient(135deg,#7B61FF,#6EC3F4,#F8A5C2)]
+                                text-[2rem] font-black text-white
+                                shadow-[0_12px_35px_rgba(123,97,255,0.38)]
+                                transition duration-300
+                                hover:scale-105
+                                active:scale-95
+                                disabled:opacity-50
+                            "
+                        >
+                            <span className="absolute inset-0 rounded-full bg-white/20 opacity-0 blur-md transition group-hover:opacity-100" />
+                            <span className="absolute inset-[-6px] rounded-full border border-[#7B61FF]/15" />
+                            <span className="relative -mt-1">+</span>
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-);
-}function GuestUploadSheet({
+    );
+}
+function GuestUploadSheet({
     guestName,
     setGuestName,
     guestText,
@@ -606,171 +603,104 @@ function FooterPlus({ totalMemories, isPremium, canAddMore, onOpenUpload }) {
         whatsappMessage
     )}`;
 
-    return (
-        <div className="fixed inset-0 z-50 flex items-end justify-center bg-[#080711]/70 p-3 backdrop-blur-xl">
-            <div className="w-full max-w-xl overflow-hidden rounded-[2rem] bg-white shadow-2xl">
-                <div className="bg-[linear-gradient(135deg,#111827,#2b174f,#7B61FF)] p-5 text-white">
-                    <div className="flex items-start justify-between gap-4">
-                        <div>
-                            <p className="text-[10px] font-black uppercase tracking-[0.2em] text-white/55">
-                                Shto kujtim
-                            </p>
-                            <h2 className="mt-1 text-2xl font-black">
-                                Ndaje momentin tënd
-                            </h2>
-                        </div>
-
-                        <button
-                            type="button"
-                            onClick={onClose}
-                            className="flex h-10 w-10 items-center justify-center rounded-full bg-white/15 text-xl font-black"
-                        >
-                            ×
-                        </button>
-                    </div>
-
-                    <div className="mt-4 rounded-2xl border border-white/15 bg-white/10 p-4">
-                        <div className="flex items-center justify-between">
-                            <p className="text-sm font-black">
-                                {isPremium
-                                    ? "Premium - pa limit"
-                                    : "Free - deri në 5 vendosje"}
-                            </p>
-
-                            {!isPremium && (
-                                <span className="rounded-full bg-white px-3 py-1 text-xs font-black text-[#7B61FF]">
-                                    {totalMemories}/{freeLimit}
-                                </span>
-                            )}
-                        </div>
-
-                        {!isPremium && (
-                            <div className="mt-3 h-2 overflow-hidden rounded-full bg-white/15">
-                                <div
-                                    className="h-full rounded-full bg-[linear-gradient(135deg,#7B61FF,#6EC3F4,#F8A5C2)]"
-                                    style={{
-                                        width: `${Math.min(
-                                            (totalMemories / freeLimit) * 100,
-                                            100
-                                        )}%`,
-                                    }}
-                                />
-                            </div>
-                        )}
-                    </div>
+   return (
+    <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/50 p-3 backdrop-blur-sm">
+        <div className="w-full max-w-lg overflow-hidden rounded-[1.7rem] bg-white shadow-2xl">
+            <div className="flex items-start justify-between gap-4 bg-[#7B61FF] p-5 text-white">
+                <div>
+                    <h2 className="text-xl font-black">Shto kujtim</h2>
+                    <p className="mt-1 text-sm text-white/80">
+                        Foto, video ose mesazh nga eventi
+                    </p>
                 </div>
 
-                <div className="p-5">
-                    {!canAddMore && !isPremium ? (
-                        <div className="rounded-3xl border border-[#E9D5FF] bg-[#FBFAFF] p-5">
-                            <p className="text-xs font-black uppercase tracking-[0.18em] text-[#7B61FF]">
-                                Limiti Free u plotësua
-                            </p>
+                <button
+                    type="button"
+                    onClick={onClose}
+                    className="flex h-9 w-9 items-center justify-center rounded-full bg-white/15 text-xl font-black"
+                >
+                    ×
+                </button>
+            </div>
 
-                            <h3 className="mt-2 text-xl font-black text-[#111827]">
-                                Ke arritur 5 vendosje
-                            </h3>
+            <div className="p-5">
+                <div className="grid grid-cols-2 gap-2 rounded-2xl bg-[#F5F3FF] p-1">
+                    <button
+                        type="button"
+                        onClick={() => setUploadType("media")}
+                        className={`rounded-xl px-4 py-3 text-sm font-black transition ${
+                            uploadType === "media"
+                                ? "bg-white text-[#111827] shadow"
+                                : "text-[#7B61FF]"
+                        }`}
+                    >
+                        Foto / Video
+                    </button>
 
-                            <p className="mt-2 text-sm font-semibold leading-6 text-[#6B7280]">
-                                Për më shumë foto, video dhe mesazhe aktivizo planin Premium.
-                            </p>
-
-                            <a
-                                href={whatsappUrl}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="mt-4 flex w-full items-center justify-center rounded-2xl bg-[#25D366] px-5 py-4 text-sm font-black text-white shadow-lg"
-                            >
-                                Kontakto në WhatsApp
-                            </a>
-                        </div>
-                    ) : (
-                        <>
-                            <div className="grid grid-cols-2 gap-2 rounded-2xl bg-[#F5F3FF] p-1">
-                                <button
-                                    type="button"
-                                    onClick={() => setUploadType("media")}
-                                    className={`rounded-xl px-4 py-3 text-sm font-black transition ${
-                                        uploadType === "media"
-                                            ? "bg-white text-[#111827] shadow"
-                                            : "text-[#7B61FF]"
-                                    }`}
-                                >
-                                    Foto / Video
-                                </button>
-
-                                <button
-                                    type="button"
-                                    onClick={() => setUploadType("text")}
-                                    className={`rounded-xl px-4 py-3 text-sm font-black transition ${
-                                        uploadType === "text"
-                                            ? "bg-white text-[#111827] shadow"
-                                            : "text-[#7B61FF]"
-                                    }`}
-                                >
-                                    Vetëm tekst
-                                </button>
-                            </div>
-
-                            <input
-                                value={guestName}
-                                onChange={(e) => setGuestName(e.target.value)}
-                                placeholder="Emri yt"
-                                className="mt-4 w-full rounded-2xl border border-[#E9D5FF] bg-white px-4 py-3.5 text-sm font-bold text-[#111827] outline-none focus:ring-4 focus:ring-[#C4B5FD]/35"
-                            />
-
-                            <textarea
-                                value={guestText}
-                                onChange={(e) => setGuestText(e.target.value)}
-                                placeholder={
-                                    uploadType === "text"
-                                        ? "Shkruaj një urim ose kujtim..."
-                                        : "Përshkrimi i fotos/videos..."
-                                }
-                                rows={4}
-                                className="mt-3 w-full resize-none rounded-2xl border border-[#E9D5FF] bg-white px-4 py-3.5 text-sm font-bold text-[#111827] outline-none focus:ring-4 focus:ring-[#C4B5FD]/35"
-                            />
-
-                            {uploadType === "media" ? (
-                                <label className="mt-4 flex cursor-pointer flex-col items-center justify-center rounded-3xl border-2 border-dashed border-[#C4B5FD] bg-[#FBFAFF] px-5 py-8 text-center transition hover:bg-[#F5F3FF]">
-                                    <span className="flex h-14 w-14 items-center justify-center rounded-full bg-[linear-gradient(135deg,#7B61FF,#6EC3F4,#F8A5C2)] text-3xl font-black text-white shadow-xl">
-                                        +
-                                    </span>
-
-                                    <span className="mt-3 text-sm font-black text-[#111827]">
-                                        Zgjidh foto/video
-                                    </span>
-
-                                    <span className="mt-1 text-xs font-semibold text-[#6B7280]">
-                                        {isPremium
-                                            ? "Do të shfaqet menjëherë në galeri"
-                                            : `Mund të shtosh edhe ${remainingSlots} kujtime`}
-                                    </span>
-
-                                    <input
-                                        type="file"
-                                        accept="image/*,video/*"
-                                        multiple
-                                        onChange={handleGuestUpload}
-                                        className="hidden"
-                                    />
-                                </label>
-                            ) : (
-                                <button
-                                    type="button"
-                                    onClick={handleAddText}
-                                    disabled={!guestText.trim()}
-                                    className="mt-4 w-full rounded-2xl bg-[linear-gradient(135deg,#7B61FF,#6EC3F4,#F8A5C2)] px-5 py-4 text-sm font-black text-white shadow-xl shadow-[#7B61FF]/25 disabled:opacity-50"
-                                >
-                                    Shto mesazhin
-                                </button>
-                            )}
-                        </>
-                    )}
+                    <button
+                        type="button"
+                        onClick={() => setUploadType("text")}
+                        className={`rounded-xl px-4 py-3 text-sm font-black transition ${
+                            uploadType === "text"
+                                ? "bg-white text-[#111827] shadow"
+                                : "text-[#7B61FF]"
+                        }`}
+                    >
+                        Tekst
+                    </button>
                 </div>
+
+                <input
+                    value={guestName}
+                    onChange={(e) => setGuestName(e.target.value)}
+                    placeholder="Emri yt"
+                    className="mt-4 w-full rounded-2xl border border-[#E9D5FF] px-4 py-3 text-sm font-bold outline-none focus:ring-4 focus:ring-[#C4B5FD]/35"
+                />
+
+                <textarea
+                    value={guestText}
+                    onChange={(e) => setGuestText(e.target.value)}
+                    placeholder={
+                        uploadType === "text"
+                            ? "Shkruaj një urim ose kujtim..."
+                            : "Përshkrimi i fotos/videos..."
+                    }
+                    rows={4}
+                    className="mt-3 w-full resize-none rounded-2xl border border-[#E9D5FF] px-4 py-3 text-sm font-bold outline-none focus:ring-4 focus:ring-[#C4B5FD]/35"
+                />
+
+                {uploadType === "media" ? (
+                    <label className="mt-4 flex cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed border-[#C4B5FD] bg-[#FBFAFF] px-5 py-7 text-center transition hover:bg-[#F5F3FF]">
+                        <span className="flex h-14 w-14 items-center justify-center rounded-full bg-[#7B61FF] text-3xl font-black text-white">
+                            +
+                        </span>
+
+                        <span className="mt-3 text-sm font-black text-[#111827]">
+                            Zgjidh foto/video
+                        </span>
+
+                        <input
+                            type="file"
+                            accept="image/*,video/*"
+                            multiple
+                            onChange={handleGuestUpload}
+                            className="hidden"
+                        />
+                    </label>
+                ) : (
+                    <button
+                        type="button"
+                        onClick={handleAddText}
+                        disabled={!guestText.trim()}
+                        className="mt-4 w-full rounded-2xl bg-[#7B61FF] px-5 py-4 text-sm font-black text-white shadow-lg disabled:opacity-50"
+                    >
+                        Shto mesazhin
+                    </button>
+                )}
             </div>
         </div>
-    );
+    </div>
+);
 }
 
 function MediaThumb({ item, mediaUrl, isVideo }) {
