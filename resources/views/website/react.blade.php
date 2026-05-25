@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>eventetsot.</title>
+    <meta name="verify-paysera" content="751556b17b7039e36698340a6798fb86">
 
     <link rel="icon" type="image/png" href="{{ asset('1.png') }}">
 <link rel="preconnect" href="https://fonts.googleapis.com">

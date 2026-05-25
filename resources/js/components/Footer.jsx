@@ -12,54 +12,84 @@ export default function Footer() {
     ],
   };
 
+  const policyLinks = [
+    { name: "Terms of Service", href: "/terms" },
+    { name: "Privacy Policy", href: "/privacy" },
+    { name: "Refund Policy", href: "/refund-policy" },
+    { name: "Cookies Policy", href: "/cookies-policy" },
+  ];
+
+  const paymentMethods = [
+    {
+      name: "Paysera",
+      image: "/images/paysera.png",
+      href: "https://www.paysera.com",
+      className: "h-7",
+    },
+    {
+      name: "Visa",
+      image: "/images/visa.png",
+      href: "https://www.visa.com",
+      className: "h-6",
+    },
+    {
+      name: "Mastercard",
+      image: "/images/mastercard.png",
+      href: "https://www.mastercard.com",
+      className: "h-8",
+    },
+  ];
+
   return (
-    <footer className="border-t border-[#EEEAF8] bg-[#FCFBFF]">
-      <div className="mx-auto max-w-7xl px-6 py-14 lg:px-8">
-        <div className="grid gap-10 md:grid-cols-3">
-          {/* Brand */}
-          <div className="max-w-sm">
-            <a href="/">
-              <h1 className="logo-yellowtail text-[2.6rem] leading-none">
+    <footer className="relative overflow-hidden border-t border-[#EEEAF8] bg-[linear-gradient(135deg,#FCFBFF_0%,#F7F4FF_48%,#EEF7FF_100%)]">
+      <div className="pointer-events-none absolute -left-24 top-0 h-72 w-72 rounded-full bg-[#7B61FF]/10 blur-3xl" />
+      <div className="pointer-events-none absolute -right-20 bottom-0 h-72 w-72 rounded-full bg-[#6EC3F4]/10 blur-3xl" />
+
+      <div className="relative z-10 mx-auto max-w-7xl px-6 py-14 lg:px-8">
+        <div className="grid gap-12 lg:grid-cols-[1.3fr_1fr_1fr]">
+          <div className="max-w-md">
+            <a href="/" className="inline-block">
+              <h1 className="logo-yellowtail text-[3rem] leading-none">
                 <span className="bg-[linear-gradient(135deg,#111827,#7B61FF,#6EC3F4)] bg-clip-text text-transparent">
                   eventetsot.
                 </span>
               </h1>
             </a>
 
-            <p className="mt-3 text-sm text-slate-500">
-              Kujtime eventesh, të ruajtura me stil.
+            <p className="mt-4 max-w-sm text-sm leading-6 text-slate-500">
+              Kujtime eventesh, të ruajtura me stil dhe të ndara me njerëzit që
+              kanë më shumë rëndësi.
             </p>
 
-            <div className="mt-6 flex gap-3">
+            <div className="mt-6 flex flex-wrap gap-3">
               <a
                 href="/register"
-                className="rounded-xl bg-[#7B61FF] px-4 py-2 text-sm font-semibold text-white transition hover:bg-[#6A4DFF]"
+                className="rounded-2xl bg-[linear-gradient(135deg,#7B61FF,#6A4DFF)] px-5 py-3 text-sm font-semibold text-white shadow-[0_12px_32px_rgba(123,97,255,0.32)] transition hover:-translate-y-0.5 hover:shadow-[0_16px_40px_rgba(123,97,255,0.42)]"
               >
                 Krijo eventin
               </a>
 
               <a
                 href="/demo"
-                className="rounded-xl border border-[#E5E7EB] px-4 py-2 text-sm font-semibold text-slate-700 transition hover:border-[#7B61FF] hover:text-[#7B61FF]"
+                className="rounded-2xl border border-[#E5E7EB] bg-white/75 px-5 py-3 text-sm font-semibold text-slate-700 backdrop-blur-xl transition hover:-translate-y-0.5 hover:border-[#7B61FF] hover:text-[#7B61FF]"
               >
-                Demo
+                Shiko demo
               </a>
             </div>
           </div>
 
-          {/* Links */}
           {Object.entries(footerLinks).map(([title, links]) => (
             <div key={title}>
-              <p className="text-xs font-semibold uppercase tracking-wider text-slate-400">
+              <p className="text-xs font-bold uppercase tracking-[0.22em] text-slate-400">
                 {title}
               </p>
 
-              <ul className="mt-4 space-y-2">
+              <ul className="mt-5 space-y-3">
                 {links.map((link) => (
                   <li key={link.name}>
                     <a
                       href={link.href}
-                      className="text-sm text-slate-600 transition hover:text-[#7B61FF]"
+                      className="inline-flex text-sm font-medium text-slate-600 transition hover:translate-x-1 hover:text-[#7B61FF]"
                     >
                       {link.name}
                     </a>
@@ -70,22 +100,51 @@ export default function Footer() {
           ))}
         </div>
 
-        {/* Bottom */}
-        <div className="mt-10 flex flex-col items-center justify-between gap-3 border-t border-[#EEEAF8] pt-5 md:flex-row">
-          <p className="text-sm text-slate-500">
-            © {new Date().getFullYear()} EventetSot
-          </p>
+        <div className="mt-12 rounded-[2rem] border border-white/70 bg-white/65 p-5 shadow-[0_18px_55px_rgba(15,23,42,0.06)] backdrop-blur-xl">
+          <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
+            <div>
+              <p className="text-sm font-medium text-slate-500">
+                © {new Date().getFullYear()} EventetSot. Të gjitha të drejtat e rezervuara.
+              </p>
 
-          <div className="flex gap-3 text-sm text-slate-500">
-            <a href="#" className="transition hover:text-[#7B61FF]">
-              Instagram
-            </a>
-            <a href="#" className="transition hover:text-[#7B61FF]">
-              Facebook
-            </a>
-            <a href="#" className="transition hover:text-[#7B61FF]">
-              LinkedIn
-            </a>
+              <div className="mt-4 flex flex-wrap gap-x-5 gap-y-2">
+                {policyLinks.map((link) => (
+                  <a
+                    key={link.name}
+                    href={link.href}
+                    className="text-sm font-medium text-slate-500 transition hover:text-[#7B61FF]"
+                  >
+                    {link.name}
+                  </a>
+                ))}
+              </div>
+            </div>
+
+            <div>
+              <p className="mb-3 text-xs font-bold uppercase tracking-[0.18em] text-slate-400 lg:text-right">
+                Pagesa të sigurta
+              </p>
+
+              <div className="flex flex-wrap items-center gap-3">
+                {paymentMethods.map((method) => (
+                  <a
+                    key={method.name}
+                    href={method.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={method.name}
+                    className="flex h-14 w-24 items-center justify-center rounded-2xl border border-[#ECE7FF] bg-white shadow-[0_8px_24px_rgba(15,23,42,0.06)] transition hover:-translate-y-1 hover:border-[#C4B5FD] hover:shadow-[0_14px_35px_rgba(123,97,255,0.16)]"
+                  >
+                    <img
+                      src={method.image}
+                      alt={method.name}
+                      className={`${method.className} max-w-[76px] object-contain`}
+                      loading="lazy"
+                    />
+                  </a>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </div>

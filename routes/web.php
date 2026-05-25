@@ -114,6 +114,13 @@ Route::middleware('auth')->group(function () {
         ->name('subscription.payment.redirect');
 });
 
+
+
+Route::view('/terms', 'website.terms')->name('terms');
+Route::view('/privacy', 'website.privacy')->name('privacy');
+Route::view('/refund-policy', 'website.refund-policy')->name('refund.policy');
+Route::view('/cookies-policy', 'website.cookies-policy')->name('cookies.policy');
+
 /*
 |--------------------------------------------------------------------------
 | Split Route Files
