@@ -12,12 +12,12 @@ export default function Footer() {
     ],
   };
 
-  const policyLinks = [
-    { name: "Terms of Service", href: "/terms" },
-    { name: "Privacy Policy", href: "/privacy" },
-    { name: "Refund Policy", href: "/refund-policy" },
-    { name: "Cookies Policy", href: "/cookies-policy" },
-  ];
+const policyLinks = [
+  { name: "Kushtet e Shërbimit", href: "/terms" },
+  { name: "Politika e Privatësisë", href: "/privacy" },
+  { name: "Politika e Rimbursimit", href: "/refund-policy" },
+  { name: "Politika e Cookies", href: "/cookies-policy" },
+];
 
   const paymentMethods = [
     {
@@ -125,25 +125,39 @@ export default function Footer() {
                 Pagesa të sigurta
               </p>
 
-              <div className="flex flex-wrap items-center gap-3">
-                {paymentMethods.map((method) => (
-                  <a
-                    key={method.name}
-                    href={method.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={method.name}
-                    className="flex h-14 w-24 items-center justify-center rounded-2xl border border-[#ECE7FF] bg-white shadow-[0_8px_24px_rgba(15,23,42,0.06)] transition hover:-translate-y-1 hover:border-[#C4B5FD] hover:shadow-[0_14px_35px_rgba(123,97,255,0.16)]"
-                  >
-                    <img
-                      src={method.image}
-                      alt={method.name}
-                      className={`${method.className} max-w-[76px] object-contain`}
-                      loading="lazy"
-                    />
-                  </a>
-                ))}
-              </div>
+             <div className="flex flex-wrap items-center gap-2 sm:gap-3">
+  {paymentMethods.map((method) => (
+    <a
+      key={method.name}
+      href={method.href}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label={method.name}
+      className="
+        flex h-9 w-[58px] items-center justify-center
+        rounded-lg border border-[#ECE7FF]
+        bg-white shadow-[0_6px_18px_rgba(15,23,42,0.05)]
+        transition hover:-translate-y-1 hover:border-[#C4B5FD]
+
+        sm:h-14 sm:w-24
+        sm:rounded-2xl
+        sm:shadow-[0_8px_24px_rgba(15,23,42,0.06)]
+      "
+    >
+      <img
+        src={method.image}
+        alt={method.name}
+        className="
+          max-h-4 max-w-[42px] object-contain
+
+          sm:max-h-8
+          sm:max-w-[76px]
+        "
+        loading="lazy"
+      />
+    </a>
+  ))}
+</div>
             </div>
           </div>
         </div>
