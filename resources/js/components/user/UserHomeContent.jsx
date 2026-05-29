@@ -3,6 +3,10 @@ export default function UserHomeContent({ event }) {
         ? `${window.location.origin}/events/${event.code}`
         : "";
 
+    const premiumUntil = event?.premium_until
+        ? new Date(event.premium_until).toLocaleDateString("sq-AL")
+        : null;
+
     const copyURL = async () => {
         if (!eventUrl) return;
 
@@ -95,10 +99,39 @@ export default function UserHomeContent({ event }) {
                                     <p className="mt-3 text-sm font-semibold text-slate-500">
                                         {event.event_date || "Pa datë"}
                                     </p>
+
+                                    {event?.is_premium && (
+                                        <div className="mt-4 rounded-[22px] border border-[#D8CCFF] bg-[linear-gradient(135deg,#F8F5FF,#F2FAFF)] p-4 shadow-[0_10px_30px_rgba(123,97,255,0.10)]">
+                                            <div className="flex items-center gap-2">
+                                                <span className="text-lg">⭐</span>
+                                                <p className="text-sm font-black uppercase tracking-[0.12em] text-[#7B61FF]">
+                                                    Premium Aktiv
+                                                </p>
+                                            </div>
+
+                                            <p className="mt-2 text-sm font-semibold text-slate-700">
+                                                Tani ke akses në planin Premium.
+                                            </p>
+
+                                            {premiumUntil && (
+                                                <p className="mt-1 text-xs text-slate-500">
+                                                    Aktiv deri më {premiumUntil}
+                                                </p>
+                                            )}
+                                        </div>
+                                    )}
                                 </div>
 
-                                <div className="rounded-full border border-emerald-100 bg-emerald-50 px-4 py-2 text-xs font-black uppercase tracking-[0.14em] text-emerald-700">
-                                    Gati për ndarje
+                                <div className="flex flex-wrap gap-2">
+                                    <div className="rounded-full border border-emerald-100 bg-emerald-50 px-4 py-2 text-xs font-black uppercase tracking-[0.14em] text-emerald-700">
+                                        Gati për ndarje
+                                    </div>
+
+                                    {event?.is_premium && (
+                                        <div className="rounded-full border border-[#D8CCFF] bg-[#F4F0FF] px-4 py-2 text-xs font-black uppercase tracking-[0.14em] text-[#7B61FF]">
+                                            ⭐ Premium
+                                        </div>
+                                    )}
                                 </div>
                             </div>
                         </div>

@@ -25,13 +25,20 @@ class Event extends Model
         'button_text',
         'is_animated',
         'background',
+
+        'is_active',
+        'is_premium',
+        'premium_until',
     ];
 
     protected $casts = [
         'event_date' => 'datetime',
         'expires_at' => 'datetime',
+        'premium_until' => 'datetime',
         'is_public' => 'boolean',
         'is_animated' => 'boolean',
+        'is_active' => 'boolean',
+        'is_premium' => 'boolean',
         'dynamic_fields' => 'array',
     ];
 
@@ -71,33 +78,46 @@ class Event extends Model
 
     public function isActive(): bool
     {
-        // Kontrollo nëse ka skaduar sipas expires_at
-        if ($this->expires_at && $this->expires_at->isPast()) {
+        if ($this->is_active === false) {
             return false;
         }
 
-        if (!$this->user) {
+        if ($this->is_premium === true) {
+            return ! $this->premium_until || $this->premium_until->isFuture();
+        }
+
+        if (! $this->user) {
+            return false;
+        }
+
+        if ($this->user->hasActivePremium()) {
+            return ! $this->expires_at || $this->expires_at->isFuture();
+        }
+
+        if ($this->expires_at && $this->expires_at->isPast()) {
             return false;
         }
 
         $subscription = $this->user->activeSubscription ?? null;
 
-        if (!$subscription) {
-            return false;
+        if (! $subscription) {
+            return $this->created_at?->copy()?->addHours(3)?->isFuture() ?? false;
         }
 
         $plan = $subscription->plan ?? $subscription->subscriptionPlan ?? null;
 
-        if (!$plan) {
-            return false;
+        if (! $plan) {
+            return $this->created_at?->copy()?->addHours(3)?->isFuture() ?? false;
         }
 
         if (($plan->slug ?? null) === 'free') {
             $activeHours = data_get($plan, 'limits.active_hours', 3);
+
             return $this->created_at?->copy()?->addHours($activeHours)?->isFuture() ?? false;
         }
 
         $activeDays = data_get($plan, 'limits.active_days', 30);
+
         return $this->created_at?->copy()?->addDays($activeDays)?->isFuture() ?? false;
     }
 }

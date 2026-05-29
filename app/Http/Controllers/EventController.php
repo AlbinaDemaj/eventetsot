@@ -10,6 +10,14 @@ class EventController extends Controller
 {
     private function ensureEventIsActive(Event $event): void
     {
+        $event->loadMissing('user');
+
+        // Nëse përdoruesi ka Premium aktiv,
+        // eventi hapet pavarësisht skadimit të mëparshëm
+        if ($event->user?->hasActivePremium()) {
+            return;
+        }
+
         if ($event->expires_at && $event->expires_at->isPast()) {
             abort(403, 'Ky event ka skaduar.');
         }
